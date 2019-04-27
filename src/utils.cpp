@@ -1,0 +1,25 @@
+#include <iostream>
+#include <sstream>
+
+#include <boost/endian/conversion.hpp>
+
+#include "utils.hpp"
+
+
+std::string displayHash(const std::array<unsigned int, 5>& hash)
+{
+	std::ostringstream buf;
+    for (int i = 0; i < 5; i++) {
+		buf << std::hex << boost::endian::endian_reverse(hash[i]);
+    }
+    return buf.str();
+}
+
+void hexdump(const uint8_t* data, size_t size) {
+    std::ostringstream buf;
+    for (int i = 0; i < 5; i++) {
+        buf << std::hex << data[i];
+    }
+
+    std::cout << buf.str() << std::endl;
+}
