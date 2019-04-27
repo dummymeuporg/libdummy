@@ -4,8 +4,8 @@ include_directories(include)
 set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} \
     -lboost_system \
     -lcrypto -lssl")
-add_library(dummy
-    src/utils.cpp
+add_library(dummy STATIC
+	src/utils.cpp
 	src/crypto/sha512.cpp
 )
 
