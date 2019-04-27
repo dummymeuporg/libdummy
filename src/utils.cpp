@@ -16,7 +16,7 @@ std::string displayHash(const std::array<unsigned int, 5>& hash)
 
 void hexdump(const uint8_t* data, size_t size) {
     std::ostringstream buf;
-    for (int i = 0; i < 5; i++) {
+    for (int i = 0; i < size; i++) {
         buf << std::hex << static_cast<int>(data[i]);
     }
 
