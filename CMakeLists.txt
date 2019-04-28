@@ -7,6 +7,7 @@ set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} \
 add_library(dummy STATIC
 	src/utils.cpp
 	src/crypto/sha512.cpp
+    src/crypto/rsa_keypair.cpp
 )
 
 
