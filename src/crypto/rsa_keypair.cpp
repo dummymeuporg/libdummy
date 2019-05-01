@@ -22,7 +22,7 @@ RSAKeyPair::RSAKeyPair(const std::string& publicKeyPath,
 
     if(nullptr == (fpriv = ::fopen(privateKeyPath.c_str(), "rb")))
     {
-        fclose(fpub);
+        ::fclose(fpub);
         throw PEMFileError();
     }
 
