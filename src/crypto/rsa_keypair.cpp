@@ -37,28 +37,30 @@ RSAKeyPair::RSAKeyPair(EVP_PKEY* publicKey, EVP_PKEY* privateKey)
 
 }
 
-RSAKeyPair::RSAKeyPair(FILE* fpub, FILE* fpriv)
-    : m_publicKey(nullptr), m_privateKey(nullptr)
-{
-    _loadKeysFromFiles(fpub, fpriv);
-}
-
 RSAKeyPair::~RSAKeyPair() {
-    EVP_PKEY_free(m_publicKey);
-    EVP_PKEY_free(m_privateKey);
+    ::EVP_PKEY_free(m_publicKey);
+    ::EVP_PKEY_free(m_privateKey);
 }
 
 void RSAKeyPair::_loadKeysFromFiles(FILE* fpub, FILE* fpriv) {
-    m_publicKey = PEM_read_PUBKEY(fpub, NULL, NULL, NULL);
+    m_publicKey = ::PEM_read_PUBKEY(fpub, NULL, NULL, NULL);
     if (nullptr == m_publicKey) {
+        ::fclose(fpub);
+        ::fclose(fpriv);
         throw KeyLoadingError();
     }
 
-    m_privateKey = PEM_read_PrivateKey(fpriv, NULL, NULL, NULL);
+    m_privateKey = ::PEM_read_PrivateKey(fpriv, NULL, NULL, NULL);
     if (nullptr == m_privateKey) {
-        EVP_PKEY_free(m_publicKey);
+        ::fclose(fpub);
+        ::fclose(fpriv);
+        ::EVP_PKEY_free(m_publicKey);
         throw KeyLoadingError();
     }
+
+    // Close the files anyway
+    ::fclose(fpub);
+    ::fclose(fpriv);
 }
 
 } // namespace Crypto
