@@ -1,5 +1,7 @@
 #include "core/project.hpp"
 
+namespace fs = boost::filesystem;
+namespace pt = boost::property_tree;
 
 namespace Dummy
 {

@@ -3,6 +3,10 @@
 #include <exceptions>
 
 #include <boost/filesystem.hpp>
+#include <boost/property_tree/ptree.hpp>
+
+namespace fs = boost::filesystem;
+namespace pt = boost::property_tree;
 
 namespace Dummy
 {
