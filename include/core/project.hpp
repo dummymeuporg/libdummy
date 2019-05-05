@@ -32,6 +32,10 @@ class Project
 public:
     Project(const fs::path&);
 
+    const fs::path& projectPath() const {
+        return m_projectPath;
+    }
+
     const std::map<std::string, std::unique_ptr<void*>>& maps() const {
         return m_maps;
     }
