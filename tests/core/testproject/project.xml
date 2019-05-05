@@ -1,0 +1,8 @@
+<project>
+    <maps>
+        <map name="map1">
+            <map name="map2"/>
+        </map>
+    </maps>
+    <starting_point x="12" map="map2" y="8"/>
+</project>
