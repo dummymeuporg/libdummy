@@ -9,6 +9,7 @@ add_library(dummy STATIC
 	src/crypto/sha512.cpp
     src/crypto/rsa_keypair.cpp
     src/core/project.cpp
+    src/core/map.cpp
 )
 
 

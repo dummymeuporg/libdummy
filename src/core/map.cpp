@@ -1,6 +1,12 @@
-#pragma once
+#include <iostream>
+#include <fstream>
+
+#include <boost/filesystem.hpp>
 
 #include "core/map.hpp"
+#include "core/project.hpp"
+
+namespace fs = boost::filesystem;
 
 namespace Dummy
 {
@@ -8,29 +14,57 @@ namespace Dummy
 namespace Core
 {
 
-Map::Map(std::uint16_t width, std::uint16_t height)
-    : m_width(width), m_height(height),
-      m_blocking(width * height * sizeof(std::uint8_t))
+Map::Map(const Project& project, const std::string& name)
+    : m_project(project), m_name(name)
 {
+    fs::path basePath(project.projectPath() / "maps");
+    std::string mapFile(name + ".map");
+    std::string blkFile(name + ".blk");
+
+    _loadMapFile(std::move((basePath / mapFile).string()));
+    _loadBlkFile(std::move((basePath / blkFile).string()));
 }
 
-void Map::_loadFromStream(std::fstream& fs) {
+void Map::_loadMapFile(std::string fullpath) {
     std::uint32_t magicNumber;
-    std::uint32_t version;
-
-    fs.read(reinterpret_cast<char*>(&magicNumber), sizeof(std::uint32_t));
-    if (magicNumber != MAGIC_WORD)
-    {
+    std::uint16_t version;
+    std::ifstream ifs(fullpath, std::ios::binary);
+    if (!ifs.is_open()) {
+        throw MapFileNotFound();
+    }
+    ifs.read(reinterpret_cast<char*>(&magicNumber), sizeof(std::uint32_t));
+    if (magicNumber != Map::MAP_MAGIC_WORD) {
         throw WrongMagicNumber();
     }
 
-    fs.read(reinterpret_cast<char*>(&version), sizeof(std::uint32_t));
+    // XXX what to do with version?
+    ifs.read(reinterpret_cast<char*>(&version), sizeof(std::uint16_t));
+
+    // read dimensions
+    ifs.read(reinterpret_cast<char*>(&m_width), sizeof(std::uint16_t));
+    ifs.read(reinterpret_cast<char*>(&m_height), sizeof(std::uint16_t));
+    std::cerr << m_name << " (" << m_width * 2 << "," << m_height * 2 << ")"
+        << std::endl;
+    ifs.close();
 
 }
 
-std::fstream& operator>>(std::fstream& fs, Map& map) {
-    map._loadFromStream(fs);
-    return fs;
+void Map::_loadBlkFile(std::string fullpath)
+{
+    std::uint32_t magicNumber;
+    std::ifstream ifs(fullpath, std::ios::binary);
+    if (!ifs.is_open()) {
+        throw BlkFileNotFound();
+    }
+    ifs.read(reinterpret_cast<char*>(&magicNumber), sizeof(std::uint32_t));
+    if (magicNumber != Map::BLK_MAGIC_WORD) {
+        throw WrongMagicNumber();
+    }
+
+    m_blocking.resize(m_width * m_height * 4);
+    ifs.read(reinterpret_cast<char*>(m_blocking.data()),
+            m_blocking.size() * sizeof(std::uint8_t));
+    std::cerr << m_name << " read blocking layer." << std::endl;
 }
 
 } // namespace Core
