@@ -10,6 +10,8 @@ add_library(dummy STATIC
     src/crypto/rsa_keypair.cpp
     src/core/project.cpp
     src/core/map.cpp
+    src/core/character.cpp
+    src/core/account.cpp
 )
 
 
