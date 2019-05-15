@@ -13,6 +13,7 @@ add_library(dummy STATIC
     src/core/character.cpp
     src/core/account.cpp
     src/protocol/outgoing_packet.cpp
+    src/protocol/incoming_packet.cpp
 )
 
 
