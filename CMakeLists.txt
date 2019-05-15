@@ -12,6 +12,7 @@ add_library(dummy STATIC
     src/core/map.cpp
     src/core/character.cpp
     src/core/account.cpp
+    src/protocol/outgoing_packet.cpp
 )
 
 
@@ -23,6 +24,9 @@ add_executable(project_tests
     tests/core/project_tests.cpp
 )
 
+add_executable(protocol_tests
+    tests/protocol/outgoing_packet_tests.cpp
+)
 
 target_link_libraries(
 	sha512_tests
@@ -33,4 +37,9 @@ target_link_libraries(
     project_tests
     dummy
     boost_filesystem
+)
+
+target_link_libraries(
+    protocol_tests
+    dummy
 )
