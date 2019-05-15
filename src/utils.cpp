@@ -1,3 +1,4 @@
+#include <iomanip>
 #include <iostream>
 #include <sstream>
 
@@ -17,7 +18,8 @@ std::string displayHash(const std::array<unsigned int, 5>& hash)
 void hexdump(const uint8_t* data, size_t size) {
     std::ostringstream buf;
     for (int i = 0; i < size; i++) {
-        buf << std::hex << static_cast<int>(data[i]);
+        buf << std::setfill('0') << std::setw(2) << std::hex
+            << static_cast<int>(data[i]);
     }
 
     std::cout << buf.str() << std::endl;
