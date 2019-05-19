@@ -12,6 +12,7 @@ class IncomingPacket {
 public:
     IncomingPacket(const std::uint8_t*);
     IncomingPacket& operator>>(std::string&);
+    IncomingPacket& operator>>(std::uint8_t&);
     IncomingPacket& operator>>(std::uint16_t&);
     IncomingPacket& operator>>(std::uint32_t&);
 private:

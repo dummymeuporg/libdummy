@@ -33,6 +33,14 @@ IncomingPacket& IncomingPacket::operator>>(std::uint16_t& value)
     return *this;
 }
 
+IncomingPacket& IncomingPacket::operator>>(std::uint8_t& value)
+{
+    value = *(reinterpret_cast<const std::uint8_t*>(m_data + m_cursor));
+    m_cursor += sizeof(std::uint8_t);
+    return *this;
+
+}
+
 } // namespace Protocol
 
 } // namespace Dummy

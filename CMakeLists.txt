@@ -25,8 +25,12 @@ add_executable(project_tests
     tests/core/project_tests.cpp
 )
 
-add_executable(protocol_tests
+add_executable(outgoing_packet_tests
     tests/protocol/outgoing_packet_tests.cpp
+)
+
+add_executable(incoming_packet_tests
+    tests/protocol/incoming_packet_tests.cpp
 )
 
 target_link_libraries(
@@ -41,6 +45,11 @@ target_link_libraries(
 )
 
 target_link_libraries(
-    protocol_tests
+    outgoing_packet_tests
+    dummy
+)
+
+target_link_libraries(
+    incoming_packet_tests
     dummy
 )
