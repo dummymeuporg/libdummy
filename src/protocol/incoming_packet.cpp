@@ -8,6 +8,11 @@ IncomingPacket::IncomingPacket(const std::uint8_t* data)
     : m_data(data), m_cursor(0)
 {}
 
+IncomingPacket::IncomingPacket(const std::vector<std::uint8_t>& vector)
+    : m_data(vector.data()), m_cursor(0)
+{
+}
+
 IncomingPacket& IncomingPacket::operator>>(std::string& str)
 {
     std::uint32_t strSize;
