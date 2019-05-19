@@ -1,5 +1,6 @@
 #pragma once
 
+#include <array>
 #include <cstdint>
 #include <string>
 #include <vector>
@@ -45,6 +46,21 @@ public:
     OutgoingPacket& operator<<(const std::uint8_t);
     OutgoingPacket& operator<<(const std::uint16_t);
     OutgoingPacket& operator<<(const std::uint32_t);
+
+    template<std::size_t SIZE>
+    OutgoingPacket& operator<<(const std::array<std::uint8_t, SIZE>& arr)
+    {
+        if (m_buffer.size() < m_cursor + (SIZE * sizeof(std::uint8_t))) {
+            m_buffer.resize(m_buffer.size() + (SIZE * sizeof(std::uint8_t)));
+        }
+
+        std::copy(arr.begin(),
+                  arr.end(),
+                  m_buffer.begin() + m_cursor);
+        m_cursor += sizeof(std::uint8_t) * SIZE;
+        return *this;
+
+    }
 private:
     void _updateInternalSize();
     std::vector<std::uint8_t> m_buffer;
