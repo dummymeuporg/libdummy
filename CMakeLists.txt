@@ -4,17 +4,11 @@ include_directories(include)
 set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} \
     -lboost_system \
     -lcrypto -lssl")
-add_library(dummy STATIC
-	src/utils.cpp
-	src/crypto/sha512.cpp
-    src/crypto/rsa_keypair.cpp
-    src/core/project.cpp
-    src/core/map.cpp
-    src/core/character.cpp
-    src/core/account.cpp
-    src/protocol/outgoing_packet.cpp
-    src/protocol/incoming_packet.cpp
-)
+
+file(GLOB_RECURSE SOURCES "src/*.cpp")
+file(GLOB_RECURSE HEADERS "include/*.hpp")
+
+add_library(dummy STATIC ${SOURCES} ${INCLUDE})
 
 
 add_executable(sha512_tests

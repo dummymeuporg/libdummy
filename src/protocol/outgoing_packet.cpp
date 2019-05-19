@@ -15,6 +15,18 @@ OutgoingPacket::OutgoingPacket(std::size_t initialSize)
 {
 }
 
+OutgoingPacket& OutgoingPacket::operator<<(const std::uint8_t val)
+{
+    if (m_buffer.size() < m_cursor + sizeof(std::uint8_t))
+    {
+        m_buffer.resize(m_buffer.size() + sizeof(std::uint8_t));
+    }
+    *(reinterpret_cast<std::uint8_t*>(m_buffer.data() + m_cursor)) = val;
+    m_cursor += sizeof(std::uint8_t);
+    _updateInternalSize();
+    return *this;
+}
+
 OutgoingPacket& OutgoingPacket::operator<<(const std::uint16_t val)
 {
     if (m_buffer.size() < m_cursor + sizeof(std::uint16_t))

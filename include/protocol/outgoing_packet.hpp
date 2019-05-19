@@ -42,6 +42,7 @@ public:
     }
 
     OutgoingPacket& operator<<(const std::string&);
+    OutgoingPacket& operator<<(const std::uint8_t);
     OutgoingPacket& operator<<(const std::uint16_t);
     OutgoingPacket& operator<<(const std::uint32_t);
 private:
