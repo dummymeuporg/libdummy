@@ -58,6 +58,7 @@ public:
                   arr.end(),
                   m_buffer.begin() + m_cursor);
         m_cursor += sizeof(std::uint8_t) * SIZE;
+        _updateInternalSize();
         return *this;
 
     }
