@@ -55,6 +55,7 @@ public:
     }
 
     Character& setName(const std::string&);
+    Character& setSkin(const std::string&);
 private:
     void _writeToStream(std::ofstream&) const;
     void _readFromStream(std::ifstream&);

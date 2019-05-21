@@ -34,6 +34,11 @@ Character& Character::setName(const std::string& name) {
     return *this;
 }
 
+Character& Character::setSkin(const std::string& skin) {
+    m_skin = skin;
+    return *this;
+}
+
 std::string Character::filteredName(const std::string& name) {
     std::string filteredName("");
     bool isPreviousAlpha = false;
