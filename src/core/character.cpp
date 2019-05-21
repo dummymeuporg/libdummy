@@ -1,4 +1,5 @@
 #include "core/character.hpp"
+#include "core/errors.hpp"
 
 namespace Dummy {
 
@@ -59,6 +60,43 @@ std::string Character::filteredName(const std::string& name) {
         }
     }
     return filteredName;
+}
+
+void Character::_readFromStream(std::ifstream& ifs) {
+    std::uint32_t magicWord;
+    std::uint32_t size;
+    std::string str;
+
+    ifs.read(reinterpret_cast<char*>(&magicWord), sizeof(std::uint32_t));
+
+    if (magicWord != Character::MAGIC_WORD) {
+        throw WrongMagicNumber();
+    }
+
+    // read name
+    ifs.read(reinterpret_cast<char*>(&size), sizeof(std::uint32_t));
+    str.resize(size);
+    ifs.read(str.data(), size);
+    m_name = std::move(str);
+
+    // read skin
+    ifs.read(reinterpret_cast<char*>(&size), sizeof(std::uint32_t));
+    str.resize(size);
+    ifs.read(str.data(), size);
+    m_skin = std::move(str);
+}
+
+void Character::_writeToStream(std::ofstream& ofs) const {
+    std::uint32_t magicWord(Character::MAGIC_WORD);
+    std::uint32_t nameSize(static_cast<std::uint32_t>(m_name.size()));
+    std::uint32_t skinSize(static_cast<std::uint32_t>(m_skin.size()));
+
+    ofs.write(reinterpret_cast<const char*>(&magicWord),
+              sizeof(std::uint32_t));
+    ofs.write(reinterpret_cast<const char*>(&nameSize), sizeof(std::uint32_t));
+    ofs.write(m_name.c_str(), m_name.size());
+    ofs.write(reinterpret_cast<const char*>(&skinSize), sizeof(std::uint32_t));
+    ofs.write(m_skin.c_str(), m_skin.size());
 }
 
 } // namespace Core

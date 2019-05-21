@@ -5,6 +5,8 @@ set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} \
     -lboost_system \
     -lcrypto -lssl")
 
+set(CMAKE_CXX_STANDARD 17)
+
 file(GLOB_RECURSE SOURCES "src/*.cpp")
 file(GLOB_RECURSE HEADERS "include/*.hpp")
 
@@ -31,6 +33,10 @@ add_executable(character_tests
     tests/core/character_tests.cpp
 )
 
+add_executable(character_read_file_tests
+    tests/core/character_read_file_tests.cpp
+)
+
 target_link_libraries(
 	sha512_tests
 	dummy
@@ -54,5 +60,11 @@ target_link_libraries(
 
 target_link_libraries(
     character_tests
+    dummy
+)
+
+
+target_link_libraries(
+    character_read_file_tests
     dummy
 )
