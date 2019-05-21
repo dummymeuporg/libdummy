@@ -1,5 +1,6 @@
 #pragma once
 
+#include <algorithm>
 #include <cstdint>
 #include <string>
 #include <tuple>
@@ -15,9 +16,13 @@ public:
 
     Character();
 
+    static std::string filteredName(const std::string&);
+
     inline const std::string& name() const {
         return m_name;
     }
+
+    std::string filename() const;
 
     inline const std::string& skin() const {
         return m_skin;
@@ -34,6 +39,8 @@ public:
     inline const Position& position() const {
         return m_position;
     }
+
+    Character& setName(const std::string&);
 private:
     std::string m_name;
     std::string m_skin;

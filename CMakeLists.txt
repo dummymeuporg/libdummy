@@ -27,6 +27,10 @@ add_executable(incoming_packet_tests
     tests/protocol/incoming_packet_tests.cpp
 )
 
+add_executable(character_tests
+    tests/core/character_tests.cpp
+)
+
 target_link_libraries(
 	sha512_tests
 	dummy
@@ -45,5 +49,10 @@ target_link_libraries(
 
 target_link_libraries(
     incoming_packet_tests
+    dummy
+)
+
+target_link_libraries(
+    character_tests
     dummy
 )
