@@ -13,7 +13,7 @@ namespace Core {
 class Character {
 public:
     static const uint32_t MAGIC_WORD = 0xdeadface;
-    using Position = std::tuple<std::uint16_t, std::uint16_t>;
+    using Position = std::pair<std::uint16_t, std::uint16_t>;
     enum Direction { TOP = 0, RIGHT, DOWN, LEFT };
 
     Character();
@@ -56,6 +56,8 @@ public:
 
     Character& setName(const std::string&);
     Character& setSkin(const std::string&);
+    Character& setPosition(const Position&);
+    Character& setMapLocation(const std::string&);
 private:
     void _writeToStream(std::ofstream&) const;
     void _readFromStream(std::ifstream&);

@@ -39,6 +39,16 @@ Character& Character::setSkin(const std::string& skin) {
     return *this;
 }
 
+Character& Character::setPosition(const Position& position) {
+    m_position = position;
+    return *this;
+}
+
+Character& Character::setMapLocation(const std::string& mapLocation) {
+    m_mapLocation = mapLocation;
+    return *this;
+}
+
 std::string Character::filteredName(const std::string& name) {
     std::string filteredName("");
     bool isPreviousAlpha = false;
@@ -70,6 +80,7 @@ std::string Character::filteredName(const std::string& name) {
 void Character::_readFromStream(std::ifstream& ifs) {
     std::uint32_t magicWord;
     std::uint32_t size;
+    std::uint16_t word;
     std::string str;
 
     ifs.read(reinterpret_cast<char*>(&magicWord), sizeof(std::uint32_t));
@@ -89,12 +100,28 @@ void Character::_readFromStream(std::ifstream& ifs) {
     str.resize(size);
     ifs.read(str.data(), size);
     m_skin = std::move(str);
+
+    // read starting position
+    ifs.read(reinterpret_cast<char*>(&word), sizeof(std::uint32_t));
+    m_position.first = word;
+    ifs.read(reinterpret_cast<char*>(&word), sizeof(std::uint32_t));
+    m_position.second = word;
+
+    // read map location.
+    ifs.read(reinterpret_cast<char*>(&size), sizeof(std::uint32_t));
+    str.resize(size);
+    ifs.read(str.data(), size);
+    m_mapLocation = std::move(str);
+
 }
 
 void Character::_writeToStream(std::ofstream& ofs) const {
     std::uint32_t magicWord(Character::MAGIC_WORD);
     std::uint32_t nameSize(static_cast<std::uint32_t>(m_name.size()));
     std::uint32_t skinSize(static_cast<std::uint32_t>(m_skin.size()));
+    std::uint32_t mapLocationSize(static_cast<std::uint32_t>(
+        m_mapLocation.size()
+    ));
 
     ofs.write(reinterpret_cast<const char*>(&magicWord),
               sizeof(std::uint32_t));
@@ -102,6 +129,13 @@ void Character::_writeToStream(std::ofstream& ofs) const {
     ofs.write(m_name.c_str(), m_name.size());
     ofs.write(reinterpret_cast<const char*>(&skinSize), sizeof(std::uint32_t));
     ofs.write(m_skin.c_str(), m_skin.size());
+    ofs.write(reinterpret_cast<const char*>(&m_position.first),
+              sizeof(std::uint16_t));
+    ofs.write(reinterpret_cast<const char*>(&m_position.second),
+              sizeof(std::uint16_t));
+    ofs.write(reinterpret_cast<const char*>(&mapLocationSize),
+              sizeof(std::uint32_t));
+    ofs.write(m_mapLocation.c_str(), m_mapLocation.size());
 }
 
 } // namespace Core
