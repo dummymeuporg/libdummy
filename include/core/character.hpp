@@ -6,6 +6,9 @@
 #include <string>
 #include <tuple>
 
+#include "protocol/incoming_packet.hpp"
+#include "protocol/outgoing_packet.hpp"
+
 namespace Dummy {
 
 namespace Core {
@@ -54,6 +57,18 @@ public:
         return ofs;
     }
 
+    friend Dummy::Protocol::OutgoingPacket&
+    operator<<(Protocol::OutgoingPacket& pkt, const Character& chr) {
+        chr._writeToPacket(pkt);
+        return pkt;
+    }
+
+    friend Dummy::Protocol::IncomingPacket&
+    operator>>(Protocol::IncomingPacket& pkt, Character& chr) {
+        chr._readFromPacket(pkt);
+        return pkt;
+    }
+
     Character& setName(const std::string&);
     Character& setSkin(const std::string&);
     Character& setPosition(const Position&);
@@ -61,6 +76,8 @@ public:
 private:
     void _writeToStream(std::ofstream&) const;
     void _readFromStream(std::ifstream&);
+    void _writeToPacket(Protocol::OutgoingPacket&) const;
+    void _readFromPacket(Protocol::IncomingPacket&);
     std::string m_name;
     std::string m_skin;
     std::string m_mapLocation;

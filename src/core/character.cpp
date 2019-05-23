@@ -1,6 +1,7 @@
 #include "core/character.hpp"
 #include "core/errors.hpp"
 
+
 namespace Dummy {
 
 namespace Core {
@@ -136,6 +137,16 @@ void Character::_writeToStream(std::ofstream& ofs) const {
     ofs.write(reinterpret_cast<const char*>(&mapLocationSize),
               sizeof(std::uint32_t));
     ofs.write(m_mapLocation.c_str(), m_mapLocation.size());
+}
+
+void Character::_writeToPacket(Protocol::OutgoingPacket& pkt) const {
+    pkt << m_name << m_skin << m_position.first << m_position.second
+        << m_mapLocation;
+}
+
+void Character::_readFromPacket(Protocol::IncomingPacket& pkt) {
+    pkt >> m_name >> m_skin >> m_position.first >> m_position.second
+        >> m_mapLocation;
 }
 
 } // namespace Core
