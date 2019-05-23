@@ -103,9 +103,9 @@ void Character::_readFromStream(std::ifstream& ifs) {
     m_skin = std::move(str);
 
     // read starting position
-    ifs.read(reinterpret_cast<char*>(&word), sizeof(std::uint32_t));
+    ifs.read(reinterpret_cast<char*>(&word), sizeof(std::uint16_t));
     m_position.first = word;
-    ifs.read(reinterpret_cast<char*>(&word), sizeof(std::uint32_t));
+    ifs.read(reinterpret_cast<char*>(&word), sizeof(std::uint16_t));
     m_position.second = word;
 
     // read map location.
@@ -140,6 +140,7 @@ void Character::_writeToStream(std::ofstream& ofs) const {
 }
 
 void Character::_writeToPacket(Protocol::OutgoingPacket& pkt) const {
+    std::cerr << "Write to packet." << std::endl;
     pkt << m_name << m_skin << m_position.first << m_position.second
         << m_mapLocation;
 }

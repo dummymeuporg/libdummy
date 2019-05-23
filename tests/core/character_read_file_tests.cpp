@@ -15,4 +15,7 @@ BOOST_AUTO_TEST_CASE(character_filename)
     ifs >> chr;
     BOOST_TEST(chr.name() == "Gilebran Scale");
     BOOST_TEST(chr.skin() == "WhiteScale.png");
+    BOOST_TEST(chr.position().first == 14);
+    BOOST_TEST(chr.position().second == 6);
+    BOOST_TEST(chr.mapLocation() == "LhynnBis");
 }
