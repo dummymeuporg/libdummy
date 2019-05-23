@@ -140,7 +140,6 @@ void Character::_writeToStream(std::ofstream& ofs) const {
 }
 
 void Character::_writeToPacket(Protocol::OutgoingPacket& pkt) const {
-    std::cerr << "Write to packet." << std::endl;
     pkt << m_name << m_skin << m_position.first << m_position.second
         << m_mapLocation;
 }
