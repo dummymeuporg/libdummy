@@ -46,7 +46,7 @@ public:
     Map(const Project&, const std::string&);
     friend std::fstream& operator>>(std::fstream&, Map&);
 protected:
-    virtual void _internalloadMapFile(std::string);
+    virtual void _internalLoadMapFile(std::string);
     void _loadBlkFile(std::string);
 
     const Project& m_project;
@@ -54,7 +54,7 @@ protected:
     std::uint16_t m_width, m_height;
     std::vector<std::uint8_t> m_blocking;
 private:
-    virtual void _loadMapFile(std::string);
+    virtual void _loadMapFile(std::ifstream&);
 };
 
 } // namespace Core

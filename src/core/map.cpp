@@ -30,11 +30,11 @@ void Map::_internalLoadMapFile(std::string fullpath) {
     if (!ifs.is_open()) {
         throw MapFileNotFound();
     }
-    _loadMapFile(fullpath); 
+    _loadMapFile(ifs); 
     ifs.close();
 }
 
-void Map::_loadMapFile(std::string fullpath) {
+void Map::_loadMapFile(std::ifstream& ifs) {
     std::cerr << "Map::_loadMapFile" << std::endl;
     std::uint32_t magicNumber;
     std::uint16_t version;
