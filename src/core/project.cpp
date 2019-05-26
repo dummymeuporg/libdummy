@@ -17,10 +17,9 @@ Project::Project(const fs::path& projectPath) : m_projectPath(projectPath)
 {
     // Load project.xml
     // Identify starting map.
-    _loadProjectFile();
 }
 
-void Project::_loadProjectFile() {
+void Project::load() {
 
     fs::path projectXMLPath(m_projectPath / "project.xml");
 

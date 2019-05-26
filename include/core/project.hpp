@@ -75,8 +75,9 @@ public:
     const std::string& startingMap() const {
         return m_startingMap;
     }
+
+    void load();
 private:
-    void _loadProjectFile();
     void _browseNode(pt::ptree);
     void _setStartingPoint(pt::ptree);
 
