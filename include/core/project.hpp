@@ -8,6 +8,8 @@
 #include <boost/property_tree/ptree.hpp>
 #include <boost/property_tree/xml_parser.hpp>
 
+#include "core/map.hpp"
+
 namespace fs = boost::filesystem;
 namespace pt = boost::property_tree;
 
@@ -58,8 +60,12 @@ public:
         return m_projectPath;
     }
 
-    const std::map<std::string, std::unique_ptr<void*>>& maps() const {
+    const std::map<std::string, std::unique_ptr<Map>>& maps() const {
         return m_maps;
+    }
+
+    const Map& getMap(const std::string& mapName) const {
+        return *m_maps.at(mapName);
     }
 
     const std::pair<std::uint16_t, std::uint16_t>& startingPosition() const {
@@ -76,7 +82,7 @@ private:
 
     /* Private attributes */
     fs::path m_projectPath;
-    std::map<std::string, std::unique_ptr<void*>> m_maps;
+    std::map<std::string, std::unique_ptr<Map>> m_maps;
     std::pair<std::uint16_t, std::uint16_t> m_startingPosition;
     std::string m_startingMap;
 };

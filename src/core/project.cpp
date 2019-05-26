@@ -88,7 +88,9 @@ void Project::_browseNode(pt::ptree node) {
             for (const auto& child: it.second.get_child("<xmlattr>"))
             {
                 if (child.first == "name") {
-                    m_maps[child.second.data()] = nullptr;
+                    const std::string& mapName(child.second.data());
+                    std::cerr << "[+] Loading " << mapName << std::endl;
+                    m_maps[mapName] = std::make_unique<Map>(*this, mapName);
                 }
             }
             if (it.second.count("map") > 0) {
