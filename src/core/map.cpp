@@ -21,17 +21,23 @@ Map::Map(const Project& project, const std::string& name)
     std::string mapFile(name + ".map");
     std::string blkFile(name + ".blk");
 
-    _loadMapFile(std::move((basePath / mapFile).string()));
+    _internalLoadMapFile(std::move((basePath / mapFile).string()));
     _loadBlkFile(std::move((basePath / blkFile).string()));
 }
 
-void Map::_loadMapFile(std::string fullpath) {
-    std::uint32_t magicNumber;
-    std::uint16_t version;
+void Map::_internalLoadMapFile(std::string fullpath) {
     std::ifstream ifs(fullpath, std::ios::binary);
     if (!ifs.is_open()) {
         throw MapFileNotFound();
     }
+    _loadMapFile(fullpath); 
+    ifs.close();
+}
+
+void Map::_loadMapFile(std::string fullpath) {
+    std::cerr << "Map::_loadMapFile" << std::endl;
+    std::uint32_t magicNumber;
+    std::uint16_t version;
     ifs.read(reinterpret_cast<char*>(&magicNumber), sizeof(std::uint32_t));
     if (magicNumber != Map::MAP_MAGIC_WORD) {
         throw WrongMagicNumber();
@@ -45,7 +51,6 @@ void Map::_loadMapFile(std::string fullpath) {
     ifs.read(reinterpret_cast<char*>(&m_height), sizeof(std::uint16_t));
     std::cerr << m_name << " (" << m_width * 2 << "," << m_height * 2 << ")"
         << std::endl;
-    ifs.close();
 
 }
 
