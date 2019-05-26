@@ -45,9 +45,10 @@ public:
     static const std::uint16_t VERSION = 1;
     Map(const Project&, const std::string&);
     friend std::fstream& operator>>(std::fstream&, Map&);
+protected:
+    virtual void _loadMapFile(std::string);
 private:
     /* private methods */
-    void _loadMapFile(std::string);
     void _loadBlkFile(std::string);
 
     /* private attributes */
