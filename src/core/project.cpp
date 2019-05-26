@@ -90,6 +90,7 @@ void Project::_browseNode(pt::ptree node) {
                     const std::string& mapName(child.second.data());
                     std::cerr << "[+] Loading " << mapName << std::endl;
                     m_maps[mapName] = std::make_unique<Map>(*this, mapName);
+                    m_maps[mapName]->load();
                 }
             }
             if (it.second.count("map") > 0) {
