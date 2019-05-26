@@ -10,7 +10,6 @@
 
 #include "core/map.hpp"
 
-namespace fs = boost::filesystem;
 namespace pt = boost::property_tree;
 
 namespace Dummy
@@ -54,9 +53,9 @@ public:
 class Project
 {
 public:
-    Project(const fs::path&);
+    Project(const boost::filesystem::path&);
 
-    const fs::path& projectPath() const {
+    const boost::filesystem::path& projectPath() const {
         return m_projectPath;
     }
 
@@ -82,7 +81,7 @@ private:
     void _setStartingPoint(pt::ptree);
 
     /* Private attributes */
-    fs::path m_projectPath;
+    boost::filesystem::path m_projectPath;
     std::map<std::string, std::unique_ptr<Map>> m_maps;
     std::pair<std::uint16_t, std::uint16_t> m_startingPosition;
     std::string m_startingMap;
