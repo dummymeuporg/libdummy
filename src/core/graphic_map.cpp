@@ -17,6 +17,7 @@ namespace Core
 GraphicMap::GraphicMap(const Project& project, const std::string& name)
     : Map(project, name)
 {
+    std::cerr << "GraphicMap constructor" << std::endl;
 }
 
 
@@ -33,6 +34,8 @@ void GraphicMap::_loadMapFile(std::ifstream& ifs) {
     } else {
         m_chipset = ""; // XXX should not happen. Throw exception?
     }
+
+    std::cerr << "Chipset: " << m_chipset << std::endl;
 
     /* Read music */
     ifs.read(reinterpret_cast<char*>(&strSize), sizeof(std::uint32_t));

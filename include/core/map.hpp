@@ -45,6 +45,7 @@ public:
     static const std::uint16_t VERSION = 1;
 
     Map(const Project&, const std::string&);
+    void load();
 
     friend std::fstream& operator>>(std::fstream&, Map&);
 

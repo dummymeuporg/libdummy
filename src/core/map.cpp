@@ -17,9 +17,14 @@ namespace Core
 Map::Map(const Project& project, const std::string& name)
     : m_project(project), m_name(name)
 {
-    fs::path basePath(project.projectPath() / "maps");
-    std::string mapFile(name + ".map");
-    std::string blkFile(name + ".blk");
+}
+
+void Map::load() {
+    std::cerr << "load map" << std::endl;
+    fs::path basePath(m_project.projectPath() / "maps");
+    std::cerr << "path: " << basePath.string() << std::endl;
+    std::string mapFile(m_name + ".map");
+    std::string blkFile(m_name + ".blk");
 
     _internalLoadMapFile(std::move((basePath / mapFile).string()));
     _loadBlkFile(std::move((basePath / blkFile).string()));
