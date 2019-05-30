@@ -57,7 +57,7 @@ public:
         return m_height;
     }
 
-    bool isBlocking(std::uint16_t x, std::uint16_t y);
+    bool isBlocking(std::uint16_t x, std::uint16_t y) const;
 protected:
     void _loadBlkFile(std::string);
     virtual void _loadMapFile(std::ifstream&);

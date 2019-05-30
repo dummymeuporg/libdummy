@@ -77,7 +77,7 @@ void Map::_loadBlkFile(std::string fullpath)
     std::cerr << m_name << " read blocking layer." << std::endl;
 }
 
-bool Map::isBlocking(std::uint16_t x, std::uint16_t y) {
+bool Map::isBlocking(std::uint16_t x, std::uint16_t y) const {
     return static_cast<bool>(m_blocking[y * (m_width * 2) + x]);
 }
 
