@@ -19,7 +19,7 @@ BOOST_AUTO_TEST_CASE(parse_packet)
         "\xef\xbe\xad\xde" // some uint32_t
         "\x00\x01\x02\x03\x04\x05\x06\x07\x08\x09\x0a\x0b\x0c\x0d\x0e\x0f";
 
-    Dummy::Protocol::IncomingPacket pkt(buffer);
+    Dummy::Protocol::IncomingPacket pkt(buffer, sizeof(buffer));
 
     std::string firstString, secondString;
     uint8_t byte;

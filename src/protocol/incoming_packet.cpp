@@ -4,12 +4,12 @@ namespace Dummy {
 
 namespace Protocol {
 
-IncomingPacket::IncomingPacket(const std::uint8_t* data)
-    : m_data(data), m_cursor(0)
+IncomingPacket::IncomingPacket(const std::uint8_t* data, std::size_t size)
+    : m_data(data), m_cursor(0), m_size(size)
 {}
 
 IncomingPacket::IncomingPacket(const std::vector<std::uint8_t>& vector)
-    : m_data(vector.data()), m_cursor(0)
+    : m_data(vector.data()), m_cursor(0), m_size(vector.size())
 {
 }
 
@@ -26,24 +26,17 @@ IncomingPacket& IncomingPacket::operator>>(std::string& str)
 
 IncomingPacket& IncomingPacket::operator>>(std::uint32_t& value)
 {
-    value = *(reinterpret_cast<const std::uint32_t*>(m_data + m_cursor));
-    m_cursor += sizeof(std::uint32_t);
-    return *this;
+    return operator>><std::uint32_t>(value);
 }
 
 IncomingPacket& IncomingPacket::operator>>(std::uint16_t& value)
 {
-    value = *(reinterpret_cast<const std::uint16_t*>(m_data + m_cursor));
-    m_cursor += sizeof(std::uint16_t);
-    return *this;
+    return operator>><std::uint16_t>(value);
 }
 
 IncomingPacket& IncomingPacket::operator>>(std::uint8_t& value)
 {
-    value = *(reinterpret_cast<const std::uint8_t*>(m_data + m_cursor));
-    m_cursor += sizeof(std::uint8_t);
-    return *this;
-
+    return operator>><std::uint8_t>(value);
 }
 
 } // namespace Protocol
