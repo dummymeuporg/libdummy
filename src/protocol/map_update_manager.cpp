@@ -18,7 +18,7 @@ MapUpdateManager::readMapUpdate(IncomingPacket& pkt) {
     pkt >> code;
 
     switch(code) {
-    case Code::CHARACTER_INFO: {
+    case Code::CHARACTER_POSITION: {
         std::uint16_t x, y;
         std::string name, chipset;
         Dummy::Core::Character::Direction direction;
@@ -49,7 +49,8 @@ MapUpdateManager::writeMapUpdate(
     OutgoingPacket& pkt,
     const CharacterInfo& update)
 {
-    pkt << Code::CHARACTER_INFO << reinterpret_cast<const MapUpdate&>(update);
+    pkt << Code::CHARACTER_POSITION
+        << reinterpret_cast<const MapUpdate&>(update);
 }
 
 void

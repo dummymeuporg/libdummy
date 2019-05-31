@@ -1,6 +1,7 @@
 #pragma once
 
 #include <cstdint>
+#include <memory>
 
 #include "protocol/incoming_packet.hpp"
 #include "protocol/outgoing_packet.hpp"
@@ -18,7 +19,7 @@ class CharacterOff;
 class MapUpdateManager {
 public:
     enum class Code : std::uint16_t {
-        CHARACTER_INFO = 1,
+        CHARACTER_POSITION = 1,
         CHARACTER_OFF = 2
     };
 
