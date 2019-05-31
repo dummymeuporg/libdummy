@@ -6,7 +6,7 @@ namespace Dummy {
 
 namespace Core {
 
-Character::Character()
+Character::Character() : m_direction(Direction::DOWN)
 {
 
 }
@@ -114,6 +114,9 @@ void Character::_readFromStream(std::ifstream& ifs) {
     ifs.read(str.data(), size);
     m_mapLocation = std::move(str);
 
+    // read direction
+    ifs.read(reinterpret_cast<char*>(&m_direction), sizeof(std::uint8_t));
+
 }
 
 void Character::_writeToStream(std::ofstream& ofs) const {
@@ -137,6 +140,8 @@ void Character::_writeToStream(std::ofstream& ofs) const {
     ofs.write(reinterpret_cast<const char*>(&mapLocationSize),
               sizeof(std::uint32_t));
     ofs.write(m_mapLocation.c_str(), m_mapLocation.size());
+    ofs.write(reinterpret_cast<const char*>(&m_direction),
+              sizeof(std::uint8_t));
 }
 
 void Character::_writeToPacket(Protocol::OutgoingPacket& pkt) const {
