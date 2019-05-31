@@ -3,6 +3,7 @@
 #include <cstdint>
 #include <string>
 #include "protocol/map_update.hpp"
+#include "core/character.hpp"
 
 namespace Dummy {
 
@@ -16,7 +17,8 @@ public:
     CharacterPosition(std::uint16_t,
                       std::uint16_t,
                       const std::string&,
-                      const std::string&);
+                      const std::string&,
+                      Dummy::Core::Character::Direction);
 
 protected:
     virtual void _streamToPacket(OutgoingPacket&) const override;
@@ -26,6 +28,7 @@ private:
     std::uint16_t m_x, m_y;
     std::string m_name;
     std::string m_chipset;
+    Dummy::Core::Character::Direction m_direction;
 };
 
 } // namespace Protocol

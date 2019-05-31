@@ -21,9 +21,11 @@ MapUpdateManager::readMapUpdate(IncomingPacket& pkt) {
     case Code::CHARACTER_INFO: {
         std::uint16_t x, y;
         std::string name, chipset;
-        pkt >> x, y, name, chipset;
+        Dummy::Core::Character::Direction direction;
+        pkt >> x >> y >> name >> chipset
+            >> reinterpret_cast<std::uint8_t&>(direction);
         mapUpdate = std::dynamic_pointer_cast<MapUpdate>(
-            std::make_shared<CharacterPosition>(x, y, name, chipset)
+            std::make_shared<CharacterPosition>(x, y, name, chipset, direction)
         );
         break;
     }

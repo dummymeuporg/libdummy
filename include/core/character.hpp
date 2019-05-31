@@ -17,7 +17,12 @@ class Character {
 public:
     static const uint32_t MAGIC_WORD = 0xdeadface;
     using Position = std::pair<std::uint16_t, std::uint16_t>;
-    enum Direction { TOP = 0, RIGHT, DOWN, LEFT };
+    enum class Direction : std::uint8_t {
+        TOP = 0,
+        RIGHT = 1,
+        DOWN = 2,
+        LEFT = 3
+    };
 
     Character();
 
