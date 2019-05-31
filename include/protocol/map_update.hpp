@@ -1,5 +1,7 @@
 #pragma once
 
+#include <cstdint>
+
 namespace Dummy {
 
 namespace Protocol {
@@ -22,6 +24,9 @@ public:
         mapUpdate._streamFromPacket(ip);
         return ip;
     }
+
+    virtual std::uint16_t code() = 0;
+
 protected:
     virtual void _streamToPacket(OutgoingPacket&) const = 0;
     virtual void _streamFromPacket(IncomingPacket&) = 0;

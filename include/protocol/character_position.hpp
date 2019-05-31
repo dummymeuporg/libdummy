@@ -2,6 +2,7 @@
 
 #include <cstdint>
 #include <string>
+#include "protocol/map_update_manager.hpp"
 #include "protocol/map_update.hpp"
 #include "core/character.hpp"
 
@@ -19,6 +20,12 @@ public:
                       const std::string&,
                       const std::string&,
                       Dummy::Core::Character::Direction);
+
+    virtual std::uint16_t code() override {
+        return static_cast<std::uint16_t>(
+            MapUpdateManager::Code::CHARACTER_POSITION
+        );
+    }
 
 protected:
     virtual void _streamToPacket(OutgoingPacket&) const override;
