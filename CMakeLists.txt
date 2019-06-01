@@ -1,21 +1,20 @@
 cmake_minimum_required(VERSION 3.10.0)
 project(dummy)
 include_directories(include)
-set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} \
-    -lboost_system \
-    -lcrypto -lssl")
 
 set(CMAKE_CXX_STANDARD 17)
+
+find_package(Boost COMPONENTS system REQUIRED)
 
 file(GLOB_RECURSE SOURCES "src/*.cpp")
 file(GLOB_RECURSE HEADERS "include/*.hpp")
 
-add_library(dummy STATIC ${SOURCES} ${INCLUDE})
+add_library(dummy STATIC ${SOURCES} ${HEADERS})
 
 
-add_executable(sha512_tests
-	tests/sha512_tests.cpp
-)
+#add_executable(sha512_tests
+#	tests/sha512_tests.cpp
+#)
 
 add_executable(project_tests
     tests/core/project_tests.cpp
