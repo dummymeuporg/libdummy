@@ -36,10 +36,10 @@ add_executable(character_read_file_tests
     tests/core/character_read_file_tests.cpp
 )
 
-target_link_libraries(
-	sha512_tests
-	dummy
-)
+#target_link_libraries(
+#	sha512_tests
+#	dummy
+#)
 
 target_link_libraries(
     project_tests
