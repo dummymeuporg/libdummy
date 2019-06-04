@@ -4,14 +4,17 @@ include_directories(include)
 
 set(CMAKE_CXX_STANDARD 17)
 
-find_package(Boost REQUIRED)
-include_directories(${Boost_INCLUDE_DIR})
-link_directories(${Boost_LIBRARY_DIRS})
+find_package(Boost 1.69.0 REQUIRED)
 
 file(GLOB_RECURSE SOURCES "src/*.cpp")
 file(GLOB_RECURSE HEADERS "include/*.hpp")
 
+source_group("include" FILES ${HEADERS} RELATIVE ${CMAKE_CURRENT_SOURCE_DIR})
+source_group("src" FILES ${SOURCES} RELATIVE ${CMAKE_CURRENT_SOURCE_DIR})
+
 add_library(dummy STATIC ${SOURCES} ${HEADERS})
+
+target_include_directories(dummy PUBLIC ${Boost_INCLUDE_DIR})
 
 
 #add_executable(sha512_tests
