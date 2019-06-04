@@ -71,7 +71,7 @@ OutgoingPacket& OutgoingPacket::operator<<(const std::string& str)
 void OutgoingPacket::_updateInternalSize()
 {
     *(reinterpret_cast<std::uint16_t*>(m_buffer.data())) =
-        m_cursor - sizeof(std::uint16_t);
+        static_cast<std::uint16_t>(m_cursor) - sizeof(std::uint16_t);
 }
 
 } // namespace Protocol
