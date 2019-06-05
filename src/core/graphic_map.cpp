@@ -47,7 +47,7 @@ void GraphicMap::_loadMapFile(std::ifstream& ifs) {
     }
 
     /* Read layers. */
-    std::size_t bytesToRead = m_width * m_height * 4;
+    std::size_t bytesToRead = m_width * m_height * 2 * sizeof(std::int8_t);
 
     m_firstLayer.resize(bytesToRead);
     ifs.read(reinterpret_cast<char*>(m_firstLayer.data()), bytesToRead);

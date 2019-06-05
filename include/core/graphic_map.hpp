@@ -8,7 +8,7 @@ namespace Dummy
 namespace Core
 {
 
-using GraphicLayer = std::vector<std::pair<std::int16_t, std::int16_t>>;
+using GraphicLayer = std::vector<std::pair<std::int8_t, std::int8_t>>;
 
 class GraphicMap : public Map {
 public:
