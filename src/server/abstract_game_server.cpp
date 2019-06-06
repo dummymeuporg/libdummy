@@ -30,11 +30,12 @@ void AbstractGameServer::connect(
     const std::string& accountName)
 {
     if (m_pendingAccounts.find(sessionID) == m_pendingAccounts.end()) {
-        return; // Throw an exception?
+        throw AccountNotPending();
     }
 
     if (m_connectedAccounts.find(accountName) == m_connectedAccounts.end()) {
-        return; // Throw an exception?
+        // XXX: disconnect the account.
+        throw AlreadyConnected();
     }
 
     std::cerr << "Connect account " << accountName << std::endl;

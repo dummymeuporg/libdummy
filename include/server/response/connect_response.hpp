@@ -8,7 +8,7 @@ namespace Response {
 
 class ConnectResponse : public Response {
 public:
-    virtual void accept(ResponseVisitor& visitor) const override;
+    virtual void accept(ResponseVisitor&) const override;
 };
 
 } // namespace Response

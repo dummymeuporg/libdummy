@@ -10,19 +10,15 @@ class ResponseVisitor;
 
 class Response {
 public:
-    enum class Status : std::uint16_t {
-        OK = 0,
-        ERROR = 1
-    };
     Response();
-    Status status() const {
+    std::uint8_t status() const {
         return m_status;
     }
 
-    void setStatus(Status status);
+    void setStatus(std::uint8_t status);
     virtual void accept(ResponseVisitor&) const = 0;
 private:
-    Status m_status;
+    std::uint8_t m_status;
 };
 
 } // namespace Response

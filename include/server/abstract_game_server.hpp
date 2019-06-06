@@ -4,7 +4,6 @@
 #include <map>
 #include <memory>
 
-#include "core/account.hpp"
 #include "core/character.hpp"
 #include "core/project.hpp"
 

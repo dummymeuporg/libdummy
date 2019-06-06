@@ -27,6 +27,10 @@ public:
 
     std::unique_ptr<Dummy::Server::Response::Response>
     handleCommand(const ::Dummy::Server::Command::Command&);
+
+    AbstractGameServer& abstractGameServer() {
+        return m_abstractGameServer;
+    }
 private:
     AbstractGameServer& m_abstractGameServer;
     std::shared_ptr<GameSessionState::State> m_state;
