@@ -1,4 +1,4 @@
-#include "server/command/get_primary_info_command.hpp"
+#include "server/command/select_character.hpp"
 #include "server/command/command_visitor.hpp"
 #include "server/response/response.hpp"
 
@@ -6,12 +6,14 @@ namespace Dummy {
 namespace Server {
 namespace Command {
 
-GetPrimaryInfoCommand::GetPrimaryInfoCommand() {}
+SelectCharacter::SelectCharacter(const std::string& name)
+    : m_name(name)
+{
+}
 
 std::unique_ptr<const ::Dummy::Server::Response::Response>
-GetPrimaryInfoCommand::accept(
-    ::Dummy::Server::Command::CommandVisitor& visitor
-) const {
+SelectCharacter::accept(::Dummy::Server::Command::CommandVisitor& visitor)
+const {
     return visitor.visitCommand(*this);
 }
 

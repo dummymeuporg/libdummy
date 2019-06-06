@@ -18,8 +18,10 @@ public:
     };
 };
 
+class CreateCharacter;
 class ConnectCommand;
 class GetPrimaryInfoCommand;
+class SelectCharacter;
 
 class CommandVisitor {
 public:
@@ -30,6 +32,16 @@ public:
 
     virtual std::unique_ptr<const ::Dummy::Server::Response::Response>    
     visitCommand(const GetPrimaryInfoCommand&) {
+        throw CommandNotHandled();
+    }
+
+    virtual std::unique_ptr<const ::Dummy::Server::Response::Response>
+    visitCommand(const CreateCharacter&) {
+        throw CommandNotHandled();
+    }
+
+    virtual std::unique_ptr<const ::Dummy::Server::Response::Response>
+    visitCommand(const SelectCharacter&) {
         throw CommandNotHandled();
     }
 };

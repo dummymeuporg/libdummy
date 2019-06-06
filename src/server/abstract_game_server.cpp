@@ -118,13 +118,13 @@ AbstractGameServer::createCharacter(const Account& account,
     chr.setName(characterName);
 
     if(characterExists(chr)) {
-        throw CharacterAlreadyExists();
+        throw NameAlreadyTaken();
     }
 
     chr.setSkin(skin);
 
     if (!skinExists(chr.skin())) {
-        throw SkinDoesNotExist();
+        throw InvalidSkin();
     }
 
     // From now, we consider the character being valid.

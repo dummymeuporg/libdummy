@@ -5,6 +5,7 @@
 #include "server/command/command.hpp"
 #include "server/command/connect_command.hpp"
 #include "server/game_session_state/initial_state.hpp"
+#include "server/game_session_state/send_characters_state.hpp"
 #include "server/response/connect_response.hpp"
 
 namespace Dummy {
@@ -25,7 +26,6 @@ InitialState::resume()
 
 std::unique_ptr<const ::Dummy::Server::Response::Response>
 InitialState::onCommand(const ::Dummy::Server::Command::Command& command) {
-    auto self(shared_from_this());
     std::cerr << "[InitialState] command." << std::endl;
     return command.accept(*this);
 }
@@ -34,6 +34,7 @@ std::unique_ptr<const ::Dummy::Server::Response::Response>
 InitialState::visitCommand(
     const Dummy::Server::Command::ConnectCommand& connectCommand
 ) {
+    auto self(shared_from_this());
     ::Dummy::Server::AbstractGameServer& server(
         m_gameSession.abstractGameServer()
     );
@@ -45,9 +46,14 @@ InitialState::visitCommand(
     std::cerr << "Tagname is: " << connectCommand.tagName() << std::endl;
 
     try {
-        server.connect(connectCommand.sessionID(),
-                       connectCommand.tagName());
+        m_gameSession.setAccount(
+            server.connect(connectCommand.sessionID(),
+                       connectCommand.tagName())
+        );
         response->setStatus(0); /* O.K. */
+        m_gameSession.changeState(
+            std::make_shared<SendCharactersState>(m_gameSession)
+        );
     } catch(const Dummy::Server::GameServerError& e) {
         std::cerr << "Could not connect " << connectCommand.tagName()
             << " with session id " << connectCommand.sessionID() << ": "

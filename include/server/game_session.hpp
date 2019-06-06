@@ -7,6 +7,7 @@ namespace Server {
 
 class AbstractGameServer;
 class Account;
+class Player;
 
 namespace Command {
     class Command;
@@ -37,11 +38,17 @@ public:
         return *m_account;
     }
 
+    Dummy::Server::Player& player() {
+        return *m_player;
+    }
+
     void setAccount(std::shared_ptr<Account> account);
+    void setPlayer(std::shared_ptr<Player> player);
 private:
     AbstractGameServer& m_abstractGameServer;
     std::shared_ptr<GameSessionState::State> m_state;
     std::shared_ptr<Account> m_account;
+    std::shared_ptr<Player> m_player;
 
 };
 

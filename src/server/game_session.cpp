@@ -11,7 +11,7 @@ namespace Server {
 
 GameSession::GameSession(AbstractGameServer& abstractGameServer)
     : m_abstractGameServer(abstractGameServer), m_state(nullptr),
-      m_account(nullptr)
+      m_account(nullptr), m_player(nullptr)
 {}
 
 void GameSession::start() {
@@ -25,6 +25,10 @@ void GameSession::changeState(std::shared_ptr<GameSessionState::State> state) {
 
 void GameSession::setAccount(std::shared_ptr<Account> account) {
     m_account = account;
+}
+
+void GameSession::setPlayer(std::shared_ptr<Player> player) {
+    m_player = player;
 }
 
 std::unique_ptr<const Dummy::Server::Response::Response>

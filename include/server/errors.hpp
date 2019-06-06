@@ -13,23 +13,61 @@ class GameServerError : public Error {
 public:
     enum Code {
         OK = 0,
-        CHARACTER_ALREADY_EXISTS, /* 1 */
-        SKIN_DOES_NOT_EXIST,      /* 2 */
+        ACCOUNT_NOT_PENDING,      /* 1 */
+        ALREADY_CONNECTED,        /* 2 */
         INVALID_SESSION_ID,       /* 3 */
-        ACCOUNT_NOT_PENDING,      /* 4 */
-        ALREADY_CONNECTED,        /* 5 */
 
         COUNT
     };
 
-    virtual Code code() const = 0;
+    virtual int code() const = 0;
 
 };
 
-class CharacterAlreadyExists : public GameServerError {
+class CreateCharacterError : public GameServerError {
 public:
-    virtual Code code() const override {
-        return GameServerError::Code::CHARACTER_ALREADY_EXISTS;
+    enum Code {
+        OK = 0,
+        TOO_MUCH_CHARACTERS,      /* 1 */
+        INVALID_SKIN,             /* 2 */
+        NAME_ALREADY_TAKEN,       /* 3 */
+
+        COUNT
+    };
+};
+
+class SelectCharacterError : public GameServerError {
+public:
+    enum Code {
+        OK = 0,
+        CHARACTER_NOT_FOUND,     /* 1 */
+
+        COUNT
+    };
+};
+
+class CharacterNotFound : public GameServerError {
+    virtual int code() const override {
+        return CreateCharacterError::Code::TOO_MUCH_CHARACTERS;
+    }
+
+    virtual const char* what() const noexcept override {
+        return "the character does not exist.";
+    }
+};
+
+
+class TooMuchCharacters : public CreateCharacterError {
+public:
+    virtual int code() const override {
+        return CreateCharacterError::Code::TOO_MUCH_CHARACTERS;
+    }
+};
+
+class NameAlreadyTaken : public CreateCharacterError {
+public:
+    virtual int code() const override {
+        return CreateCharacterError::Code::NAME_ALREADY_TAKEN;
     }
 
     virtual const char* what() const noexcept override {
@@ -37,20 +75,19 @@ public:
     }
 };
 
-
-class SkinDoesNotExist : public GameServerError {
+class InvalidSkin : public CreateCharacterError {
 public:
-    virtual Code code() const override {
-        return GameServerError::Code::SKIN_DOES_NOT_EXIST;
+    virtual int code() const override {
+        return CreateCharacterError::Code::INVALID_SKIN;
     }
     virtual const char* what() const noexcept override {
-        return "the skin does not exist";
+        return "the skin is invalid";
     }
 };
 
 class InvalidSessionID : public GameServerError {
 public:
-    virtual Code code() const override {
+    virtual int code() const override {
         return GameServerError::Code::INVALID_SESSION_ID;
     }
 
@@ -61,7 +98,7 @@ public:
 
 class AccountNotPending : public GameServerError {
 public:
-    virtual Code code() const override {
+    virtual int code() const override {
         return GameServerError::Code::ACCOUNT_NOT_PENDING;
     }
 
@@ -72,7 +109,7 @@ public:
 
 class AlreadyConnected : public GameServerError {
 public:
-    virtual Code code() const override {
+    virtual int code() const override {
         return GameServerError::Code::ALREADY_CONNECTED;
     }
 

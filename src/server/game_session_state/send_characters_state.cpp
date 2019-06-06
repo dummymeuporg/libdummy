@@ -41,7 +41,7 @@ SendCharactersState::onCommand(
 )
 {
     auto self(shared_from_this());
-    std::cerr << "[InitialState] command." << std::endl;
+    std::cerr << "[SendCharactersState] command." << std::endl;
     return command.accept(*this);
 }
 
@@ -49,6 +49,7 @@ std::unique_ptr<const ::Dummy::Server::Response::Response>
 SendCharactersState::visitCommand(
     const Dummy::Server::Command::GetPrimaryInfoCommand& command
 ) {
+    auto self(shared_from_this());
     const Dummy::Server::AbstractGameServer& svr(
         m_gameSession.abstractGameServer()
     );
@@ -68,6 +69,17 @@ SendCharactersState::visitCommand(
     }
     std::cerr << "There are " << response->charactersList().size()
         << " characters." << std::endl;
+
+    CharactersMap map;
+    for(auto chr: response->charactersList()) {
+        map[chr->name()] = chr;
+    }
+
+    std::cerr << "Will change state." << std::endl;
+    m_gameSession.changeState(
+        std::make_shared<ManageCharactersState>(m_gameSession, std::move(map))
+    );
+
     return response;
 }
 

@@ -16,7 +16,9 @@ public:
 };
 
 class ConnectResponse;
+class CreateCharacter;
 class CharactersListResponse;
+class SelectCharacter;
 
 class ResponseVisitor {
 public:
@@ -24,6 +26,12 @@ public:
         throw ResponseNotHandled();
     }
     virtual void visitResponse(const CharactersListResponse&) {
+        throw ResponseNotHandled();
+    }
+    virtual void visitResponse(const CreateCharacter&) {
+        throw ResponseNotHandled();
+    }
+    virtual void visitResponse(const SelectCharacter&) {
         throw ResponseNotHandled();
     }
 };

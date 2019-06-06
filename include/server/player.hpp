@@ -12,10 +12,10 @@ class Map;
 
 class Player : public std::enable_shared_from_this<Player> {
 public:
-    Player(std::shared_ptr<GameSession>,
+    Player(GameSession&,
            std::shared_ptr<::Dummy::Core::Character>);
 
-    std::shared_ptr<GameSession> gameSession() {
+    GameSession& gameSession() {
         return m_gameSession;
     }
 
@@ -41,7 +41,7 @@ public:
     void leaveCurrentMap();
 
 private:
-    std::shared_ptr<GameSession> m_gameSession;
+    GameSession& m_gameSession;
     std::shared_ptr<Dummy::Core::Character> m_character;
     std::shared_ptr<Map> m_map;
 
