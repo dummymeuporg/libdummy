@@ -4,12 +4,6 @@
 #include <map>
 #include <memory>
 
-#include <boost/asio.hpp>
-#include <boost/asio/ip/tcp.hpp>
-#include <boost/filesystem.hpp>
-#include <boost/uuid/uuid.hpp>
-#include <boost/uuid/uuid_generators.hpp>
-
 #include "core/account.hpp"
 #include "core/character.hpp"
 #include "core/project.hpp"
@@ -17,14 +11,14 @@
 #include "server/instance.hpp"
 
 namespace fs = std::filesystem;
-using boost::asio::ip::tcp;
 
 namespace Dummy {
 namespace Server {
 
+class Account;
 class GameSession;
 class Player;
-class ServerMap;
+class Map;
 
 class AbstractGameServer {
 public:
@@ -39,10 +33,9 @@ public:
         return m_project;
     }
 
-    void connect(const boost::uuids::uuid& sessionID,
-                 const std::string&);
+    void connect(const std::string&, const std::string&);
     void disconnect(const std::string&);
-    bool isPending(const boost::uuids::uuid&) const;
+    bool isPending(const std::string&) const;
     bool isAuthenticated(const std::string&) const;
 
     /* Character creation. */
@@ -51,19 +44,15 @@ public:
 
     std::shared_ptr<GameSession> buildGameSession();
 
-    ::Dummy::Core::Character createCharacter(const ::Dummy::Core::Account&,
+    ::Dummy::Core::Character createCharacter(const Account&,
                                            const std::string& characterName,
                                            const std::string& skin) const;
 
-    void createCharacterFile(
-        const ::Dummy::Core::Account&,
-        const ::Dummy::Core::Character&
-    ) const;
+    void
+    createCharacterFile(const Account&, const ::Dummy::Core::Character&) const;
 
-    void saveCharacter(
-        const ::Dummy::Core::Account&,
-        const ::Dummy::Core::Character&
-    ) const;
+    void
+    saveCharacter(const Account&, const ::Dummy::Core::Character&) const;
 
     virtual void run() = 0;
 
@@ -73,10 +62,10 @@ protected:
     ::Dummy::Core::Project m_project;
     fs::path m_serverPath;
     Instance m_mainInstance;
-    std::map<boost::uuids::uuid,
-             std::shared_ptr<::Dummy::Core::Account>> m_pendingAccounts;
     std::map<std::string,
-             std::shared_ptr<::Dummy::Core::Account>> m_connectedAccounts;
+             std::shared_ptr<Account>> m_pendingAccounts;
+    std::map<std::string,
+             std::shared_ptr<Account>> m_connectedAccounts;
 };
 
 } // namespace Server

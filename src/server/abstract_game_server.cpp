@@ -2,6 +2,7 @@
 
 
 #include "server/abstract_game_server.hpp"
+#include "server/account.hpp"
 #include "server/errors.hpp"
 #include "server/game_session.hpp"
 
@@ -25,7 +26,7 @@ void AbstractGameServer::_spawnMainInstance()
 }
 
 void AbstractGameServer::connect(
-    const boost::uuids::uuid& sessionID,
+    const std::string& sessionID,
     const std::string& accountName)
 {
     if (m_pendingAccounts.find(sessionID) == m_pendingAccounts.end()) {
@@ -37,7 +38,7 @@ void AbstractGameServer::connect(
     }
 
     std::cerr << "Connect account " << accountName << std::endl;
-    std::shared_ptr<Dummy::Core::Account> account =
+    std::shared_ptr<Account> account =
         m_pendingAccounts[sessionID];
     m_connectedAccounts[accountName] = account;
 }
@@ -48,7 +49,7 @@ AbstractGameServer::isAuthenticated(const std::string& accountName) const {
 }
 
 bool
-AbstractGameServer::isPending(const boost::uuids::uuid& id) const {
+AbstractGameServer::isPending(const std::string& id) const {
     return m_pendingAccounts.find(id) != m_pendingAccounts.end();
 }
 
@@ -58,16 +59,15 @@ AbstractGameServer::skinExists(const std::string& skin) const {
 }
 
 bool
-AbstractGameServer::characterExists(
-    const Dummy::Core::Character& character
-) const {
+AbstractGameServer::characterExists(const Dummy::Core::Character& character)
+const {
     // get canonical name, check if file exists.
     // that’s it.
     return fs::exists(m_serverPath / "characters" / character.filename());
 }
 
 void AbstractGameServer::createCharacterFile(
-    const Dummy::Core::Account& account,
+    const Account& account,
     const Dummy::Core::Character& character
 ) const
 {
@@ -87,7 +87,7 @@ void AbstractGameServer::createCharacterFile(
 }
 
 void AbstractGameServer::saveCharacter(
-    const Dummy::Core::Account& account,
+    const Account& account,
     const Dummy::Core::Character& character
 ) const
 {
@@ -106,7 +106,7 @@ void AbstractGameServer::saveCharacter(
 }
 
 Dummy::Core::Character
-AbstractGameServer::createCharacter(const Dummy::Core::Account& account,
+AbstractGameServer::createCharacter(const Account& account,
                                     const std::string& characterName,
                                     const std::string& skin) const
 {
