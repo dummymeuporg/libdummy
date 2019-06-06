@@ -6,7 +6,7 @@
 #include "core/map.hpp"
 #include "core/project.hpp"
 
-namespace fs = boost::filesystem;
+namespace fs = std::filesystem;
 
 namespace Dummy
 {

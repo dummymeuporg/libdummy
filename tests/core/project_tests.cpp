@@ -8,7 +8,7 @@
 
 using namespace boost::unit_test;
 
-namespace fs = boost::filesystem;
+namespace fs = std::filesystem;
 
 BOOST_AUTO_TEST_CASE(load_project)
 {

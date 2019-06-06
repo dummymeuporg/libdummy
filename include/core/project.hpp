@@ -1,6 +1,7 @@
 #pragma once
 
 #include <exception>
+#include <filesystem>
 #include <map>
 #include <memory>
 
@@ -10,6 +11,7 @@
 
 #include "core/map.hpp"
 
+namespace fs = std::filesystem;
 namespace pt = boost::property_tree;
 
 namespace Dummy
@@ -53,9 +55,9 @@ public:
 class Project
 {
 public:
-    Project(const boost::filesystem::path&);
+    Project(const fs::path&);
 
-    const boost::filesystem::path& projectPath() const {
+    const fs::path& projectPath() const {
         return m_projectPath;
     }
 
@@ -81,7 +83,7 @@ private:
     void _setStartingPoint(pt::ptree);
 
     /* Private attributes */
-    boost::filesystem::path m_projectPath;
+    fs::path m_projectPath;
     std::map<std::string, std::unique_ptr<Map>> m_maps;
     std::pair<std::uint16_t, std::uint16_t> m_startingPosition;
     std::string m_startingMap;

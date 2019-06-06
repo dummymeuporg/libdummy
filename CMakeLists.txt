@@ -68,7 +68,7 @@ add_executable(character_read_file_tests
 target_link_libraries(
     project_tests
     dummy
-    boost_filesystem
+    stdc++fs
 )
 
 target_link_libraries(

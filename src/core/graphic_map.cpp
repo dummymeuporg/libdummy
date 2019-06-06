@@ -1,12 +1,11 @@
+#include <filesystem>
 #include <fstream>
 #include <iostream>
-
-#include <boost/filesystem.hpp>
 
 #include "core/graphic_map.hpp"
 #include "core/project.hpp"
 
-namespace fs = boost::filesystem;
+namespace fs = std::filesystem;
 
 namespace Dummy
 {
