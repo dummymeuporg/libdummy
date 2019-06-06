@@ -17,19 +17,20 @@ InitialState::InitialState(Dummy::Server::GameSession& gameSession)
 
 }
 
-void InitialState::resume()
+void
+InitialState::resume()
 {
     std::cerr << "[InitialState] resume." << std::endl;
 }
 
-std::unique_ptr<::Dummy::Server::Response::Response>
+std::unique_ptr<const ::Dummy::Server::Response::Response>
 InitialState::onCommand(const ::Dummy::Server::Command::Command& command) {
     auto self(shared_from_this());
     std::cerr << "[InitialState] command." << std::endl;
     return command.accept(*this);
 }
 
-std::unique_ptr<::Dummy::Server::Response::Response>
+std::unique_ptr<const ::Dummy::Server::Response::Response>
 InitialState::visitCommand(
     const Dummy::Server::Command::ConnectCommand& connectCommand
 ) {

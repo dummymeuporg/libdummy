@@ -19,11 +19,17 @@ public:
 };
 
 class ConnectCommand;
+class GetPrimaryInfoCommand;
 
 class CommandVisitor {
 public:
-    virtual std::unique_ptr<::Dummy::Server::Response::Response>    
+    virtual std::unique_ptr<const ::Dummy::Server::Response::Response>    
     visitCommand(const ConnectCommand&) {
+        throw CommandNotHandled();
+    }
+
+    virtual std::unique_ptr<const ::Dummy::Server::Response::Response>    
+    visitCommand(const GetPrimaryInfoCommand&) {
         throw CommandNotHandled();
     }
 };

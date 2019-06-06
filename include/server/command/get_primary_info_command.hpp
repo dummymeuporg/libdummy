@@ -1,23 +1,19 @@
 #pragma once
 
-#include <memory>
+#include <string>
+
+#include "server/command/command.hpp"
 
 namespace Dummy {
 namespace Server {
-
-namespace Response {
-    class Response;
-}
-
 namespace Command {
 
-class CommandVisitor;
-
-class Command {
+class GetPrimaryInfoCommand : public Command {
 public:
-    Command() {}
+    GetPrimaryInfoCommand();
     virtual std::unique_ptr<const ::Dummy::Server::Response::Response>
-    accept(::Dummy::Server::Command::CommandVisitor&) const = 0;
+    accept(::Dummy::Server::Command::CommandVisitor&) const override;
+private:
 };
 
 } // namespace Command

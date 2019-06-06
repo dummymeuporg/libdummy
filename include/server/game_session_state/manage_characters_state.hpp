@@ -6,7 +6,6 @@ namespace Dummy {
 namespace Server {
 
 namespace Command {
-    class ConnectCommand;
     class Command;
 }
 
@@ -16,16 +15,16 @@ namespace Response {
 
 namespace GameSessionState {
 
-class InitialState : public State {
+using CharactersMap =
+    std::map<std::string, std::shared_ptr<Dummy::Core::Character>>;
+class ManageCharactersState : public State {
 public:
-    InitialState(GameSession&);
+    ManageCharactersState(GameSession&, CharactersMap&&);
     virtual void resume() override;
-
     virtual std::unique_ptr<const ::Dummy::Server::Response::Response>
     onCommand(const ::Dummy::Server::Command::Command&) override;
-
-    virtual std::unique_ptr<const ::Dummy::Server::Response::Response>    
-    visitCommand(const ::Dummy::Server::Command::ConnectCommand&) override;
+private:
+    CharactersMap m_charactersMap;
 };
 
 } // namespace GameSessionState

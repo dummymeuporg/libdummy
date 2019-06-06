@@ -24,7 +24,7 @@ public:
     State(::Dummy::Server::GameSession&);
     virtual void resume() = 0;
 
-    virtual std::unique_ptr<::Dummy::Server::Response::Response>
+    virtual std::unique_ptr<const ::Dummy::Server::Response::Response>
     onCommand(const ::Dummy::Server::Command::Command&) = 0;
 protected:
     ::Dummy::Server::GameSession& m_gameSession;

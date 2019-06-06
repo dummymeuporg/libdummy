@@ -1,12 +1,12 @@
 #pragma once
 
+#include "protocol/teleport_request.hpp"
 #include "server/game_session_state/state.hpp"
 
 namespace Dummy {
 namespace Server {
 
 namespace Command {
-    class ConnectCommand;
     class Command;
 }
 
@@ -16,16 +16,15 @@ namespace Response {
 
 namespace GameSessionState {
 
-class InitialState : public State {
+class LoadingState : public State {
 public:
-    InitialState(GameSession&);
-    virtual void resume() override;
-
+    LoadingState(GameSession&,
+                 Dummy::Protocol::TeleportRequest&&);
     virtual std::unique_ptr<const ::Dummy::Server::Response::Response>
     onCommand(const ::Dummy::Server::Command::Command&) override;
-
-    virtual std::unique_ptr<const ::Dummy::Server::Response::Response>    
-    visitCommand(const ::Dummy::Server::Command::ConnectCommand&) override;
+    virtual void resume() override;
+private:
+    Dummy::Protocol::TeleportRequest m_teleportRequest;
 };
 
 } // namespace GameSessionState

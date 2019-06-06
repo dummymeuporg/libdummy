@@ -32,7 +32,8 @@ public:
         return m_project;
     }
 
-    void connect(const std::string&, const std::string&);
+    std::shared_ptr<Account>
+    connect(const std::string&, const std::string&);
     void disconnect(const std::string&);
     bool isPending(const std::string&) const;
     bool isAuthenticated(const std::string&) const;
@@ -44,8 +45,8 @@ public:
     std::shared_ptr<GameSession> buildGameSession();
 
     ::Dummy::Core::Character createCharacter(const Account&,
-                                           const std::string& characterName,
-                                           const std::string& skin) const;
+                                             const std::string& characterName,
+                                             const std::string& skin) const;
 
     void
     createCharacterFile(const Account&, const ::Dummy::Core::Character&) const;

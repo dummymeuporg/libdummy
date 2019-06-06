@@ -16,10 +16,14 @@ public:
 };
 
 class ConnectResponse;
+class CharactersListResponse;
 
 class ResponseVisitor {
 public:
     virtual void visitResponse(const ConnectResponse&) {
+        throw ResponseNotHandled();
+    }
+    virtual void visitResponse(const CharactersListResponse&) {
         throw ResponseNotHandled();
     }
 };

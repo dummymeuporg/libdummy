@@ -1,4 +1,5 @@
 #include "server/abstract_game_server.hpp"
+#include "server/account.hpp"
 #include "server/game_session.hpp"
 #include "server/game_session_state/initial_state.hpp"
 
@@ -9,7 +10,8 @@ namespace Dummy {
 namespace Server {
 
 GameSession::GameSession(AbstractGameServer& abstractGameServer)
-    : m_abstractGameServer(abstractGameServer), m_state(nullptr)
+    : m_abstractGameServer(abstractGameServer), m_state(nullptr),
+      m_account(nullptr)
 {}
 
 void GameSession::start() {
@@ -19,10 +21,13 @@ void GameSession::start() {
 
 void GameSession::changeState(std::shared_ptr<GameSessionState::State> state) {
     m_state = state;
-    m_state->resume();
 }
 
-std::unique_ptr<Dummy::Server::Response::Response>
+void GameSession::setAccount(std::shared_ptr<Account> account) {
+    m_account = account;
+}
+
+std::unique_ptr<const Dummy::Server::Response::Response>
 GameSession::handleCommand(const Dummy::Server::Command::Command& command)
 {
     return std::move(m_state->onCommand(command));

@@ -21,7 +21,7 @@ public:
     }
 
 
-    virtual std::unique_ptr<::Dummy::Server::Response::Response>
+    virtual std::unique_ptr<const ::Dummy::Server::Response::Response>
     accept(::Dummy::Server::Command::CommandVisitor&) const override;
 private:
     std::string m_tagName;

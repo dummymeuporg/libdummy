@@ -25,15 +25,16 @@ void AbstractGameServer::_spawnMainInstance()
     m_mainInstance.spawnMaps();
 }
 
-void AbstractGameServer::connect(
+std::shared_ptr<Account> AbstractGameServer::connect(
     const std::string& sessionID,
-    const std::string& accountName)
+    const std::string& accountName
+)
 {
     if (m_pendingAccounts.find(sessionID) == m_pendingAccounts.end()) {
         throw AccountNotPending();
     }
 
-    if (m_connectedAccounts.find(accountName) == m_connectedAccounts.end()) {
+    if (m_connectedAccounts.find(accountName) != m_connectedAccounts.end()) {
         // XXX: disconnect the account.
         throw AlreadyConnected();
     }
@@ -42,6 +43,7 @@ void AbstractGameServer::connect(
     std::shared_ptr<Account> account =
         m_pendingAccounts[sessionID];
     m_connectedAccounts[accountName] = account;
+    return account;
 }
 
 bool
