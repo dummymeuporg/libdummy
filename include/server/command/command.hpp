@@ -1,12 +1,23 @@
 #pragma once
 
+#include <memory>
+
 namespace Dummy {
 namespace Server {
+
+namespace Response {
+    class Response;
+}
+
 namespace Command {
+
+class CommandVisitor;
 
 class Command {
 public:
-    Command();
+    Command() {}
+    virtual std::unique_ptr<::Dummy::Server::Response::Response>
+    accept(::Dummy::Server::Command::CommandVisitor&) const = 0;
 };
 
 } // namespace Command

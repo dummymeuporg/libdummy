@@ -1,5 +1,9 @@
+#include "server/abstract_game_server.hpp"
 #include "server/game_session.hpp"
 #include "server/game_session_state/initial_state.hpp"
+
+#include "server/command/command.hpp"
+#include "server/response/response.hpp"
 
 namespace Dummy {
 namespace Server {
@@ -18,12 +22,10 @@ void GameSession::changeState(std::shared_ptr<GameSessionState::State> state) {
     m_state->resume();
 }
 
-void
-GameSession::handleCommand(
-    std::unique_ptr<Dummy::Server::Command::Command> command
-)
+std::unique_ptr<Dummy::Server::Response::Response>
+GameSession::handleCommand(const Dummy::Server::Command::Command& command)
 {
-    m_state->onCommand(*command);
+    return std::move(m_state->onCommand(command));
 }
 
 } // namespace Server

@@ -2,11 +2,13 @@
 
 #include <string>
 
+#include "server/command/command.hpp"
+
 namespace Dummy {
 namespace Server {
 namespace Command {
 
-class ConnectCommand {
+class ConnectCommand : public Command {
 public:
     ConnectCommand(const std::string&, const std::string&);
 
@@ -17,6 +19,10 @@ public:
     const std::string& sessionID() const {
         return m_sessionID;
     }
+
+
+    virtual std::unique_ptr<::Dummy::Server::Response::Response>
+    accept(::Dummy::Server::Command::CommandVisitor&) const override;
 private:
     std::string m_tagName;
     std::string m_sessionID;

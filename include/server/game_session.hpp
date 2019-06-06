@@ -11,6 +11,10 @@ namespace Command {
     class Command;
 }
 
+namespace Response {
+    class Response;
+}
+
 namespace GameSessionState {
     class State;
 }
@@ -20,7 +24,9 @@ public:
     GameSession(AbstractGameServer&);
     void start();
     void changeState(std::shared_ptr<GameSessionState::State>);
-    void handleCommand(std::unique_ptr<::Dummy::Server::Command::Command>);
+
+    std::unique_ptr<Dummy::Server::Response::Response>
+    handleCommand(const ::Dummy::Server::Command::Command&);
 private:
     AbstractGameServer& m_abstractGameServer;
     std::shared_ptr<GameSessionState::State> m_state;

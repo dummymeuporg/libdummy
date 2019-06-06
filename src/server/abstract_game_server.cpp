@@ -138,5 +138,9 @@ AbstractGameServer::createCharacter(const Dummy::Core::Account& account,
 
 }
 
+std::shared_ptr<GameSession> AbstractGameServer::buildGameSession() {
+    return std::make_shared<GameSession>(*this);
+}
+
 } // namespace Server
 } // namespace Dummy

@@ -22,6 +22,7 @@ using boost::asio::ip::tcp;
 namespace Dummy {
 namespace Server {
 
+class GameSession;
 class Player;
 class ServerMap;
 
@@ -47,6 +48,8 @@ public:
     /* Character creation. */
     bool characterExists(const Core::Character&) const;
     bool skinExists(const std::string&) const;
+
+    std::shared_ptr<GameSession> buildGameSession();
 
     ::Dummy::Core::Character createCharacter(const ::Dummy::Core::Account&,
                                            const std::string& characterName,
