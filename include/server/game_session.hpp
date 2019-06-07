@@ -24,7 +24,9 @@ namespace GameSessionState {
 class GameSession : public std::enable_shared_from_this<GameSession> {
 public:
     GameSession(AbstractGameServer&);
+    virtual ~GameSession();
     void start();
+    void close();
     void changeState(std::shared_ptr<GameSessionState::State>);
 
     std::unique_ptr<const Dummy::Server::Response::Response>

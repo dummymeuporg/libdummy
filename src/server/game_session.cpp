@@ -1,3 +1,4 @@
+#include <iostream>
 #include "server/abstract_game_server.hpp"
 #include "server/account.hpp"
 #include "server/game_session.hpp"
@@ -14,9 +15,17 @@ GameSession::GameSession(AbstractGameServer& abstractGameServer)
       m_account(nullptr), m_player(nullptr)
 {}
 
+GameSession::~GameSession() {
+    std::cerr << "Ending game session." << std::endl;
+}
+
 void GameSession::start() {
     m_state = std::make_shared<GameSessionState::InitialState>(*this);
     m_state->resume();
+}
+
+void GameSession::close() {
+    m_state.reset();
 }
 
 void GameSession::changeState(std::shared_ptr<GameSessionState::State> state) {
