@@ -21,6 +21,7 @@ public:
     }
     void setCharacter(std::shared_ptr<Dummy::Core::Character> character);
     virtual void serializeTo(Dummy::Protocol::OutgoingPacket&) const override;
+    virtual void readFrom(Dummy::Protocol::IncomingPacket&) override;
 private:
     std::shared_ptr<Dummy::Core::Character> m_character;
 };

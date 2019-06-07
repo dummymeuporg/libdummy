@@ -32,6 +32,9 @@ public:
         m_cursor += SIZE;
         return *this;
     }
+    std::size_t size() const {
+        return m_size;
+    }
 private:
     template<typename T>
     IncomingPacket& operator>>(T& value) {

@@ -1,3 +1,4 @@
+#include "protocol/incoming_packet.hpp"
 #include "protocol/outgoing_packet.hpp"
 #include "server/response/connect_response.hpp"
 #include "server/response/response_visitor.hpp"
@@ -12,6 +13,11 @@ void ConnectResponse::accept(ResponseVisitor& visitor) const {
 
 void ConnectResponse::serializeTo(Dummy::Protocol::OutgoingPacket& pkt) const {
     pkt << m_status;
+}
+
+
+void ConnectResponse::readFrom(Dummy::Protocol::IncomingPacket& pkt) {
+    pkt >> m_status;
 }
 
 } // namespace Response

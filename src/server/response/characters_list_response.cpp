@@ -1,3 +1,5 @@
+#include "protocol/incoming_packet.hpp"
+#include "protocol/outgoing_packet.hpp"
 #include "server/response/characters_list_response.hpp"
 #include "server/response/response_visitor.hpp"
 
@@ -22,6 +24,11 @@ const
 {
     pkt << static_cast<std::uint16_t>(m_charactersList.size());
     // XXX: pass characters.
+}
+
+void CharactersListResponse::readFrom(Dummy::Protocol::IncomingPacket& pkt) {
+    pkt >> m_status;
+    // XXX: extract characters
 }
 
 } // namespace Response

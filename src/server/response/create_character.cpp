@@ -1,4 +1,5 @@
 #include "core/character.hpp"
+#include "protocol/incoming_packet.hpp"
 #include "protocol/outgoing_packet.hpp"
 #include "server/response/create_character.hpp"
 #include "server/response/response_visitor.hpp"
@@ -19,6 +20,10 @@ CreateCharacter::setCharacter(std::shared_ptr<Dummy::Core::Character> chr) {
 void
 CreateCharacter::serializeTo(Dummy::Protocol::OutgoingPacket& pkt) const {
     pkt << m_status;
+}
+
+void CreateCharacter::readFrom(Dummy::Protocol::IncomingPacket& pkt) {
+    pkt >> m_status;
 }
 
 } // namespace Response
