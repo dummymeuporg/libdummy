@@ -4,6 +4,7 @@
 
 namespace Dummy {
 namespace Protocol {
+class IncomingPacket;
 class OutgoingPacket;
 } // namespace Protocol
 namespace Server {
