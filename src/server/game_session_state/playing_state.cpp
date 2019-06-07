@@ -1,3 +1,5 @@
+#include "server/command/command.hpp"
+#include "server/response/response.hpp"
 #include "server/player.hpp"
 #include "server/game_session.hpp"
 #include "server/game_session_state/playing_state.hpp"
@@ -122,6 +124,12 @@ void PlayingState::_updateLivings(std::shared_ptr<Player> player,
         pkt << update->code() << *update;
     }
     */
+}
+
+std::unique_ptr<const ::Dummy::Server::Response::Response>
+PlayingState::onCommand(const ::Dummy::Server::Command::Command& command)
+{
+    return command.accept(*this);
 }
 
 } // namespace GameSessionState

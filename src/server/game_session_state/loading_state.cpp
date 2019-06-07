@@ -59,6 +59,10 @@ LoadingState::visitCommand(
             mapPt->addPlayer(player);
             player->setMap(mapPt);
             response->setStatus(0);
+
+            m_gameSession.changeState(
+                std::make_shared<PlayingState>(m_gameSession)
+            );
         }
     } else {
         response->setStatus(-1);
