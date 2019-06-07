@@ -29,6 +29,15 @@ void AbstractGameServer::run() {
 
 }
 
+void AbstractGameServer::addPending(
+    const std::string& sessionID,
+    const std::string& accountName
+) {
+    m_pendingAccounts[sessionID] = std::make_shared<Account>(
+        accountName, sessionID
+    );
+}
+
 std::shared_ptr<Account> AbstractGameServer::connect(
     const std::string& sessionID,
     const std::string& accountName

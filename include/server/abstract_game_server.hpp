@@ -35,6 +35,7 @@ public:
     std::shared_ptr<Account>
     connect(const std::string&, const std::string&);
     void disconnect(const std::string&);
+    void addPending(const std::string&, const std::string&);
     bool isPending(const std::string&) const;
     bool isAuthenticated(const std::string&) const;
     Instance& mainInstance() {
