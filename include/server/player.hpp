@@ -31,11 +31,11 @@ public:
         return m_character->position();
     }
 
-    std::shared_ptr<Map> map() const {
+    std::weak_ptr<Map> map() const {
         return m_map;
     }
 
-    void setMap(std::shared_ptr<Map>);
+    void setMap(std::weak_ptr<Map>);
     void setPosition(const std::pair<std::uint16_t, std::uint16_t>&);
     void setPosition(std::uint16_t, std::uint16_t);
     void leaveCurrentMap();
@@ -43,7 +43,7 @@ public:
 private:
     GameSession& m_gameSession;
     std::shared_ptr<Dummy::Core::Character> m_character;
-    std::shared_ptr<Map> m_map;
+    std::weak_ptr<Map> m_map;
 
 };
 

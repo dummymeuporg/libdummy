@@ -37,6 +37,9 @@ public:
     void disconnect(const std::string&);
     bool isPending(const std::string&) const;
     bool isAuthenticated(const std::string&) const;
+    Instance& mainInstance() {
+        return m_mainInstance;
+    }
 
     /* Character creation. */
     bool characterExists(const Core::Character&) const;

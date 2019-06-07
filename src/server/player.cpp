@@ -6,21 +6,21 @@ namespace Server {
 
 Player::Player(GameSession& gameSession,
                std::shared_ptr<Dummy::Core::Character> character)
-    : m_gameSession(gameSession), m_character(character),
-      m_map(nullptr)
+    : m_gameSession(gameSession),
+      m_character(character)
 {
 
 }
 
 void Player::leaveCurrentMap() {
     auto self(shared_from_this());
-    if (nullptr != m_map) {
-        m_map->removePlayer(shared_from_this());
-        m_map = nullptr;
+    if (auto m = m_map.lock()) {
+        m->removePlayer(shared_from_this());
+        m_map.reset();
     }
 }
 
-void Player::setMap(std::shared_ptr<Map> map) {
+void Player::setMap(std::weak_ptr<Map> map) {
     leaveCurrentMap();
     m_map = map;
 }

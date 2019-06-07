@@ -22,6 +22,7 @@ class CreateCharacter;
 class ConnectCommand;
 class GetPrimaryInfoCommand;
 class SelectCharacter;
+class TeleportMap;
 
 class CommandVisitor {
 public:
@@ -42,6 +43,11 @@ public:
 
     virtual std::unique_ptr<const ::Dummy::Server::Response::Response>
     visitCommand(const SelectCharacter&) {
+        throw CommandNotHandled();
+    }
+
+    virtual std::unique_ptr<const ::Dummy::Server::Response::Response>
+    visitCommand(const TeleportMap&) {
         throw CommandNotHandled();
     }
 };

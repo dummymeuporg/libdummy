@@ -38,8 +38,8 @@ public:
         return *m_account;
     }
 
-    Dummy::Server::Player& player() {
-        return *m_player;
+    std::weak_ptr<Dummy::Server::Player> player() {
+        return m_player;
     }
 
     void setAccount(std::shared_ptr<Account> account);
