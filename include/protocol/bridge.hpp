@@ -4,6 +4,7 @@
 
 namespace Dummy {
 namespace Protocol {
+namespace Bridge {
 
 /* Initial state */
 const std::uint16_t CONNECT = 1;
@@ -18,6 +19,6 @@ const std::uint16_t SELECT_CHARACTER = 2;
 /* Loading state */
 const std::uint16_t TELEPORT_MAP = 1;
 
-
+} // namespace Bridge
 } // namespace Protocol
 } // namespace Dummy

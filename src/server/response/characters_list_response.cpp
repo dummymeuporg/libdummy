@@ -17,6 +17,13 @@ CharactersListResponse::addCharacter(
     m_charactersList.push_back(character);
 }
 
+void CharactersListResponse::serializeTo(Dummy::Protocol::OutgoingPacket& pkt)
+const
+{
+    pkt << static_cast<std::uint16_t>(m_charactersList.size());
+    // XXX: pass characters.
+}
+
 } // namespace Response
 } // namespace Server
 } // namespace Dummy

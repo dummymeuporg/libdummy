@@ -20,6 +20,7 @@ public:
         return m_character;
     }
     void setCharacter(std::shared_ptr<Dummy::Core::Character> character);
+    virtual void serializeTo(Dummy::Protocol::OutgoingPacket&) const override;
 private:
     std::shared_ptr<Dummy::Core::Character> m_character;
 };

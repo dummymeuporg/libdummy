@@ -3,6 +3,9 @@
 #include <cstdint>
 
 namespace Dummy {
+namespace Protocol {
+class OutgoingPacket;
+} // namespace Protocol
 namespace Server {
 namespace Response {
 
@@ -17,7 +20,8 @@ public:
 
     void setStatus(std::uint8_t status);
     virtual void accept(ResponseVisitor&) const = 0;
-private:
+    virtual void serializeTo(Dummy::Protocol::OutgoingPacket&) const = 0;
+protected:
     std::uint8_t m_status;
 };
 

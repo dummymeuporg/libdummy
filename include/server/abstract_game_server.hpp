@@ -57,7 +57,7 @@ public:
     void
     saveCharacter(const Account&, const ::Dummy::Core::Character&) const;
 
-    virtual void run() = 0;
+    virtual void run();
 
 protected:
     void _spawnMainInstance();

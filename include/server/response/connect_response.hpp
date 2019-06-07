@@ -9,6 +9,7 @@ namespace Response {
 class ConnectResponse : public Response {
 public:
     virtual void accept(ResponseVisitor&) const override;
+    virtual void serializeTo(Dummy::Protocol::OutgoingPacket&) const override;
 };
 
 } // namespace Response

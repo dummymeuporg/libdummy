@@ -19,6 +19,8 @@ public:
         return m_charactersList;
     }
     void addCharacter(std::shared_ptr<Dummy::Core::Character>);
+    virtual void
+    serializeTo(Dummy::Protocol::OutgoingPacket& pkt) const override;
 private:
     CharactersList m_charactersList;
 };

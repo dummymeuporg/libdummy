@@ -25,6 +25,10 @@ void AbstractGameServer::_spawnMainInstance()
     m_mainInstance.spawnMaps();
 }
 
+void AbstractGameServer::run() {
+
+}
+
 std::shared_ptr<Account> AbstractGameServer::connect(
     const std::string& sessionID,
     const std::string& accountName
