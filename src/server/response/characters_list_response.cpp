@@ -23,7 +23,9 @@ void CharactersListResponse::serializeTo(Dummy::Protocol::OutgoingPacket& pkt)
 const
 {
     pkt << static_cast<std::uint16_t>(m_charactersList.size());
-    // XXX: pass characters.
+    for (auto chr: m_charactersList) {
+        pkt << *chr;
+    }
 }
 
 void CharactersListResponse::readFrom(Dummy::Protocol::IncomingPacket& pkt) {

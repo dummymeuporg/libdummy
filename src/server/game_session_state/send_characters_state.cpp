@@ -58,6 +58,7 @@ SendCharactersState::visitCommand(
     fs::path accountPath(svr.serverPath()
         / "accounts" / m_gameSession.account().name() / "characters");
 
+    std::cerr << "AccountPath: " << accountPath.string() << std::endl;
     for (const auto& entry: fs::directory_iterator(accountPath)) {
         std::cerr << "found " << entry << std::endl;
         std::shared_ptr<Dummy::Core::Character> chr =
