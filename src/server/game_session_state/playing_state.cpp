@@ -126,10 +126,9 @@ void PlayingState::_updateLivings(std::shared_ptr<Player> player,
     */
 }
 
-std::unique_ptr<const ::Dummy::Server::Response::Response>
-PlayingState::onCommand(const ::Dummy::Server::Command::Command& command)
+void PlayingState::onCommand(const ::Dummy::Server::Command::Command& command)
 {
-    return command.accept(*this);
+    command.accept(*this);
 }
 
 } // namespace GameSessionState

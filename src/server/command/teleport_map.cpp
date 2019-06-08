@@ -23,10 +23,10 @@ TeleportMap::TeleportMap(
 {
 }
 
-std::unique_ptr<const ::Dummy::Server::Response::Response>
+void
 TeleportMap::accept(::Dummy::Server::Command::CommandVisitor& visitor)
 const {
-    return visitor.visitCommand(*this);
+    visitor.visitCommand(*this);
 }
 
 } // namespace Command

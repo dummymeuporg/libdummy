@@ -11,7 +11,7 @@ SelectCharacter::SelectCharacter(const std::string& name)
 {
 }
 
-std::unique_ptr<const ::Dummy::Server::Response::Response>
+void
 SelectCharacter::accept(::Dummy::Server::Command::CommandVisitor& visitor)
 const {
     return visitor.visitCommand(*this);

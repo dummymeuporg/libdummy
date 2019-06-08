@@ -16,8 +16,7 @@ class CommandVisitor;
 class Command {
 public:
     Command() {}
-    virtual std::unique_ptr<const ::Dummy::Server::Response::Response>
-    accept(::Dummy::Server::Command::CommandVisitor&) const = 0;
+    virtual void accept(::Dummy::Server::Command::CommandVisitor&) const = 0;
 };
 
 } // namespace Command

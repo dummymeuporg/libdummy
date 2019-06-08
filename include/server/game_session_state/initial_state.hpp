@@ -21,10 +21,10 @@ public:
     InitialState(GameSession&);
     virtual void resume() override;
 
-    virtual std::unique_ptr<const ::Dummy::Server::Response::Response>
+    virtual void
     onCommand(const ::Dummy::Server::Command::Command&) override;
 
-    virtual std::unique_ptr<const ::Dummy::Server::Response::Response>    
+    virtual void
     visitCommand(const ::Dummy::Server::Command::ConnectCommand&) override;
 };
 

@@ -22,8 +22,7 @@ namespace GameSessionState {
 class PlayingState : public State {
 public:
     PlayingState(GameSession&);
-    virtual std::unique_ptr<const ::Dummy::Server::Response::Response>
-    onCommand(const ::Dummy::Server::Command::Command&) override;
+    virtual void onCommand(const ::Dummy::Server::Command::Command&) override;
     virtual void resume() override;
 private:
     void _updateLivings(std::shared_ptr<Player> player,

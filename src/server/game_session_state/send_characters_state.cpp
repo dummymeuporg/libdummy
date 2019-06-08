@@ -30,23 +30,19 @@ SendCharactersState::SendCharactersState(GameSession& gameSession)
 {
 }
 
-void
-SendCharactersState::resume() {
+void SendCharactersState::resume() {
 }
 
 
-std::unique_ptr<const ::Dummy::Server::Response::Response>
-SendCharactersState::onCommand(
+void SendCharactersState::onCommand(
     const ::Dummy::Server::Command::Command& command
 )
 {
-    auto self(shared_from_this());
     std::cerr << "[SendCharactersState] command." << std::endl;
     return command.accept(*this);
 }
 
-std::unique_ptr<const ::Dummy::Server::Response::Response>
-SendCharactersState::visitCommand(
+void SendCharactersState::visitCommand(
     const Dummy::Server::Command::GetPrimaryInfoCommand& command
 ) {
     auto self(shared_from_this());
@@ -80,8 +76,7 @@ SendCharactersState::visitCommand(
     m_gameSession.changeState(
         std::make_shared<ManageCharactersState>(m_gameSession, std::move(map))
     );
-
-    return response;
+    m_gameSession.addResponse(std::move(response));
 }
 
 } // namespace GameSessionState

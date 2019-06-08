@@ -40,11 +40,31 @@ void GameSession::setPlayer(std::shared_ptr<Player> player) {
     m_player = player;
 }
 
-std::unique_ptr<const Dummy::Server::Response::Response>
+void
+GameSession::addResponse(
+    std::unique_ptr<const Dummy::Server::Response::Response> response
+) {
+    m_responses.emplace(std::move(response));
+}
+
+void
 GameSession::handleCommand(const Dummy::Server::Command::Command& command)
 {
-    return std::move(m_state->onCommand(command));
+    m_state->onCommand(command);
 }
+
+std::unique_ptr<const Dummy::Server::Response::Response>
+GameSession::getResponse() {
+    if (m_responses.size() > 0) {
+        std::unique_ptr<const Dummy::Server::Response::Response> r(
+            std::move(m_responses.front())
+        );
+        m_responses.pop();
+        return r;
+    }
+    return nullptr; // no response
+}
+
 
 } // namespace Server
 } // namespace Dummy

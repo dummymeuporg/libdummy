@@ -20,8 +20,7 @@ public:
         return m_sessionID;
     }
 
-
-    virtual std::unique_ptr<const ::Dummy::Server::Response::Response>
+    virtual void
     accept(::Dummy::Server::Command::CommandVisitor&) const override;
 private:
     std::string m_tagName;

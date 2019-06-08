@@ -13,7 +13,8 @@ public:
                 const std::string&);
     TeleportMap(const std::string&,
                 std::uint16_t, std::uint16_t, const std::string&);
-    virtual std::unique_ptr<const ::Dummy::Server::Response::Response>
+
+    virtual void
     accept(::Dummy::Server::Command::CommandVisitor&) const override;
 
     const std::string& mapName() const {

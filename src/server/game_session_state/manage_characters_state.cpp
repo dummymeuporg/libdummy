@@ -31,16 +31,14 @@ ManageCharactersState::ManageCharactersState(
 void ManageCharactersState::resume() {
 }
 
-std::unique_ptr<const ::Dummy::Server::Response::Response>
-ManageCharactersState::onCommand(
+void ManageCharactersState::onCommand(
     const ::Dummy::Server::Command::Command& command
 )
 {
-    return command.accept(*this);
+    command.accept(*this);
 }
 
-std::unique_ptr<const ::Dummy::Server::Response::Response>
-ManageCharactersState::visitCommand(
+void ManageCharactersState::visitCommand(
     const Dummy::Server::Command::SelectCharacter& selectCharacter
 ) {
 
@@ -72,11 +70,10 @@ ManageCharactersState::visitCommand(
         std::cerr << "Created teleport request." << std::endl;
         response->setStatus(0); // O.K.
     }
-    return response;
+    m_gameSession.addResponse(std::move(response));
 }
 
-std::unique_ptr<const ::Dummy::Server::Response::Response>
-ManageCharactersState::visitCommand(
+void ManageCharactersState::visitCommand(
     const Dummy::Server::Command::CreateCharacter& createCharacter
 ) {
     Dummy::Server::AbstractGameServer& svr(
@@ -107,7 +104,7 @@ ManageCharactersState::visitCommand(
             << e.what() << std::endl;
         response->setStatus(e.code());
     }
-    return response;
+    m_gameSession.addResponse(std::move(response));
 }
 
 } // namespace GameSessionState

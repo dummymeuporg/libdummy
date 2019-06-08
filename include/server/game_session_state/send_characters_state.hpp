@@ -24,18 +24,12 @@ public:
 
     virtual void resume() override;
 
-    virtual std::unique_ptr<const ::Dummy::Server::Response::Response>
-    onCommand(const ::Dummy::Server::Command::Command&) override;
+    virtual void onCommand(const ::Dummy::Server::Command::Command&) override;
 
-    virtual std::unique_ptr<const ::Dummy::Server::Response::Response>
-    visitCommand(
+    virtual void visitCommand(
         const Dummy::Server::Command::GetPrimaryInfoCommand& command
     ) override;
 
-    /*
-    virtual std::unique_ptr<::Dummy::Server::Response::Response>    
-    visitCommand(const ::Dummy::Server::Command::ConnectCommand&);
-    */
 };
 
 } // namespace GameSessionState

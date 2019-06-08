@@ -11,7 +11,7 @@ namespace Command {
 class CreateCharacter : public Command {
 public:
     CreateCharacter(const std::string&, const std::string&);
-    virtual std::unique_ptr<const ::Dummy::Server::Response::Response>
+    virtual void
     accept(::Dummy::Server::Command::CommandVisitor&) const override;
 
     const std::string& name() const {

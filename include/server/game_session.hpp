@@ -1,6 +1,7 @@
 #pragma once
 
 #include <memory>
+#include <queue>
 
 namespace Dummy {
 namespace Server {
@@ -29,8 +30,14 @@ public:
     void close();
     void changeState(std::shared_ptr<GameSessionState::State>);
 
+    void handleCommand(const ::Dummy::Server::Command::Command&);
+
     std::unique_ptr<const Dummy::Server::Response::Response>
-    handleCommand(const ::Dummy::Server::Command::Command&);
+    getResponse();
+
+    void addResponse(
+        std::unique_ptr<const Dummy::Server::Response::Response>
+    );
 
     AbstractGameServer& abstractGameServer() {
         return m_abstractGameServer;
@@ -51,6 +58,8 @@ private:
     std::shared_ptr<GameSessionState::State> m_state;
     std::shared_ptr<Account> m_account;
     std::shared_ptr<Player> m_player;
+    std::queue<std::unique_ptr<const Dummy::Server::Response::Response>>
+        m_responses;
 
 };
 

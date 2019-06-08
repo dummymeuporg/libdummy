@@ -6,6 +6,7 @@
 #include "server/command/connect_command.hpp"
 #include "server/game_session_state/initial_state.hpp"
 #include "server/game_session_state/send_characters_state.hpp"
+#include "server/response/response.hpp"
 #include "server/response/connect_response.hpp"
 
 namespace Dummy {
@@ -24,14 +25,13 @@ InitialState::resume()
     std::cerr << "[InitialState] resume." << std::endl;
 }
 
-std::unique_ptr<const ::Dummy::Server::Response::Response>
+void
 InitialState::onCommand(const ::Dummy::Server::Command::Command& command) {
     std::cerr << "[InitialState] command." << std::endl;
-    return command.accept(*this);
+    command.accept(*this);
 }
 
-std::unique_ptr<const ::Dummy::Server::Response::Response>
-InitialState::visitCommand(
+void InitialState::visitCommand(
     const Dummy::Server::Command::ConnectCommand& connectCommand
 ) {
     auto self(shared_from_this());
@@ -60,7 +60,7 @@ InitialState::visitCommand(
             << e.what() << std::endl;
         response->setStatus(e.code());
     }
-    return response;
+    m_gameSession.addResponse(std::move(response));
 }
 
 } // namespace GameSessionState

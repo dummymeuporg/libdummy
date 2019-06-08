@@ -26,13 +26,12 @@ void LoadingState::resume() {
 }
 
 
-std::unique_ptr<const ::Dummy::Server::Response::Response>
+void 
 LoadingState::onCommand(const ::Dummy::Server::Command::Command& command) {
-    return command.accept(*this);
+    command.accept(*this);
 }
 
-std::unique_ptr<const ::Dummy::Server::Response::Response>
-LoadingState::visitCommand(
+void LoadingState::visitCommand(
     const Dummy::Server::Command::TeleportMap& teleportMap
 ) {
     auto self(shared_from_this());
@@ -67,7 +66,7 @@ LoadingState::visitCommand(
     } else {
         response->setStatus(-1);
     }
-    return response;
+    m_gameSession.addResponse(std::move(response));
 }
 
 } // namespace GameSessionState

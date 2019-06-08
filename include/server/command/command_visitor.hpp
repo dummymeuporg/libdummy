@@ -26,28 +26,23 @@ class TeleportMap;
 
 class CommandVisitor {
 public:
-    virtual std::unique_ptr<const ::Dummy::Server::Response::Response>    
-    visitCommand(const ConnectCommand&) {
+    virtual void visitCommand(const ConnectCommand&) {
         throw CommandNotHandled();
     }
 
-    virtual std::unique_ptr<const ::Dummy::Server::Response::Response>    
-    visitCommand(const GetPrimaryInfoCommand&) {
+    virtual void visitCommand(const GetPrimaryInfoCommand&) {
         throw CommandNotHandled();
     }
 
-    virtual std::unique_ptr<const ::Dummy::Server::Response::Response>
-    visitCommand(const CreateCharacter&) {
+    virtual void visitCommand(const CreateCharacter&) {
         throw CommandNotHandled();
     }
 
-    virtual std::unique_ptr<const ::Dummy::Server::Response::Response>
-    visitCommand(const SelectCharacter&) {
+    virtual void visitCommand(const SelectCharacter&) {
         throw CommandNotHandled();
     }
 
-    virtual std::unique_ptr<const ::Dummy::Server::Response::Response>
-    visitCommand(const TeleportMap&) {
+    virtual void visitCommand(const TeleportMap&) {
         throw CommandNotHandled();
     }
 };
