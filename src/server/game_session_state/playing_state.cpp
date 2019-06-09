@@ -15,6 +15,10 @@ namespace Dummy {
 namespace Server {
 namespace GameSessionState {
 
+using MapUpdatesVector = std::vector<
+    std::unique_ptr<Dummy::Protocol::MapUpdate::Update>
+>;
+
 PlayingState::PlayingState(GameSession& gameSession) : State(gameSession)
 {
 }
@@ -24,18 +28,18 @@ PlayingState::resume() {
     // XXX: send the map state?
 }
 
-void PlayingState::_updateLivings(std::shared_ptr<Player> player,
-                                  std::shared_ptr<Map> map)
-{
 
-    std::vector<
-        std::shared_ptr<Dummy::Protocol::MapUpdate::Updates>
-    > mapUpdates;
+void
+PlayingState::_createMapUpdates(
+    std::shared_ptr<Player> player,
+    std::shared_ptr<Map> map,
+    MapUpdatesVector& mapUpdates)
+{
 
     // Get the players around.
     std::cerr << "There are " << map->players().size() << " on the map."
         << std::endl;
-    for (const auto [name&, otherPlayer]: map->players()) {
+    for (const auto& [name, otherPlayer]: map->players()) {
         /* ignore the self player */
         if (player->name() == name) {
             continue;
@@ -45,80 +49,45 @@ void PlayingState::_updateLivings(std::shared_ptr<Player> player,
 
         std::shared_ptr<const Dummy::Core::Character>
             chr(otherPlayer->character());
-        if (m_livings.find(chr->name()) == std::end(m_livings)) {
+        if (m_mapState.livings().find(chr->name())
+                == std::end(m_mapState.livings()))
+        {
             // A new character appeared. create a CharacterOn update 
             mapUpdates.push_back(std::move(
                 std::make_unique<Dummy::Protocol::MapUpdate::CharacterOn>(
-                    otherPlayer.second->serverPosition().first,
-                    otherPlayer.second->serverPosition().second,
-                    otherPlayer.second->character()->name(),
-                    otherPlayer.second->character()->skin(),
-                    otherPlayer.second->character()->direction()
+                    otherPlayer->serverPosition().first,
+                    otherPlayer->serverPosition().second,
+                    otherPlayer->character()->name(),
+                    otherPlayer->character()->skin(),
+                    otherPlayer->character()->direction()
                 )
             ));
             std::cerr << "Hello " << name << std::endl;
         } else {
             // Update the living status.
-            Dummy::Protocol::Living& living(*m_livings[otherPlayer.first]);
-            
-            if (living.x() != otherPlayer.second->serverPosition().first ||
-                living.y() != otherPlayer.second->serverPosition().second)
-            {
-                living.setPosition(
-                    otherPlayer.second->serverPosition().first,
-                    otherPlayer.second->serverPosition().second
-                );
-                std::cerr << "UPDATE POS TO: " << living.x() << ", "
-                    << living.y() << std::endl;
-            }
-
-            if (living.chipset() !=
-                otherPlayer.second->character()->skin())
-            {
-                living.setChipset(
-                    otherPlayer.second->character()->skin()
-                );
-            }
-
-            if (living.direction() !=
-                otherPlayer.second->character()->direction())
-            {
-                living.setDirection(
-                    otherPlayer.second->character()->direction()
-                );
-            }
-            std::cerr << "Updated " << otherPlayer.first << std::endl;
+            mapUpdates.push_back(std::move(
+                std::make_unique<
+                    Dummy::Protocol::MapUpdate::CharacterPosition
+                >(
+                    otherPlayer->serverPosition().first,
+                    otherPlayer->serverPosition().second,
+                    otherPlayer->character()->name()
+                )));
+            // XXX: update the skin / diretion?
+            std::cerr << "Updated " << name << std::endl;
         }
-
-        // Create the event.
-        Dummy::Protocol::Living& living(*m_livings[otherPlayer.first]);
-        std::shared_ptr<Dummy::Protocol::CharacterPosition> event =
-            std::make_shared<Dummy::Protocol::CharacterPosition>(
-                living.x(),
-                living.y(),
-                living.name(),
-                living.chipset(),
-                living.direction()
-            );
-        mapUpdates.push_back(event);
-
     }
 
-    std::vector<std::string> departures;
     // Check if any player left the map
-    for(const auto& [name, living]: m_livings) {
-        //const Dummy::Protocol::Living& living(*it.second);
+    for(const auto& [name, living]: m_mapState.livings()) {
         if (map->players().find(name) == std::end(map->players())) {
-            std::shared_ptr<Dummy::Protocol::CharacterOff> event =
-                std::make_shared<Dummy::Protocol::CharacterOff>(name);
-            mapUpdates.push_back(event);
-            departures.push_back(name);
+            std::unique_ptr<Dummy::Protocol::MapUpdate::CharacterOff> update =
+                std::make_unique<Dummy::Protocol::MapUpdate::CharacterOff>(
+                    name
+                );
+            mapUpdates.push_back(std::move(update));
+            std::cerr << "Bye bye " << name << std::endl;
         }
-    }
-
-    for (const auto& name: departures) {
-        std::cerr << "Bye bye " << name << std::endl;
-        m_livings.erase(name);
     }
 
     // Write map updates to outgoing packet.
@@ -134,6 +103,30 @@ void PlayingState::_updateLivings(std::shared_ptr<Player> player,
 void PlayingState::onCommand(const ::Dummy::Server::Command::Command& command)
 {
     command.accept(*this);
+}
+
+void PlayingState::visitCommand(
+    const Dummy::Server::Command::Ping& ping
+) {
+    MapUpdatesVector mapUpdates;
+
+    // Get map updates
+    auto player = m_gameSession.player().lock();
+    if(player == nullptr) {
+       // XXX: throw an exception?
+        std::cerr << "Error while acquiering player" << std::endl;
+    }
+
+    auto map = player->map().lock();
+    if (map == nullptr) {
+        // XXX: throw an exception?
+        std::cerr << "Error while acquiering map" << std::endl;
+    }
+   _createMapUpdates(player, map, mapUpdates);
+
+   // Apply map updates to the map state.
+
+   // Put map updates into the response.
 }
 
 } // namespace GameSessionState

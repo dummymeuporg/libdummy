@@ -15,6 +15,7 @@ namespace MapUpdate {
 class Update;
 class CharacterPosition;
 class CharacterOff;
+class CharacterOn;
 }
 
 } // namespace Protocol
@@ -35,8 +36,12 @@ public:
         const Dummy::Protocol::MapUpdate::CharacterOff&
     );
 
+    virtual void visitMapUpdate(
+        const Dummy::Protocol::MapUpdate::CharacterOn&
+    );
+
     const LivingsMap& livings() const {
-        return m_living;
+        return m_livings;
     }
 private:
     LivingsMap m_livings;
