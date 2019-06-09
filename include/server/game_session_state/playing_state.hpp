@@ -20,14 +20,22 @@ class Response;
 
 namespace GameSessionState {
 
+using MapUpdatesVector = std::vector<
+    std::unique_ptr<Dummy::Protocol::MapUpdate::Update>
+>;
+
 class PlayingState : public State {
 public:
     PlayingState(GameSession&);
-    virtual void onCommand(const ::Dummy::Server::Command::Command&) override;
+    virtual void onCommand(const Command::Command&) override;
     virtual void resume() override;
+
+    virtual void visitCommand(const Command::Ping&) override;
 private:
-    void _updateLivings(std::shared_ptr<Player> player,
-                        std::shared_ptr<Map> map);
+    void _createMapUpdates(
+        std::shared_ptr<Player>,
+        std::shared_ptr<Map>,
+        MapUpdatesVector&);
 
      MapState m_mapState;
 };

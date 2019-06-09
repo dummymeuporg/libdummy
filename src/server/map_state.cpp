@@ -22,6 +22,11 @@ void MapState::visitMapUpdate(
 
 }
 
+void MapState::visitMapUpdate(
+    const Dummy::Protocol::MapUpdate::CharacterOn& update) {
+
+}
+
 } // namespace Server
 
 } // namespace Dummy

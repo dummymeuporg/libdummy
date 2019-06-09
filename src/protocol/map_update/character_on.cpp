@@ -17,6 +17,10 @@ CharacterOn::CharacterOn(std::uint16_t x,
 {
 }
 
+void CharacterOn::accept(MapUpdateVisitor& visitor) const {
+    visitor.visitMapUpdate(*this);
+}
+
 } // namespace MapUpdate
 
 } // namespace Protocol
