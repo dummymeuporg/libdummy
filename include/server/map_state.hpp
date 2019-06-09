@@ -34,6 +34,10 @@ public:
     virtual void visitMapUpdate(
         const Dummy::Protocol::MapUpdate::CharacterOff&
     );
+
+    const LivingsMap& livings() const {
+        return m_living;
+    }
 private:
     LivingsMap m_livings;
 };
