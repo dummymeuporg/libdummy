@@ -13,6 +13,8 @@ class Living;
 
 namespace MapUpdate {
 class Update;
+class CharacterPosition;
+class CharacterOff;
 }
 
 } // namespace Protocol
@@ -24,6 +26,14 @@ public:
                                 std::shared_ptr<Dummy::Protocol::Living>>;
     MapState();
     void update(const Dummy::Protocol::MapUpdate::Update&);
+
+    virtual void visitMapUpdate(
+        const Dummy::Protocol::MapUpdate::CharacterPosition&
+    );
+
+    virtual void visitMapUpdate(
+        const Dummy::Protocol::MapUpdate::CharacterOff&
+    );
 private:
     LivingsMap m_livings;
 };
