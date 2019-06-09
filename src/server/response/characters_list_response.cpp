@@ -1,3 +1,5 @@
+#include <boost/core/ignore_unused.hpp>
+#include <boost/range/irange.hpp>
 #include "protocol/incoming_packet.hpp"
 #include "protocol/outgoing_packet.hpp"
 #include "server/response/characters_list_response.hpp"
@@ -31,6 +33,15 @@ const
 void CharactersListResponse::readFrom(Dummy::Protocol::IncomingPacket& pkt) {
     pkt >> m_status;
     // XXX: extract characters
+    std::uint16_t charactersCount;
+    pkt >> charactersCount;
+    for (const auto i: boost::irange(charactersCount)) {
+        boost::ignore_unused(i);
+        std::shared_ptr<Dummy::Core::Character> chr =
+            std::make_shared<Dummy::Core::Character>();
+        pkt >> *chr;
+        addCharacter(chr);
+    }
 }
 
 } // namespace Response
