@@ -15,17 +15,26 @@ class CharacterPosition : public Update {
 public:
     CharacterPosition(std::uint16_t,
                       std::uint16_t,
-                      const std::string&,
-                      const std::string&,
-                      Dummy::Core::Character::Direction);
+                      const std::string&);
 
         
     virtual void accept(MapUpdateVisitor&) const override;
-private:
+
+    std::uint16_t x() const {
+        return m_x;
+    }
+
+    std::uint16_t y() const {
+        return m_y;
+    }
+
+    const std::string& name() const {
+        return m_name;
+    }
+
+protected:
     std::uint16_t m_x, m_y;
     std::string m_name;
-    std::string m_chipset;
-    Dummy::Core::Character::Direction m_direction;
 };
 
 } // name MapUpdate
