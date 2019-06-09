@@ -3,6 +3,7 @@
 #include <map>
 
 #include "server/game_session.hpp"
+#include "server/map_state.hpp"
 #include "server/game_session_state/state.hpp"
 #include "protocol/living.hpp"
 
@@ -28,7 +29,7 @@ private:
     void _updateLivings(std::shared_ptr<Player> player,
                         std::shared_ptr<Map> map);
 
-    std::map<std::string, std::unique_ptr<Dummy::Protocol::Living>> m_livings;
+     MapState m_mapState;
 };
 
 } // namespace GameSessionState

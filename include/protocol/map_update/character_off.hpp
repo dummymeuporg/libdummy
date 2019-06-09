@@ -15,6 +15,8 @@ namespace MapUpdate {
 class CharacterOff : public Update {
 public:
     CharacterOff(const std::string&);
+
+    virtual void accept(MapUpdateVisitor&) const override;
 private:
     std::string m_name;
 };

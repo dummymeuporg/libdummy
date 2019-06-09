@@ -5,9 +5,9 @@
 #include "server/game_session_state/playing_state.hpp"
 #include "server/map.hpp"
 
-#include "protocol/map_update.hpp"
-#include "protocol/character_position.hpp"
-#include "protocol/character_off.hpp"
+#include "protocol/map_update/update.hpp"
+#include "protocol/map_update/character_position.hpp"
+#include "protocol/map_update/character_off.hpp"
 
 
 namespace Dummy {
@@ -27,6 +27,7 @@ void PlayingState::_updateLivings(std::shared_ptr<Player> player,
                                   std::shared_ptr<Map> map)
 {
 
+    /*
     std::vector<std::shared_ptr<Dummy::Protocol::MapUpdate>> mapUpdates;
 
     // Get the players around.

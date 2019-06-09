@@ -9,9 +9,6 @@ namespace Dummy {
 
 namespace Protocol {
 
-class IncomingPacket;
-class OutgoingPacket;
-
 namespace MapUpdate {
 
 class CharacterPosition : public Update {
@@ -22,6 +19,8 @@ public:
                       const std::string&,
                       Dummy::Core::Character::Direction);
 
+        
+    virtual void accept(MapUpdateVisitor&) const override;
 private:
     std::uint16_t m_x, m_y;
     std::string m_name;
