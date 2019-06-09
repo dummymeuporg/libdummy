@@ -21,6 +21,7 @@ public:
 class CreateCharacter;
 class ConnectCommand;
 class GetPrimaryInfoCommand;
+class Ping;
 class SelectCharacter;
 class TeleportMap;
 
@@ -43,6 +44,10 @@ public:
     }
 
     virtual void visitCommand(const TeleportMap&) {
+        throw CommandNotHandled();
+    }
+
+    virtual void visitCommand(const Ping&) {
         throw CommandNotHandled();
     }
 };
