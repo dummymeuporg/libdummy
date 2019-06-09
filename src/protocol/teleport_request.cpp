@@ -1,4 +1,4 @@
-#include "protocol/teleport_request.hpp"
+#include "protocol/map_update/teleport_request.hpp"
 
 namespace Dummy {
 
