@@ -14,6 +14,7 @@ public:
 };
 
 class CharacterOff;
+class CharacterOn;
 class CharacterPosition;
 
 class MapUpdateVisitor {
@@ -23,6 +24,10 @@ public:
     }
 
     virtual void visitMapUpdate(const CharacterPosition&) {
+        throw MapUpdateNotHandled();
+    }
+
+    virtual void visitMapUpdate(const CharacterOn&) {
         throw MapUpdateNotHandled();
     }
 };
