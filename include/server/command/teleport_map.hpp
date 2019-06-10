@@ -1,5 +1,6 @@
 #pragma once
 
+#include <string>
 #include "server/command/command.hpp"
 
 namespace Dummy {
@@ -13,6 +14,7 @@ public:
                 const std::string&);
     TeleportMap(const std::string&,
                 std::uint16_t, std::uint16_t, const std::string&);
+    virtual ~TeleportMap();
 
     virtual void
     accept(::Dummy::Server::Command::CommandVisitor&) const override;

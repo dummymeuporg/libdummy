@@ -23,6 +23,11 @@ TeleportMap::TeleportMap(
 {
 }
 
+TeleportMap::~TeleportMap()
+{
+
+}
+
 void
 TeleportMap::accept(::Dummy::Server::Command::CommandVisitor& visitor)
 const {
