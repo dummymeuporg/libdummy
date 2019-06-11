@@ -20,6 +20,8 @@ class Ping : public Response {
 public:
     virtual void accept(ResponseVisitor&) const override;
     void addUpdate(std::unique_ptr<Dummy::Protocol::MapUpdate::Update>);
+    virtual void serializeTo(Dummy::Protocol::OutgoingPacket&) const override;
+    virtual void readFrom(Dummy::Protocol::IncomingPacket&) override;
 private:
     std::vector<std::unique_ptr<Dummy::Protocol::MapUpdate::Update>>
         m_mapUpdates;

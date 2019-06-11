@@ -19,6 +19,8 @@ public:
 
         
     virtual void accept(MapUpdateVisitor&) const override;
+    virtual void serializeTo(Dummy::Protocol::OutgoingPacket&) const override;
+    virtual void readFrom(Dummy::Protocol::IncomingPacket&) override;
 
     std::uint16_t x() const {
         return m_x;

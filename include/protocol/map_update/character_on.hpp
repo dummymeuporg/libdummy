@@ -28,6 +28,9 @@ public:
     Dummy::Core::Character::Direction direction() const {
         return m_direction;
     }
+
+    virtual void serializeTo(Dummy::Protocol::OutgoingPacket&) const override;
+    virtual void readFrom(Dummy::Protocol::IncomingPacket&) override;
 protected:
     std::string m_chipset;
     Dummy::Core::Character::Direction m_direction;

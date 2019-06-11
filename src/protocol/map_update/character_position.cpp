@@ -1,3 +1,5 @@
+#include "protocol/incoming_packet.hpp"
+#include "protocol/outgoing_packet.hpp"
 #include "protocol/map_update/map_update_visitor.hpp"
 #include "protocol/map_update/character_position.hpp"
 
@@ -17,6 +19,15 @@ CharacterPosition::CharacterPosition(
 
 void CharacterPosition::accept(MapUpdateVisitor& visitor) const {
     visitor.visitMapUpdate(*this);
+}
+
+void
+CharacterPosition::serializeTo(Dummy::Protocol::OutgoingPacket& packet) const {
+
+}
+
+void CharacterPosition::readFrom(Dummy::Protocol::IncomingPacket& packet) {
+
 }
 
 } // namespace MapUpdate

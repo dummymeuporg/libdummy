@@ -19,6 +19,12 @@ const std::uint16_t SELECT_CHARACTER = 2;
 /* Loading state */
 const std::uint16_t TELEPORT_MAP = 1;
 
+
+/* map updates */
+const std::uint16_t CHARACTER_OFF = 1;
+const std::uint16_t CHARACTER_ON = 2;
+const std::uint16_t CHARACTER_POSITION = 3;
+
 } // namespace Bridge
 } // namespace Protocol
 } // namespace Dummy

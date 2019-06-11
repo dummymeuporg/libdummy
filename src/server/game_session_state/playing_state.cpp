@@ -1,5 +1,5 @@
 #include "server/command/command.hpp"
-#include "server/response/response.hpp"
+#include "server/response/ping.hpp"
 #include "server/player.hpp"
 #include "server/game_session.hpp"
 #include "server/game_session_state/playing_state.hpp"
@@ -108,6 +108,8 @@ void PlayingState::onCommand(const ::Dummy::Server::Command::Command& command)
 void PlayingState::visitCommand(
     const Dummy::Server::Command::Ping& ping
 ) {
+    std::unique_ptr<Dummy::Server::Response::Ping> response =
+        std::make_unique<Dummy::Server::Response::Ping>();
     MapUpdatesVector mapUpdates;
 
     // Get map updates
@@ -124,13 +126,17 @@ void PlayingState::visitCommand(
     }
    _createMapUpdates(player, map, mapUpdates);
 
-   // Apply map updates to the map state.
+   // Apply map updates to the map state and put them into the response
    for (const auto& update: mapUpdates) {
        update->accept(m_mapState);
    }
-       
 
-   // Put map updates into the response.
+    // Move updates to the response
+    for (auto& update: mapUpdates) {
+        response->addUpdate(std::move(update));
+    }
+
+    m_gameSession.addResponse(std::move(response));
 }
 
 } // namespace GameSessionState

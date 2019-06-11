@@ -17,6 +17,8 @@ public:
     CharacterOff(const std::string&);
 
     virtual void accept(MapUpdateVisitor&) const override;
+    virtual void serializeTo(Dummy::Protocol::OutgoingPacket&) const override;
+    virtual void readFrom(Dummy::Protocol::IncomingPacket&) override;
 private:
     std::string m_name;
 };
