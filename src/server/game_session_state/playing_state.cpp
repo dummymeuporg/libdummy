@@ -125,6 +125,10 @@ void PlayingState::visitCommand(
    _createMapUpdates(player, map, mapUpdates);
 
    // Apply map updates to the map state.
+   for (const auto& update: mapUpdates) {
+       update->accept(m_mapState);
+   }
+       
 
    // Put map updates into the response.
 }

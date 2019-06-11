@@ -14,6 +14,7 @@ namespace Server {
 
 class AbstractGameServer;
 class Instance;
+class MapObserver;
 class Player;
 
 class Map {
@@ -30,6 +31,7 @@ private:
     Instance& m_instance;
     const Dummy::Core::Map& m_map;
     PlayersList m_players;
+    std::map<std::string, std::shared_ptr<MapObserver>> m_mapObservers;
 
 };
 

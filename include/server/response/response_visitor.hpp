@@ -18,6 +18,7 @@ public:
 class ConnectResponse;
 class CreateCharacter;
 class CharactersListResponse;
+class Ping;
 class SelectCharacter;
 class TeleportMap;
 
@@ -36,6 +37,9 @@ public:
         throw ResponseNotHandled();
     }
     virtual void visitResponse(const TeleportMap&) {
+        throw ResponseNotHandled();
+    }
+    virtual void visitResponse(const Ping&) {
         throw ResponseNotHandled();
     }
 };
