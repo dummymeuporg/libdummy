@@ -19,6 +19,10 @@ public:
     virtual void accept(MapUpdateVisitor&) const override;
     virtual void serializeTo(Dummy::Protocol::OutgoingPacket&) const override;
     virtual void readFrom(Dummy::Protocol::IncomingPacket&) override;
+
+    const std::string& name() const {
+        return m_name;
+    }
 private:
     std::string m_name;
 };

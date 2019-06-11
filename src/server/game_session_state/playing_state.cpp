@@ -71,7 +71,8 @@ PlayingState::_createMapUpdates(
                 >(
                     otherPlayer->serverPosition().first,
                     otherPlayer->serverPosition().second,
-                    otherPlayer->character()->name()
+                    otherPlayer->character()->name(),
+                    otherPlayer->character()->direction()
                 )));
             // XXX: update the skin / diretion?
             std::cerr << "Updated " << name << std::endl;

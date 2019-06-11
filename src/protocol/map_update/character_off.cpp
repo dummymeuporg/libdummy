@@ -17,11 +17,11 @@ void CharacterOff::accept(MapUpdateVisitor& visitor) const {
 
 void
 CharacterOff::serializeTo(Dummy::Protocol::OutgoingPacket& packet) const {
-
+    packet << m_name;
 }
 
 void CharacterOff::readFrom(Dummy::Protocol::IncomingPacket& packet) {
-
+    packet >> m_name;
 }
 
 

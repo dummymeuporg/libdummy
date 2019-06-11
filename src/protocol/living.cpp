@@ -26,6 +26,10 @@ void Living::setChipset(const std::string& chipset) {
     m_chipset = chipset;
 }
 
+void Living::setName(const std::string& name) {
+    m_name = name;
+}
+
 } // namespace Protocol
 
 } // namespace Dummy

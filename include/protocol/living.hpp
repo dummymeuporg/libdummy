@@ -38,8 +38,9 @@ public:
     }
 
     void setPosition(std::uint16_t, std::uint16_t);
-    void setDirection(Dummy::Core::Character::Direction direction);
-    void setChipset(const std::string& chipset);
+    void setDirection(Dummy::Core::Character::Direction);
+    void setName(const std::string&);
+    void setChipset(const std::string&);
 
 protected:
     std::uint16_t m_x;
