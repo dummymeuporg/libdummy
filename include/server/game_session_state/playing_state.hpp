@@ -12,6 +12,8 @@ namespace Server {
 
 namespace Command {
 class Command;
+class Ping;
+class SetPosition;
 }
 
 namespace Response {
@@ -31,6 +33,7 @@ public:
     virtual void resume() override;
 
     virtual void visitCommand(const Command::Ping&) override;
+    virtual void visitCommand(const Command::SetPosition&) override;
 private:
     void _createMapUpdates(
         std::shared_ptr<Player>,

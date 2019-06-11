@@ -23,6 +23,7 @@ class ConnectCommand;
 class GetPrimaryInfoCommand;
 class Ping;
 class SelectCharacter;
+class SetPosition;
 class TeleportMap;
 
 class CommandVisitor {
@@ -48,6 +49,10 @@ public:
     }
 
     virtual void visitCommand(const Ping&) {
+        throw CommandNotHandled();
+    }
+
+    virtual void visitCommand(const SetPosition&) {
         throw CommandNotHandled();
     }
 };

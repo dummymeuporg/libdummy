@@ -20,6 +20,7 @@ class CreateCharacter;
 class CharactersListResponse;
 class Ping;
 class SelectCharacter;
+class SetPosition;
 class TeleportMap;
 
 class ResponseVisitor {
@@ -40,6 +41,10 @@ public:
         throw ResponseNotHandled();
     }
     virtual void visitResponse(const Ping&) {
+        throw ResponseNotHandled();
+    }
+
+    virtual void visitResponse(const SetPosition&) {
         throw ResponseNotHandled();
     }
 };

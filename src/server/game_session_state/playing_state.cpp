@@ -1,5 +1,8 @@
 #include "server/command/command.hpp"
+#include "server/command/ping.hpp"
+#include "server/command/set_position.hpp"
 #include "server/response/ping.hpp"
+#include "server/response/set_position.hpp"
 #include "server/player.hpp"
 #include "server/game_session.hpp"
 #include "server/game_session_state/playing_state.hpp"
@@ -104,6 +107,26 @@ PlayingState::_createMapUpdates(
 void PlayingState::onCommand(const ::Dummy::Server::Command::Command& command)
 {
     command.accept(*this);
+}
+
+void PlayingState::visitCommand(
+    const Dummy::Server::Command::SetPosition& setPosition
+) {
+    std::unique_ptr<Dummy::Server::Response::SetPosition> response =
+    std::make_unique<Dummy::Server::Response::SetPosition>();
+
+    // XXX: check that the position is not blocking.
+    
+    // XXX: update the player position
+    auto player = m_gameSession.player().lock();
+    if (player) {
+        player->setPosition(setPosition.x(), setPosition.x());
+        response->setStatus(0);
+    } else {
+        // XXX: Error
+        response->setStatus(1);
+    }
+    m_gameSession.addResponse(std::move(response));
 }
 
 void PlayingState::visitCommand(
