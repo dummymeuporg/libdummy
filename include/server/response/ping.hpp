@@ -19,12 +19,19 @@ namespace Response {
 
 class ResponseVisitor;
 
+using MapUpdates = \
+    std::vector<std::unique_ptr<const Dummy::Protocol::MapUpdate::Update>>;
+
+
 class Ping : public Response {
 public:
     virtual void accept(ResponseVisitor&) const override;
     void addUpdate(std::unique_ptr<const Dummy::Protocol::MapUpdate::Update>);
     virtual void serializeTo(Dummy::Protocol::OutgoingPacket&) const override;
     virtual void readFrom(Dummy::Protocol::IncomingPacket&) override;
+    const MapUpdates& mapUpdates() const {
+        return m_mapUpdates;
+    }
 private:
     std::unique_ptr<const Dummy::Protocol::MapUpdate::CharacterOff>
     _readCharacterOff(Dummy::Protocol::IncomingPacket&);
@@ -35,8 +42,7 @@ private:
     std::unique_ptr<const Dummy::Protocol::MapUpdate::CharacterPosition>
     _readCharacterPosition(Dummy::Protocol::IncomingPacket&);
 
-    std::vector<std::unique_ptr<const Dummy::Protocol::MapUpdate::Update>>
-        m_mapUpdates;
+    MapUpdates m_mapUpdates;
 
 };
 
