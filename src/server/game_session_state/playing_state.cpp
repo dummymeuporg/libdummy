@@ -67,18 +67,23 @@ PlayingState::_createMapUpdates(
             ));
             std::cerr << "Hello " << name << std::endl;
         } else {
-            // Update the living status.
-            mapUpdates.push_back(std::move(
-                std::make_unique<
-                    Dummy::Protocol::MapUpdate::CharacterPosition
-                >(
-                    otherPlayer->serverPosition().first,
-                    otherPlayer->serverPosition().second,
-                    otherPlayer->character()->name(),
-                    otherPlayer->character()->direction()
-                )));
-            // XXX: update the skin / diretion?
-            std::cerr << "Updated " << name << std::endl;
+            // Update the living status if necessary
+            const auto& living(m_mapState.living(chr->name()));
+            if (living.x() != otherPlayer->serverPosition().first ||
+                living.y() != otherPlayer->serverPosition().second)
+            {
+                mapUpdates.push_back(std::move(
+                    std::make_unique<
+                        Dummy::Protocol::MapUpdate::CharacterPosition
+                    >(
+                        otherPlayer->serverPosition().first,
+                        otherPlayer->serverPosition().second,
+                        otherPlayer->character()->name(),
+                        otherPlayer->character()->direction()
+                    )));
+                // XXX: update the skin / diretion?
+                std::cerr << "Updated " << name << std::endl;
+            }
         }
     }
 
