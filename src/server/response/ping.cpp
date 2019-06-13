@@ -9,6 +9,7 @@
 #include "protocol/map_update/character_off.hpp"
 #include "protocol/map_update/character_on.hpp"
 #include "protocol/map_update/character_position.hpp"
+#include "protocol/map_update/packet_serializer.hpp"
 #include "server/response/response_visitor.hpp"
 #include "server/response/ping.hpp"
 
@@ -29,10 +30,10 @@ Ping::addUpdate(
 
 void Ping::serializeTo(Dummy::Protocol::OutgoingPacket& packet) const {
     std::uint16_t count = static_cast<std::uint16_t>(m_mapUpdates.size());
+    Dummy::Protocol::MapUpdate::PacketSerializer serializer(packet);
     packet << count;
     for (const auto& mapUpdate: m_mapUpdates) {
-        std::uint16_t updateCode;
-        // XXX: Serialize map updates. 
+        serializer.visit(*mapUpdate);
     }
 }
 
