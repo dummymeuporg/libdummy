@@ -120,7 +120,7 @@ void PlayingState::visitCommand(
     // XXX: update the player position
     auto player = m_gameSession.player().lock();
     if (player) {
-        player->setPosition(setPosition.x(), setPosition.x());
+        player->setPosition(setPosition.x(), setPosition.y());
         response->setStatus(0);
     } else {
         // XXX: Error
