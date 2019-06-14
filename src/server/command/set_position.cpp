@@ -7,7 +7,7 @@ namespace Server {
 namespace Command {
 
 SetPosition::SetPosition(std::uint16_t x, std::uint16_t y)
-    : m_x(y), m_y(y) {}
+    : m_x(x), m_y(y) {}
 
 void SetPosition::accept(CommandVisitor& visitor) const {
     visitor.visitCommand(*this);
