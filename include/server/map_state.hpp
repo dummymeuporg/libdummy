@@ -51,6 +51,10 @@ public:
     const LivingsMap& livings() const {
         return m_livings;
     }
+    
+    const Dummy::Protocol::Living& living(const std::string& name) const {
+        return *m_livings.at(name);
+    }
 private:
     LivingsMap m_livings;
 };
