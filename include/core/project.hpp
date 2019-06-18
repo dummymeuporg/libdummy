@@ -56,7 +56,8 @@ class Project
 {
 public:
     Project(const fs::path&);
-
+    Project(const std::string&);
+    virtual ~Project();
     const fs::path& projectPath() const {
         return m_projectPath;
     }
@@ -78,6 +79,8 @@ public:
     }
 
     void load();
+protected:
+    virtual void onMapFound(const std::string&);
 private:
     void _browseNode(pt::ptree);
     void _setStartingPoint(pt::ptree);
