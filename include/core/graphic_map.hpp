@@ -36,6 +36,22 @@ public:
     const GraphicLayer& fourthLayer() const {
         return m_fourthLayer;
     }
+
+    GraphicLayer& firstLayer() {
+        return m_firstLayer;
+    }
+
+    GraphicLayer& secondLayer() {
+        return m_secondLayer;
+    }
+
+    GraphicLayer& thirdLayer() {
+        return m_thirdLayer;
+    }
+
+    GraphicLayer& fourthLayer() {
+        return m_fourthLayer;
+    }
 protected:
     virtual void _loadMapFile(std::ifstream& ifs) override;
 private:

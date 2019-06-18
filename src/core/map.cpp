@@ -71,14 +71,14 @@ void Map::_loadBlkFile(std::string fullpath)
         throw WrongMagicNumber();
     }
 
-    m_blocking.resize(m_width * m_height * 4);
-    ifs.read(reinterpret_cast<char*>(m_blocking.data()),
-            m_blocking.size() * sizeof(std::uint8_t));
+    m_blockingLayer.resize(m_width * m_height * 4);
+    ifs.read(reinterpret_cast<char*>(m_blockingLayer.data()),
+            m_blockingLayer.size() * sizeof(std::uint8_t));
     std::cerr << m_name << " read blocking layer." << std::endl;
 }
 
 bool Map::isBlocking(std::uint16_t x, std::uint16_t y) const {
-    return static_cast<bool>(m_blocking[y * (m_width * 2) + x]);
+    return static_cast<bool>(m_blockingLayer[y * (m_width * 2) + x]);
 }
 
 } // namespace Core
