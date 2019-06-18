@@ -54,7 +54,7 @@ public:
     }
 protected:
     virtual void _loadMapFile(std::ifstream& ifs) override;
-private:
+protected:
     std::string m_chipset;
     std::string m_music;
     GraphicLayer m_firstLayer;

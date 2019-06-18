@@ -51,6 +51,10 @@ public:
 
     friend std::fstream& operator>>(std::fstream&, Map&);
 
+    const std::string& name() const {
+        return m_name;
+    }
+
     std::uint16_t width() const {
         return m_width;
     }
@@ -68,6 +72,8 @@ public:
     const BlockingLayer& blockingLayer() const {
         return m_blockingLayer;
     }
+
+    void setDimensions(std::uint16_t, std::uint16_t);
 
 protected:
     void _loadBlkFile(std::string);
