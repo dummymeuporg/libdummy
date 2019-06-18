@@ -25,6 +25,8 @@ macro(GroupSources curdir)
     endforeach()
 endmacro()
 
+link_directories(${Boost_LIBRARY_DIRS})
+
 file(GLOB_RECURSE SOURCES "src/*.cpp")
 file(GLOB_RECURSE HEADERS "include/*.hpp")
 
@@ -39,6 +41,15 @@ target_include_directories(dummy PUBLIC ${Boost_INCLUDE_DIR})
 #add_executable(sha512_tests
 #	tests/sha512_tests.cpp
 #)
+
+
+set(PROJECT_TEST_LIBRARIES dummy ${Boost_LIBRARIES})
+if (UNIX)
+    set(PROJECT_TEST_LIBRARIES
+        ${PROJECT_TEST_LIBRARIES}
+        stdc++fs
+    )
+endif (UNIX)
 
 add_executable(project_tests
     tests/core/project_tests.cpp
@@ -65,10 +76,10 @@ add_executable(character_read_file_tests
 #	dummy
 #)
 
+
 target_link_libraries(
     project_tests
-    dummy
-    stdc++fs
+    ${PROJECT_TEST_LIBRARIES}
 )
 
 target_link_libraries(

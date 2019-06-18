@@ -1,6 +1,7 @@
 #define BOOST_TEST_MODULE PROJECT Unit Tests
 
 #include <algorithm>
+#include <filesystem>
 
 #include <boost/test/included/unit_test.hpp>
 
