@@ -49,16 +49,20 @@ void GraphicMap::_loadMapFile(std::ifstream& ifs) {
     std::size_t bytesToRead = m_width * m_height * 2 * sizeof(std::int8_t);
 
     m_firstLayer.resize(bytesToRead);
-    ifs.read(reinterpret_cast<char*>(m_firstLayer.data()), bytesToRead);
+    ifs.read(reinterpret_cast<char*>(m_firstLayer.data()),
+             static_cast<std::streamsize>(bytesToRead));
 
     m_secondLayer.resize(bytesToRead);
-    ifs.read(reinterpret_cast<char*>(m_secondLayer.data()), bytesToRead);
+    ifs.read(reinterpret_cast<char*>(m_secondLayer.data()),
+             static_cast<std::streamsize>(bytesToRead));
 
     m_thirdLayer.resize(bytesToRead);
-    ifs.read(reinterpret_cast<char*>(m_thirdLayer.data()), bytesToRead);
+    ifs.read(reinterpret_cast<char*>(m_thirdLayer.data()),
+             static_cast<std::streamsize>(bytesToRead));
 
     m_fourthLayer.resize(bytesToRead);
-    ifs.read(reinterpret_cast<char*>(m_fourthLayer.data()), bytesToRead);
+    ifs.read(reinterpret_cast<char*>(m_fourthLayer.data()),
+             static_cast<std::streamsize>(bytesToRead));
 }
 
 } // namespace Core
