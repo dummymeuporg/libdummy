@@ -46,19 +46,39 @@ void GraphicMap::_loadMapFile(std::ifstream& ifs) {
     }
 
     /* Read layers. */
-    std::size_t bytesToRead = m_width * m_height * 2 * sizeof(std::int8_t);
+    std::size_t elements = m_width * m_height;
 
-    m_firstLayer.resize(bytesToRead);
-    ifs.read(reinterpret_cast<char*>(m_firstLayer.data()), bytesToRead);
+    m_firstLayer.resize(elements);
+    ifs.read(
+        reinterpret_cast<char*>(m_firstLayer.data()),
+        static_cast<std::streamsize>(
+            elements * sizeof(std::pair<std::int8_t, std::int8_t>)
+        )
+    );
 
-    m_secondLayer.resize(bytesToRead);
-    ifs.read(reinterpret_cast<char*>(m_secondLayer.data()), bytesToRead);
+    m_secondLayer.resize(elements);
+    ifs.read(
+         reinterpret_cast<char*>(m_secondLayer.data()),
+         static_cast<std::streamsize>(
+             elements * sizeof(std::pair<std::int8_t, std::int8_t>)
+         )
+     );
 
-    m_thirdLayer.resize(bytesToRead);
-    ifs.read(reinterpret_cast<char*>(m_thirdLayer.data()), bytesToRead);
+    m_thirdLayer.resize(elements);
+    ifs.read(
+         reinterpret_cast<char*>(m_thirdLayer.data()),
+         static_cast<std::streamsize>(
+             elements * sizeof(std::pair<std::int8_t, std::int8_t>)
+         )
+     );
 
-    m_fourthLayer.resize(bytesToRead);
-    ifs.read(reinterpret_cast<char*>(m_fourthLayer.data()), bytesToRead);
+    m_fourthLayer.resize(elements);
+    ifs.read(
+         reinterpret_cast<char*>(m_fourthLayer.data()),
+         static_cast<std::streamsize>(
+             elements * sizeof(std::pair<std::int8_t, std::int8_t>)
+         )
+     );
 }
 
 } // namespace Core

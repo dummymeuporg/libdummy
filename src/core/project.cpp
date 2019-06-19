@@ -19,6 +19,12 @@ Project::Project(const fs::path& projectPath) : m_projectPath(projectPath)
     // Identify starting map.
 }
 
+Project::Project(const std::string& projectPath) :
+    m_projectPath(fs::path(projectPath))
+{}
+
+Project::~Project() {}
+
 void Project::load() {
 
     fs::path projectXMLPath(m_projectPath / "project.xml");
@@ -87,10 +93,7 @@ void Project::_browseNode(pt::ptree node) {
             for (const auto& child: it.second.get_child("<xmlattr>"))
             {
                 if (child.first == "name") {
-                    const std::string& mapName(child.second.data());
-                    std::cerr << "[+] Loading " << mapName << std::endl;
-                    m_maps[mapName] = std::make_unique<Map>(*this, mapName);
-                    m_maps[mapName]->load();
+                    onMapFound(child.second.data());
                 }
             }
             if (it.second.count("map") > 0) {
@@ -98,6 +101,12 @@ void Project::_browseNode(pt::ptree node) {
             }
         }
     }
+}
+
+void Project::onMapFound(const std::string& mapName) {
+    std::cerr << "[+] Loading " << mapName << std::endl;
+    m_maps[mapName] = std::make_unique<Map>(*this, mapName);
+    m_maps[mapName]->load();
 }
     
 
