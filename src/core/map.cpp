@@ -26,8 +26,8 @@ void Map::load() {
     std::string mapFile(m_name + ".map");
     std::string blkFile(m_name + ".blk");
 
-    _internalLoadMapFile(std::move((basePath / mapFile).string()));
-    _loadBlkFile(std::move((basePath / blkFile).string()));
+    _internalLoadMapFile((basePath / mapFile).string());
+    _loadBlkFile((basePath / blkFile).string());
 }
 
 void Map::_internalLoadMapFile(std::string fullpath) {
