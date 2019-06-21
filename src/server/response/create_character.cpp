@@ -19,7 +19,7 @@ CreateCharacter::setCharacter(std::shared_ptr<Dummy::Core::Character> chr) {
 
 void
 CreateCharacter::serializeTo(Dummy::Protocol::OutgoingPacket& pkt) const {
-    pkt << m_status << *chr;
+    pkt << m_status << *m_character;
 }
 
 void CreateCharacter::readFrom(Dummy::Protocol::IncomingPacket& pkt) {
