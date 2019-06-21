@@ -49,7 +49,7 @@ std::shared_ptr<Account> AbstractGameServer::connect(
 
     if (m_connectedAccounts.find(accountName) != m_connectedAccounts.end()) {
         // XXX: disconnect the account.
-        throw AlreadyConnected();
+        //throw AlreadyConnected();
     }
 
     std::cerr << "Connect account " << accountName << std::endl;
