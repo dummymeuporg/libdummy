@@ -25,6 +25,7 @@ void GameSession::start() {
 }
 
 void GameSession::close() {
+    // XXX: Get the character out of the map, if needed.
     m_state.reset();
 }
 
