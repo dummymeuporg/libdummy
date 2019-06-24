@@ -24,19 +24,23 @@ public:
     }
 
     const GraphicLayer& firstLayer() const {
-        return m_firstLayer;
+        //return m_firstLayer;
+        return m_mapLevels[0].layer(-1);
     }
 
     const GraphicLayer& secondLayer() const {
-        return m_secondLayer;
+        //return m_secondLayer;
+        return m_mapLevels[0].layer(0);
     }
 
     const GraphicLayer& thirdLayer() const {
-        return m_thirdLayer;
+        //return m_thirdLayer;
+        return m_mapLevels[0].layer(1);
     }
 
     const GraphicLayer& fourthLayer() const {
-        return m_fourthLayer;
+        //return m_fourthLayer;
+        return m_mapLevels[0].layer(2);
     }
 protected:
     virtual void _loadMapFile(std::ifstream& ifs) override;

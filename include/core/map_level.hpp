@@ -17,7 +17,12 @@ public:
     MapLevel(const GraphicMap&);
     void addLayer(std::int8_t, GraphicLayer&&);
     const GraphicLayer& layer(std::int8_t) const;
-    const GraphicLayers& layers() const;
+    const GraphicLayers& layers() const {
+        return m_layers;
+    }
+    GraphicLayers& layers() {
+        return m_layers;
+    }
 private:
     const GraphicMap& m_graphicMap;
     GraphicLayers m_layers;
