@@ -58,6 +58,9 @@ void Map::_loadMapFile(std::ifstream& ifs) {
     std::cerr << m_name << " (" << m_width * 2 << "," << m_height * 2 << ")"
         << std::endl;
 
+    // read the number of levels
+    ifs.read(reinterpret_cast<char*>(&m_levelsCount), sizeof(std::uint8_t));
+
 }
 
 void Map::_loadBlkFile(std::string fullpath)
@@ -72,12 +75,16 @@ void Map::_loadBlkFile(std::string fullpath)
         throw WrongMagicNumber();
     }
 
-    BlockingLayer blockingLayer(m_width * m_height * 2);
-    //m_blockingLayer.resize(m_width * m_height * 2);
-    ifs.read(reinterpret_cast<char*>(blockingLayer.data()),
-            blockingLayer.size() * sizeof(std::uint8_t));
-    addBlockingLevel(std::move(blockingLayer));
-    std::cerr << m_name << " read blocking layer." << std::endl;
+    for (unsigned long long i = 0; i < m_levelsCount; ++i) {
+        BlockingLayer blockingLayer(m_width * m_height * 2);
+        //m_blockingLayer.resize(m_width * m_height * 2);
+        ifs.read(
+            reinterpret_cast<char*>(blockingLayer.data()),
+            blockingLayer.size() * sizeof(std::uint8_t)
+        );
+        addBlockingLevel(std::move(blockingLayer));
+        std::cerr << m_name << " read blocking layer." << std::endl;
+    }
 }
 
 bool Map::isBlocking(std::uint16_t x, std::uint16_t y) const {

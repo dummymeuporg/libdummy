@@ -45,61 +45,40 @@ void GraphicMap::_loadMapFile(std::ifstream& ifs) {
         m_music = "";
     }
 
-    /* Read layers. */
-    std::size_t elements = m_width * m_height;
+    /* read levels count */
+    ifs.read(reinterpret_cast<char*>(&m_levelsCount), sizeof(std::uint8_t));
 
-    // XXX: for now
-    /*
-    std::uint8_t levelsCount = 1;
-
-    for (std::uint8_t i = 0; i < levelsCount; ++i) {
+    for(std::uint8_t i = 0; i < m_levelsCount; ++i) {
         _readMapLevel(ifs);
     }
-    */
 
-    m_firstLayer.resize(elements);
-    ifs.read(
-        reinterpret_cast<char*>(m_firstLayer.data()),
-        static_cast<std::streamsize>(
-            elements * sizeof(std::pair<std::int8_t, std::int8_t>)
-        )
-    );
-
-    m_secondLayer.resize(elements);
-    ifs.read(
-         reinterpret_cast<char*>(m_secondLayer.data()),
-         static_cast<std::streamsize>(
-             elements * sizeof(std::pair<std::int8_t, std::int8_t>)
-         )
-     );
-
-    m_thirdLayer.resize(elements);
-    ifs.read(
-         reinterpret_cast<char*>(m_thirdLayer.data()),
-         static_cast<std::streamsize>(
-             elements * sizeof(std::pair<std::int8_t, std::int8_t>)
-         )
-     );
-
-    m_fourthLayer.resize(elements);
-    ifs.read(
-         reinterpret_cast<char*>(m_fourthLayer.data()),
-         static_cast<std::streamsize>(
-             elements * sizeof(std::pair<std::int8_t, std::int8_t>)
-         )
-     );
-
-    // XXX: copy the layers into an home made level
-    MapLevel mapLevel(*this);
-    mapLevel.addLayer(-1, std::move(m_firstLayer));
-    mapLevel.addLayer(0, std::move(m_secondLayer));
-    mapLevel.addLayer(1, std::move(m_thirdLayer));
-    mapLevel.addLayer(2, std::move(m_fourthLayer));
-    m_mapLevels.push_back(mapLevel);
 }
 
 void GraphicMap::_readMapLevel(std::ifstream& ifs) {
+    MapLevel mapLevel(*this);
+    std::size_t elements = m_width * m_height;
+    std::uint8_t layersCount;
 
+    // Read layers count
+    ifs.read(reinterpret_cast<char*>(&layersCount), sizeof(std::uint8_t));
+
+    for(std::uint8_t i = 0; i < layersCount; i++) {
+        // Read the layer position
+        std::int8_t position;
+        ifs.read(
+            reinterpret_cast<char*>(&position), sizeof(std::uint8_t)
+        );
+        GraphicLayer graphicLayer(elements);
+        // read the whole layer
+        ifs.read(
+            reinterpret_cast<char*>(graphicLayer.data()),
+            static_cast<std::streamsize>(
+                elements * sizeof(std::pair<std::int8_t, std::int8_t>)
+            )
+        );
+        mapLevel.addLayer(position, std::move(graphicLayer));
+    }
+    m_mapLevels.push_back(std::move(mapLevel));
 }
 
 } // namespace Core

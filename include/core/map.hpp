@@ -92,6 +92,7 @@ protected:
     const Project& m_project;
     std::string m_name;
     std::uint16_t m_width, m_height;
+    std::uint8_t m_levelsCount;
     BlockingLayer m_blockingLayer; // XXX: to remove
     BlockingLevels m_blockingLevels;
 private:
