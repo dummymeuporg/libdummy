@@ -39,6 +39,7 @@ public:
 class Project;
 
 using BlockingLayer = std::vector<std::uint8_t>;
+using BlockingLevels = std::vector<BlockingLayer>;
 
 class Map {
 public:
@@ -66,14 +67,23 @@ public:
     bool isBlocking(std::uint16_t x, std::uint16_t y) const;
 
     BlockingLayer& blockingLayer() {
-        return m_blockingLayer;
+        return m_blockingLevels[0];
     }
 
     const BlockingLayer& blockingLayer() const {
-        return m_blockingLayer;
+        return m_blockingLevels.at(0);
+    }
+
+    const BlockingLevels& blockingLevels() const {
+        return m_blockingLevels;
+    }
+
+    const BlockingLayer& blockingLevel(unsigned long long index) {
+        return m_blockingLevels.at(index);
     }
 
     void setDimensions(std::uint16_t, std::uint16_t);
+    void addBlockingLevel(BlockingLayer&&);
 
 protected:
     void _loadBlkFile(std::string);
@@ -82,7 +92,8 @@ protected:
     const Project& m_project;
     std::string m_name;
     std::uint16_t m_width, m_height;
-    std::vector<std::uint8_t> m_blockingLayer;
+    BlockingLayer m_blockingLayer; // XXX: to remove
+    BlockingLevels m_blockingLevels;
 private:
     void _internalLoadMapFile(std::string);
 };

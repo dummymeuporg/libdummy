@@ -1,6 +1,7 @@
 #pragma once
 
 #include "core/map.hpp"
+#include "core/map_level.hpp"
 
 namespace Dummy
 {
@@ -9,6 +10,7 @@ namespace Core
 {
 
 using GraphicLayer = std::vector<std::pair<std::int8_t, std::int8_t>>;
+using MapLevels = std::vector<MapLevel>;
 
 class GraphicMap : public Map {
 public:
@@ -38,6 +40,7 @@ public:
     }
 protected:
     virtual void _loadMapFile(std::ifstream& ifs) override;
+    void _readMapLevel(std::ifstream&);
 protected:
     std::string m_chipset;
     std::string m_music;
@@ -45,6 +48,7 @@ protected:
     GraphicLayer m_secondLayer;
     GraphicLayer m_thirdLayer;
     GraphicLayer m_fourthLayer;
+    MapLevels m_mapLevels;
 };
 
 } // namespace Core

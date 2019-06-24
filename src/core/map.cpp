@@ -17,6 +17,7 @@ namespace Core
 Map::Map(const Project& project, const std::string& name)
     : m_project(project), m_name(name)
 {
+    m_blockingLevels.resize(1); // One level at least.
 }
 
 void Map::load() {
@@ -71,14 +72,20 @@ void Map::_loadBlkFile(std::string fullpath)
         throw WrongMagicNumber();
     }
 
-    m_blockingLayer.resize(m_width * m_height * 4);
-    ifs.read(reinterpret_cast<char*>(m_blockingLayer.data()),
-            m_blockingLayer.size() * sizeof(std::uint8_t));
+    BlockingLayer blockingLayer(m_width * m_height * 2);
+    //m_blockingLayer.resize(m_width * m_height * 2);
+    ifs.read(reinterpret_cast<char*>(blockingLayer.data()),
+            blockingLayer.size() * sizeof(std::uint8_t));
+    addBlockingLevel(std::move(blockingLayer));
     std::cerr << m_name << " read blocking layer." << std::endl;
 }
 
 bool Map::isBlocking(std::uint16_t x, std::uint16_t y) const {
-    return static_cast<bool>(m_blockingLayer[y * (m_width * 2) + x]);
+    return static_cast<bool>(m_blockingLevels[0][y * (m_width * 2) + x]);
+}
+
+void Map::addBlockingLevel(BlockingLayer&& blockingLayer) {
+    m_blockingLevels.push_back(std::move(blockingLayer));
 }
 
 } // namespace Core

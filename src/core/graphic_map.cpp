@@ -48,6 +48,15 @@ void GraphicMap::_loadMapFile(std::ifstream& ifs) {
     /* Read layers. */
     std::size_t elements = m_width * m_height;
 
+    // XXX: for now
+    /*
+    std::uint8_t levelsCount = 1;
+
+    for (std::uint8_t i = 0; i < levelsCount; ++i) {
+        _readMapLevel(ifs);
+    }
+    */
+
     m_firstLayer.resize(elements);
     ifs.read(
         reinterpret_cast<char*>(m_firstLayer.data()),
@@ -79,6 +88,18 @@ void GraphicMap::_loadMapFile(std::ifstream& ifs) {
              elements * sizeof(std::pair<std::int8_t, std::int8_t>)
          )
      );
+
+    // XXX: copy the layers into an home made level
+    MapLevel mapLevel(*this);
+    mapLevel.addLayer(-1, std::move(m_firstLayer));
+    mapLevel.addLayer(0, std::move(m_secondLayer));
+    mapLevel.addLayer(1, std::move(m_thirdLayer));
+    mapLevel.addLayer(2, std::move(m_fourthLayer));
+    m_mapLevels.push_back(mapLevel);
+}
+
+void GraphicMap::_readMapLevel(std::ifstream& ifs) {
+
 }
 
 } // namespace Core
