@@ -45,9 +45,6 @@ void GraphicMap::_loadMapFile(std::ifstream& ifs) {
         m_music = "";
     }
 
-    /* read levels count */
-    ifs.read(reinterpret_cast<char*>(&m_levelsCount), sizeof(std::uint8_t));
-
     for(std::uint8_t i = 0; i < m_levelsCount; ++i) {
         _readMapLevel(ifs);
     }

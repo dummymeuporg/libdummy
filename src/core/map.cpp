@@ -60,7 +60,6 @@ void Map::_loadMapFile(std::ifstream& ifs) {
 
     // read the number of levels
     ifs.read(reinterpret_cast<char*>(&m_levelsCount), sizeof(std::uint8_t));
-
 }
 
 void Map::_loadBlkFile(std::string fullpath)
