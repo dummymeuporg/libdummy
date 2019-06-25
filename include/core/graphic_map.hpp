@@ -42,6 +42,10 @@ public:
         //return m_fourthLayer;
         return m_mapLevels[0].layer(2);
     }
+
+    const MapLevels& mapLevels() const {
+        return m_mapLevels;
+    }
 protected:
     virtual void _loadMapFile(std::ifstream& ifs) override;
     void _readMapLevel(std::ifstream&);
