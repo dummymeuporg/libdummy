@@ -4,6 +4,7 @@
 #include <map>
 #include <vector>
 
+using BlockingLayer = std::vector<std::uint8_t>;
 using GraphicLayer = std::vector<std::pair<std::int8_t, std::int8_t>>;
 using GraphicLayers = std::map<std::int8_t, GraphicLayer>;
 
@@ -16,15 +17,16 @@ class MapLevel {
 public:
     MapLevel(const GraphicMap&);
     void addLayer(std::int8_t, GraphicLayer&&);
-    const GraphicLayer& layer(std::int8_t) const;
-    const GraphicLayers& layers() const {
+    const GraphicLayer& graphicLayer(std::int8_t) const;
+    const GraphicLayers& graphicLayers() const {
         return m_layers;
     }
-    GraphicLayers& layers() {
-        return m_layers;
+    const BlockingLayer& blockingLayer() const {
+        return m_blockingLayer;
     }
-private:
+protected:
     const GraphicMap& m_graphicMap;
+    BlockingLayer m_blockingLayer;
     GraphicLayers m_layers;
 };
 

@@ -23,26 +23,6 @@ public:
         return m_music;
     }
 
-    const GraphicLayer& firstLayer() const {
-        //return m_firstLayer;
-        return m_mapLevels[0].layer(-1);
-    }
-
-    const GraphicLayer& secondLayer() const {
-        //return m_secondLayer;
-        return m_mapLevels[0].layer(0);
-    }
-
-    const GraphicLayer& thirdLayer() const {
-        //return m_thirdLayer;
-        return m_mapLevels[0].layer(1);
-    }
-
-    const GraphicLayer& fourthLayer() const {
-        //return m_fourthLayer;
-        return m_mapLevels[0].layer(2);
-    }
-
     const MapLevels& mapLevels() const {
         return m_mapLevels;
     }
@@ -52,10 +32,6 @@ protected:
 protected:
     std::string m_chipset;
     std::string m_music;
-    GraphicLayer m_firstLayer;
-    GraphicLayer m_secondLayer;
-    GraphicLayer m_thirdLayer;
-    GraphicLayer m_fourthLayer;
     MapLevels m_mapLevels;
 };
 
