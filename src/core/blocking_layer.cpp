@@ -4,7 +4,7 @@ namespace Dummy {
 namespace Core {
 
 BlockingLayer::BlockingLayer(std::uint16_t width, std::uint16_t height)
-    : std::vector<std::uint8_t>(width * height * 2) {}
+    : std::vector<std::uint8_t>(width * height * 4) {}
 
 } // namespace Core
 } // namespace Dummy

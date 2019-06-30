@@ -47,6 +47,7 @@ void Map::load() {
 
 void Map::readBlkFile(std::ifstream& ifs) {
     std::uint32_t magicNumber;
+    std::uint16_t version;
 
     ifs.read(reinterpret_cast<char*>(&magicNumber), sizeof(std::uint32_t));
     if (magicNumber != Map::BLK_MAGIC_WORD) {
