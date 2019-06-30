@@ -103,12 +103,9 @@ void Project::_browseNode(pt::ptree node) {
     }
 }
 
-void Project::onMapFound(const std::string& mapName) {
-    std::cerr << "[+] Loading " << mapName << std::endl;
-    m_maps[mapName] = std::make_unique<Map>(*this, mapName);
-    m_maps[mapName]->load();
+void Project::onMapFound(const std::string&) {
+    // XXX: Set it as a pure virtual function later.
 }
-    
 
 } // namespace Core
 

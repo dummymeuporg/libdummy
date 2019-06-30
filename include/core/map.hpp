@@ -47,10 +47,7 @@ public:
     static const std::uint32_t BLK_MAGIC_WORD = 0xDEADDAAD;
     static const std::uint16_t VERSION = 1;
 
-    Map(const Project&, const std::string&);
-    void load();
-
-    friend std::fstream& operator>>(std::fstream&, Map&);
+    Map(const std::string&);
 
     const std::string& name() const {
         return m_name;
@@ -64,39 +61,17 @@ public:
         return m_height;
     }
 
-    bool isBlocking(std::uint16_t x, std::uint16_t y) const;
-
-    BlockingLayer& blockingLayer() {
-        return m_blockingLevels[0];
-    }
-
-    const BlockingLayer& blockingLayer() const {
-        return m_blockingLevels.at(0);
-    }
-
-    const BlockingLevels& blockingLevels() const {
-        return m_blockingLevels;
-    }
-
-    const BlockingLayer& blockingLevel(unsigned long long index) {
-        return m_blockingLevels.at(index);
-    }
-
-    void setDimensions(std::uint16_t, std::uint16_t);
-    void addBlockingLevel(BlockingLayer&&);
+    virtual void load() = 0;
 
 protected:
-    void _loadBlkFile(std::string);
-    virtual void _loadMapFile(std::ifstream&);
+    void loadBaseInfo(std::ifstream&);
+    BlockingLayer loadBlockingLayer(std::ifstream&);
 
-    const Project& m_project;
+protected:
     std::string m_name;
     std::uint16_t m_width, m_height;
     std::uint8_t m_levelsCount;
-    BlockingLayer m_blockingLayer; // XXX: to remove
-    BlockingLevels m_blockingLevels;
-private:
-    void _internalLoadMapFile(std::string);
+    void internalLoadMapFile(std::string);
 };
 
 } // namespace Core
