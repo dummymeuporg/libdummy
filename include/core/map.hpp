@@ -38,7 +38,7 @@ public:
 
 class Project;
 
-using BlockingLayer = std::vector<std::uint8_t>;
+class BlockingLayer;
 using BlockingLevels = std::vector<BlockingLayer>;
 
 class Map {

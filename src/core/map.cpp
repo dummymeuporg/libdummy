@@ -3,6 +3,7 @@
 
 #include <boost/filesystem.hpp>
 
+#include "core/blocking_layer.hpp"
 #include "core/map.hpp"
 #include "core/project.hpp"
 
@@ -40,10 +41,10 @@ void Map::loadBaseInfo(std::ifstream& ifs) {
 }
 
 BlockingLayer Map::loadBlockingLayer(std::ifstream& ifs) {
-    BlockingLayer layer(m_width * m_height * 2);
+    BlockingLayer layer(m_width, m_height);
     ifs.read(
         reinterpret_cast<char*>(layer.data()),
-        static_cast<std::streamsize>(layer.size())
+        static_cast<std::streamsize>(layer.size() * sizeof(std::uint8_t))
     );
     return layer;
 }

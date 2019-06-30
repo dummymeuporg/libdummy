@@ -3,6 +3,7 @@
 #include <iostream>
 #include <utility>
 
+#include "core/graphic_layer.hpp"
 
 #include "local/map.hpp"
 #include "local/project.hpp"
@@ -99,7 +100,7 @@ void Map::readMapLevel(
         ifsMapFile.read(
             reinterpret_cast<char*>(&position), sizeof(std::uint8_t)
         );
-        GraphicLayer graphicLayer(elements);
+        Dummy::Core::GraphicLayer graphicLayer(m_width, m_height);
         // read the whole layer
         ifsMapFile.read(
             reinterpret_cast<char*>(graphicLayer.data()),
@@ -110,7 +111,7 @@ void Map::readMapLevel(
         level.addGraphicLayer(position, std::move(graphicLayer));
     }
     // Read the blocking layer
-    BlockingLayer&& blockingLayer = loadBlockingLayer(ifsBlkFile);
+    Dummy::Core::BlockingLayer&& blockingLayer = loadBlockingLayer(ifsBlkFile);
     level.setBlockingLayer(std::move(blockingLayer));
 
     // Create the level.
