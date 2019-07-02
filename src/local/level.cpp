@@ -14,9 +14,7 @@ void Level::addGraphicLayer(
     std::int8_t position,
     Dummy::Core::GraphicLayer&& layer
 ) {
-    m_graphicLayers[position] = std::make_unique<Dummy::Core::GraphicLayer>(
-        layer
-    );
+    m_graphicLayers[position] = std::move(layer);
 }
 
 void Level::setBlockingLayer(Dummy::Core::BlockingLayer&& blockingLayer) {
