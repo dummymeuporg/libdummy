@@ -31,6 +31,7 @@ public:
         TOO_MUCH_CHARACTERS,      /* 1 */
         INVALID_SKIN,             /* 2 */
         NAME_ALREADY_TAKEN,       /* 3 */
+        NAME_EMPTY,               /* 4 */
 
         COUNT
     };
@@ -72,6 +73,17 @@ public:
 
     virtual const char* what() const noexcept override {
         return "the character already exists";
+    }
+};
+
+class CharacterNameEmpty : public CreateCharacterError {
+public:
+    int code() const override {
+        return CreateCharacterError::Code::NAME_EMPTY;
+    }
+
+    const char* what() const noexcept override {
+        return "the character name is empty";
     }
 };
 
