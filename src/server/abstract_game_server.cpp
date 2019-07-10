@@ -128,6 +128,10 @@ AbstractGameServer::createCharacter(const Account& account,
 {
     Dummy::Core::Character chr;
 
+    if (characterName.empty()) {
+        throw CharacterNameEmpty();
+    }
+
     chr.setName(characterName);
 
     if(characterExists(chr)) {
