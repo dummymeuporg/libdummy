@@ -15,7 +15,8 @@ namespace Dummy
 namespace Core
 {
 
-Map::Map(const std::string& name) : m_name(name)
+Map::Map(const std::string& name) : m_name(name), m_width(1), m_height(1),
+    m_levelsCount(0)
 {
 }
 
