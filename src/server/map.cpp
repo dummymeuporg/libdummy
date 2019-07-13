@@ -7,7 +7,7 @@
 namespace Dummy {
 namespace Server {
 
-Map::Map(Instance& instance, const ::Dummy::Core::Map& map)
+Map::Map(Instance& instance, const ::Dummy::Remote::Map& map)
     : m_instance(instance), m_map(map)
 {
 }

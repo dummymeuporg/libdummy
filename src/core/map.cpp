@@ -49,6 +49,15 @@ BlockingLayer Map::loadBlockingLayer(std::ifstream& ifs) {
     return layer;
 }
 
+void Map::readBlkFile(std::ifstream& ifs) {
+    std::uint32_t magicNumber;
+
+    ifs.read(reinterpret_cast<char*>(&magicNumber), sizeof(std::uint32_t));
+    if (magicNumber != Map::BLK_MAGIC_WORD) {
+        throw Dummy::Core::WrongMagicNumber();
+    }
+}
+
 } // namespace Core
 
 } // namespace Dummy

@@ -40,8 +40,6 @@ protected:
     std::string m_chipset;
     std::string m_music;
     Levels m_levels;
-private:
-    void readBlkFile(std::ifstream&);
 };
 
 } // namespace Core

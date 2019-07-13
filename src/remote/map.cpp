@@ -1,4 +1,9 @@
+#include <filesystem>
+
+#include "server/project.hpp"
 #include "remote/map.hpp"
+
+namespace fs = std::filesystem;
 
 namespace Dummy {
 namespace Remote {
@@ -23,14 +28,13 @@ void Map::load() {
         throw Dummy::Core::BlkFileNotFound();
     }
 
-    /*
-    loadMapFile(ifsMapFile);
+    Dummy::Core::Map::loadBaseInfo(ifsMapFile);
     readBlkFile(ifsBlkFile);
 
     for (int i = 0; i < m_levelsCount; ++i) {
-        readMapLevel(ifsMapFile, ifsBlkFile);
+        m_floors.push_back(std::move(loadBlockingLayer(ifsBlkFile)));
     }
-    */
+
 }
 
 } // namespace Remote

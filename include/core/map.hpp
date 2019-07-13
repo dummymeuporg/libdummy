@@ -66,6 +66,7 @@ public:
 protected:
     void loadBaseInfo(std::ifstream&);
     BlockingLayer loadBlockingLayer(std::ifstream&);
+    void readBlkFile(std::ifstream& ifs);
 
 protected:
     std::string m_name;

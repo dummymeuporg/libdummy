@@ -62,14 +62,6 @@ public:
         return m_projectPath;
     }
 
-    const std::map<std::string, std::unique_ptr<Map>>& maps() const {
-        return m_maps;
-    }
-
-    const Map& getMap(const std::string& mapName) const {
-        return *m_maps.at(mapName);
-    }
-
     const std::pair<std::uint16_t, std::uint16_t>& startingPosition() const {
         return m_startingPosition;
     }
@@ -88,7 +80,6 @@ protected:
 
     /* Private attributes */
     fs::path m_projectPath;
-    std::map<std::string, std::unique_ptr<Map>> m_maps;
     std::pair<std::uint16_t, std::uint16_t> m_startingPosition;
     std::string m_startingMap;
 };

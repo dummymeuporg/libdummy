@@ -1,13 +1,26 @@
 #pragma once
 
+#include <map>
+#include <memory>
+#include <string>
+
 #include "core/project.hpp"
+#include "remote/map.hpp"
 
 namespace Dummy {
 namespace Server {
 
+using RemoteMaps = std::map<std::string,
+                            std::unique_ptr<Dummy::Remote::Map>>;
+
 class Project : public Core::Project {
+public:
+    Project(const std::string&);
 protected:
     void onMapFound(const std::string&) override;
+    bool mapExists(const std::string&) override;
+private:
+    RemoteMaps m_maps;
 };
 
 } // namespace Server

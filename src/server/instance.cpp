@@ -11,13 +11,15 @@ Instance::Instance(AbstractGameServer& abstractGameServer) :
 
 void Instance::spawnMaps() {
     // XXX: simplify it
-    const Dummy::Core::Project& project(m_abstractGameServer.project());
+    /*
+    const Dummy::Server::Project& project(m_abstractGameServer.project());
     for (auto const &projectMap : project.maps()) {
         std::cerr << "Spawn map " << projectMap.first << std::endl;
         m_maps[projectMap.first] = std::make_shared<Map>(
             *this, *projectMap.second
         );
     }
+    */
 }
 
 } // namespace Server

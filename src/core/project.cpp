@@ -77,7 +77,7 @@ void Project::_setStartingPoint(pt::ptree node) {
 
     m_startingMap = map;
 
-    if (m_maps.find(m_startingMap) == std::end(m_maps)) {
+    if (!mapExists(m_startingMap)) {
         throw MapNotFound();
     }
 
@@ -109,6 +109,7 @@ void Project::onMapFound(const std::string&) {
 
 bool Project::mapExists(const std::string&) {
     // XXX: Set it as a pure virtual function later.
+    return false;
 }
 
 } // namespace Core

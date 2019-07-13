@@ -5,12 +5,15 @@
 #include "core/blocking_layer.hpp"
 #include "core/map.hpp"
 
-#include "server/project.hpp"
 
 namespace Dummy {
+namespace Server {
+class Project;
+} // namespace Server
 namespace Remote {
 
 class Map : public Core::Map {
+public:
     Map(const Dummy::Server::Project&, const std::string&);
 
     void load() override;
