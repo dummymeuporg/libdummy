@@ -88,6 +88,7 @@ private:
     std::string m_mapLocation;
     Direction m_direction;
     Position m_position;
+    std::uint8_t m_floor;
 };
 
 } // namespace Core

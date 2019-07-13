@@ -63,7 +63,7 @@ public:
 protected:
     void _spawnMainInstance();
 
-    ::Dummy::Core::Project m_project;
+    ::Dummy::Server::Project m_project;
     fs::path m_serverPath;
     Instance m_mainInstance;
     std::map<std::string,

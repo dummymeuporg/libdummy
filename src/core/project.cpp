@@ -107,6 +107,10 @@ void Project::onMapFound(const std::string&) {
     // XXX: Set it as a pure virtual function later.
 }
 
+bool Project::mapExists(const std::string&) {
+    // XXX: Set it as a pure virtual function later.
+}
+
 } // namespace Core
 
 } // namespace Dummy

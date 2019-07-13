@@ -28,7 +28,7 @@ Map::removePlayer(std::shared_ptr<Player> player) {
 }
 
 bool
-Map::isBlocking(std::uint16_t x, std::uint16_t y) const {
+Map::isBlocking(std::uint16_t x, std::uint16_t y, std::uint8_t floor) const {
     // XXX: refactor this.
     //return m_map.isBlocking(x, y);
     return false;

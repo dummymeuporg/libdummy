@@ -81,7 +81,8 @@ public:
     void load();
 protected:
     virtual void onMapFound(const std::string&);
-private:
+    virtual bool mapExists(const std::string&);
+protected:
     void _browseNode(pt::ptree);
     void _setStartingPoint(pt::ptree);
 
