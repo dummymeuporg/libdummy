@@ -1,4 +1,4 @@
-#include "server/project.cpp"
+#include "server/project.hpp"
 
 namespace Dummy {
 namespace Server {

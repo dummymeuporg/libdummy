@@ -3,12 +3,12 @@
 namespace Dummy {
 namespace Remote {
 
-Map::Map(const std::string& name) :
-    Core::Map(name)
+Map::Map(const Dummy::Server::Project& project, const std::string& name) :
+    Core::Map(name), m_project(project)
 {}
 
 void Map::load() {
-    /*
+
     fs::path basePath(m_project.projectPath() / "maps");
     std::string mapFile(m_name + ".map");
     std::string blkFile(m_name + ".blk");
@@ -23,6 +23,7 @@ void Map::load() {
         throw Dummy::Core::BlkFileNotFound();
     }
 
+    /*
     loadMapFile(ifsMapFile);
     readBlkFile(ifsBlkFile);
 
