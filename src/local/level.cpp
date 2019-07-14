@@ -21,5 +21,13 @@ void Level::setBlockingLayer(Dummy::Core::BlockingLayer&& blockingLayer) {
     m_blockingLayer = std::move(blockingLayer);
 }
 
+std::uint16_t Level::width() const {
+    return m_map.width();
+}
+
+std::uint16_t Level::height() const {
+    return m_map.height();
+}
+
 } // namespace Local
 } // namespace Dummy

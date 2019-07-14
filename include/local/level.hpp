@@ -39,6 +39,9 @@ public:
         return m_blockingLayer;
     }
 
+    std::uint16_t width() const;
+    std::uint16_t height() const;
+
     void setBlockingLayer(Dummy::Core::BlockingLayer&&);
 protected:
     const Map& m_map;
