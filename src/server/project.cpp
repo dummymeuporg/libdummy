@@ -8,6 +8,9 @@ namespace Server {
 Project::Project(const std::string& projectPath)
     : Core::Project(projectPath) {}
 
+Project::Project(const fs::path& path)
+    : Project(path.string()) {}
+
 void Project::onMapFound(const std::string& mapName) {
     // XXX Instantiate a Remote Map.
     std::cerr << "Load remote map " << mapName << std::endl;

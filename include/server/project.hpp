@@ -7,6 +7,8 @@
 #include "core/project.hpp"
 #include "remote/map.hpp"
 
+namespace fs = std::filesystem;
+
 namespace Dummy {
 namespace Server {
 
@@ -15,6 +17,7 @@ using RemoteMaps = std::map<std::string,
 
 class Project : public Core::Project {
 public:
+    Project(const fs::path&);
     Project(const std::string&);
 protected:
     void onMapFound(const std::string&) override;
