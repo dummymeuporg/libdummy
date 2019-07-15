@@ -42,6 +42,10 @@ public:
     std::uint16_t width() const;
     std::uint16_t height() const;
 
+    const Map& map() const {
+        return m_map;
+    }
+
     void setBlockingLayer(Dummy::Core::BlockingLayer&&);
 protected:
     const Map& m_map;
