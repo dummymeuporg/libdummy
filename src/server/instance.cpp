@@ -11,7 +11,6 @@ Instance::Instance(AbstractGameServer& abstractGameServer) :
 
 void Instance::spawnMaps() {
     // XXX: simplify it
-    /*
     const Dummy::Server::Project& project(m_abstractGameServer.project());
     for (auto const &projectMap : project.maps()) {
         std::cerr << "Spawn map " << projectMap.first << std::endl;
@@ -19,7 +18,6 @@ void Instance::spawnMaps() {
             *this, *projectMap.second
         );
     }
-    */
 }
 
 } // namespace Server

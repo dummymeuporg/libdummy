@@ -19,6 +19,9 @@ class Project : public Core::Project {
 public:
     Project(const fs::path&);
     Project(const std::string&);
+    const RemoteMaps& maps() const {
+        return m_maps;
+    }
 protected:
     void onMapFound(const std::string&) override;
     bool mapExists(const std::string&) override;

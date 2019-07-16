@@ -50,6 +50,10 @@ public:
         return m_position;
     }
 
+    inline std::uint8_t floor() const {
+        return m_floor;
+    }
+
     friend std::ifstream&
     operator>>(std::ifstream& ifs, Character& chr) {
         chr._readFromStream(ifs);
