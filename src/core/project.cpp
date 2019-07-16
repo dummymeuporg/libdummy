@@ -43,7 +43,7 @@ void Project::load() {
 }
 
 void Project::_setStartingPoint(pt::ptree node) {
-    std::string x, y, map;
+    std::string x, y, map, floor;
 
     for(const auto& child: node.get_child("<xmlattr>")) {
         if (child.first == "x") {
@@ -52,10 +52,12 @@ void Project::_setStartingPoint(pt::ptree node) {
             y = child.second.data();
         } else if (child.first == "map") {
             map = child.second.data();
+        } else if (child.first == "floor") {
+            floor = child.second.data();
         }
     }
 
-    if (x == "" || y == "" || map == "") {
+    if (x == "" || y == "" || map == "" || floor == "") {
         throw IncompleteStartingPosition();
     }
     std::istringstream iss(x);
