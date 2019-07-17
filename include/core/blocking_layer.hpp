@@ -16,6 +16,10 @@ public:
     std::uint16_t height() const {
         return m_height;
     }
+
+    bool isBlocking(std::uint16_t x, std::uint16_t y) const {
+        return operator[](y * m_width + x);
+    }
 private:
     std::uint16_t m_width;
     std::uint16_t m_height;

@@ -47,6 +47,10 @@ public:
     }
 
     void setBlockingLayer(Dummy::Core::BlockingLayer&&);
+
+    bool isBlocking(std::uint16_t x, std::uint16_t y) const {
+        return m_blockingLayer.isBlocking(x, y);
+    }
 protected:
     const Map& m_map;
     Dummy::Core::BlockingLayer m_blockingLayer;
