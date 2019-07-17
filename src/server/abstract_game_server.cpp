@@ -1,10 +1,13 @@
 #include <iostream>
+#include <filesystem>
 
-
+#include "remote/map.hpp"
 #include "server/abstract_game_server.hpp"
 #include "server/account.hpp"
 #include "server/errors.hpp"
 #include "server/game_session.hpp"
+
+namespace fs = std::filesystem;
 
 namespace Dummy {
 namespace Server {
@@ -145,12 +148,14 @@ AbstractGameServer::createCharacter(const Account& account,
     }
 
     // From now, we consider the character being valid.
+    const Dummy::Core::StartingPoint& startingPoint(m_project.startingPoint());
     std::pair<std::uint16_t, std::uint16_t>
-        position(m_project.startingPosition());
+        position(startingPoint.position());
     position.first *= 2;
     position.second *= 2;
     chr.setPosition(position);
-    chr.setMapLocation(m_project.startingMap());
+    chr.setMapLocation(startingPoint.mapName());
+    chr.setFloor(startingPoint.floor());
 
     createCharacterFile(account, chr);
 

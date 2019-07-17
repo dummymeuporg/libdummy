@@ -7,7 +7,7 @@
 namespace Dummy {
 namespace Server {
 
-Map::Map(Instance& instance, const ::Dummy::Core::Map& map)
+Map::Map(Instance& instance, const ::Dummy::Remote::Map& map)
     : m_instance(instance), m_map(map)
 {
 }
@@ -28,8 +28,10 @@ Map::removePlayer(std::shared_ptr<Player> player) {
 }
 
 bool
-Map::isBlocking(std::uint16_t x, std::uint16_t y) const {
-    return m_map.isBlocking(x, y);
+Map::isBlocking(std::uint16_t x, std::uint16_t y, std::uint8_t floor) const {
+    // XXX: refactor this.
+    //return m_map.isBlocking(x, y);
+    return false;
 }
 
 } // namespace Server

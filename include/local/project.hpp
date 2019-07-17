@@ -4,14 +4,12 @@
 #include <filesystem>
 #include <map>
 #include <memory>
-#include <optional>
 
 #include <boost/filesystem.hpp>
 #include <boost/property_tree/ptree.hpp>
 #include <boost/property_tree/xml_parser.hpp>
 
 #include "core/map.hpp"
-#include "core/starting_point.hpp"
 
 namespace fs = std::filesystem;
 namespace pt = boost::property_tree;
@@ -19,8 +17,10 @@ namespace pt = boost::property_tree;
 namespace Dummy
 {
 
-namespace Core
+namespace Local
 {
+
+class Map;
 
 class ProjectError : public std::exception {
 
@@ -28,36 +28,29 @@ class ProjectError : public std::exception {
 
 class ProjectFileNotFound : public ProjectError {
 public:
-    const char* what() const noexcept override {
+    virtual const char* what() const noexcept {
         return "project.xml file could not be found";
     }
 };
 
 class MapNotFound : public ProjectError {
 public:
-    const char* what() const noexcept override {
+    virtual const char* what() const noexcept {
         return "the map could not be found";
     }
 };
 
 class IncompleteStartingPosition : public ProjectError {
 public:
-    const char* what() const noexcept override {
+    virtual const char* what() const noexcept {
         return "the starting position is incomplete";
     }
 };
 
 class IncorrectStartingPosition : public ProjectError {
 public:
-    const char* what() const noexcept override {
+    virtual const char* what() const noexcept {
         return "the starting position is incorrect.";
-    }
-};
-
-class StartingPositionNotSet : public ProjectError {
-public:
-    const char* what() const noexcept override {
-        return "the starting position is not set.";
     }
 };
 
@@ -70,28 +63,12 @@ public:
     const fs::path& projectPath() const {
         return m_projectPath;
     }
-
-    const StartingPoint& startingPoint() const {
-        if (!m_startingPoint.has_value()) {
-            throw StartingPositionNotSet();
-        }
-        return m_startingPoint.value();
-    }
-
-    void load();
-protected:
-    virtual void onMapFound(const std::string&);
-    virtual bool mapExists(const std::string&);
-protected:
-    void _browseNode(pt::ptree);
-    void _setStartingPoint(pt::ptree);
-
+private:
     /* Private attributes */
     fs::path m_projectPath;
-    std::optional<StartingPoint> m_startingPoint;
 };
 
 
-} // namespace Core
+} // namespace Local
 
 } // namespace Dummy

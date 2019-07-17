@@ -6,7 +6,7 @@
 
 namespace Dummy {
 
-namespace Core {
+namespace Remote {
 class Map;
 } // namespace Core
 
@@ -20,16 +20,16 @@ class Player;
 class Map {
 public:
     using PlayersList = std::map<std::string, std::shared_ptr<Player>>;
-    Map(Instance&, const ::Dummy::Core::Map&);
+    Map(Instance&, const Remote::Map&);
     void addPlayer(std::shared_ptr<Player>);
     void removePlayer(std::shared_ptr<Player>);
-    bool isBlocking(std::uint16_t, std::uint16_t) const;
+    bool isBlocking(std::uint16_t, std::uint16_t, std::uint8_t) const;
     const PlayersList& players() const {
         return m_players;
     }
 private:
     Instance& m_instance;
-    const Dummy::Core::Map& m_map;
+    const Dummy::Remote::Map& m_map;
     PlayersList m_players;
     std::map<std::string, std::shared_ptr<MapObserver>> m_mapObservers;
 

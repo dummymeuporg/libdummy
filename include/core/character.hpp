@@ -50,6 +50,10 @@ public:
         return m_position;
     }
 
+    inline std::uint8_t floor() const {
+        return m_floor;
+    }
+
     friend std::ifstream&
     operator>>(std::ifstream& ifs, Character& chr) {
         chr._readFromStream(ifs);
@@ -78,6 +82,7 @@ public:
     Character& setSkin(const std::string&);
     Character& setPosition(const Position&);
     Character& setMapLocation(const std::string&);
+    Character& setFloor(std::uint8_t);
 private:
     void _writeToStream(std::ofstream&) const;
     void _readFromStream(std::ifstream&);
@@ -88,6 +93,7 @@ private:
     std::string m_mapLocation;
     Direction m_direction;
     Position m_position;
+    std::uint8_t m_floor;
 };
 
 } // namespace Core

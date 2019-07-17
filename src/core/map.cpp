@@ -3,6 +3,7 @@
 
 #include <boost/filesystem.hpp>
 
+#include "core/blocking_layer.hpp"
 #include "core/map.hpp"
 #include "core/project.hpp"
 
@@ -14,33 +15,12 @@ namespace Dummy
 namespace Core
 {
 
-Map::Map(const Project& project, const std::string& name)
-    : m_project(project), m_name(name)
+Map::Map(const std::string& name) : m_name(name), m_width(1), m_height(1),
+    m_levelsCount(0)
 {
 }
 
-void Map::load() {
-    std::cerr << "load map" << std::endl;
-    fs::path basePath(m_project.projectPath() / "maps");
-    std::cerr << "path: " << basePath.string() << std::endl;
-    std::string mapFile(m_name + ".map");
-    std::string blkFile(m_name + ".blk");
-
-    _internalLoadMapFile((basePath / mapFile).string());
-    _loadBlkFile((basePath / blkFile).string());
-}
-
-void Map::_internalLoadMapFile(std::string fullpath) {
-    std::ifstream ifs(fullpath, std::ios::binary);
-    if (!ifs.is_open()) {
-        throw MapFileNotFound();
-    }
-    _loadMapFile(ifs); 
-    ifs.close();
-}
-
-void Map::_loadMapFile(std::ifstream& ifs) {
-    std::cerr << "Map::_loadMapFile" << std::endl;
+void Map::loadBaseInfo(std::ifstream& ifs) {
     std::uint32_t magicNumber;
     std::uint16_t version;
     ifs.read(reinterpret_cast<char*>(&magicNumber), sizeof(std::uint32_t));
@@ -57,28 +37,26 @@ void Map::_loadMapFile(std::ifstream& ifs) {
     std::cerr << m_name << " (" << m_width * 2 << "," << m_height * 2 << ")"
         << std::endl;
 
+    // read the number of levels
+    ifs.read(reinterpret_cast<char*>(&m_levelsCount), sizeof(std::uint8_t));
 }
 
-void Map::_loadBlkFile(std::string fullpath)
-{
+BlockingLayer Map::loadBlockingLayer(std::ifstream& ifs) {
+    BlockingLayer layer(m_width, m_height);
+    ifs.read(
+        reinterpret_cast<char*>(layer.data()),
+        static_cast<std::streamsize>(layer.size() * sizeof(std::uint8_t))
+    );
+    return layer;
+}
+
+void Map::readBlkFile(std::ifstream& ifs) {
     std::uint32_t magicNumber;
-    std::ifstream ifs(fullpath, std::ios::binary);
-    if (!ifs.is_open()) {
-        throw BlkFileNotFound();
-    }
+
     ifs.read(reinterpret_cast<char*>(&magicNumber), sizeof(std::uint32_t));
     if (magicNumber != Map::BLK_MAGIC_WORD) {
-        throw WrongMagicNumber();
+        throw Dummy::Core::WrongMagicNumber();
     }
-
-    m_blockingLayer.resize(m_width * m_height * 4);
-    ifs.read(reinterpret_cast<char*>(m_blockingLayer.data()),
-            m_blockingLayer.size() * sizeof(std::uint8_t));
-    std::cerr << m_name << " read blocking layer." << std::endl;
-}
-
-bool Map::isBlocking(std::uint16_t x, std::uint16_t y) const {
-    return static_cast<bool>(m_blockingLayer[y * (m_width * 2) + x]);
 }
 
 } // namespace Core

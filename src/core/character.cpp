@@ -50,6 +50,11 @@ Character& Character::setMapLocation(const std::string& mapLocation) {
     return *this;
 }
 
+Character& Character::setFloor(std::uint8_t floor) {
+    m_floor = floor;
+    return *this;
+}
+
 std::string Character::filteredName(const std::string& name) {
     std::string filteredName("");
     bool isPreviousAlpha = false;
@@ -142,16 +147,18 @@ void Character::_writeToStream(std::ofstream& ofs) const {
     ofs.write(m_mapLocation.c_str(), m_mapLocation.size());
     ofs.write(reinterpret_cast<const char*>(&m_direction),
               sizeof(std::uint8_t));
+    ofs.write(reinterpret_cast<const char*>(&m_floor),
+              sizeof(std::uint8_t));
 }
 
 void Character::_writeToPacket(Protocol::OutgoingPacket& pkt) const {
     pkt << m_name << m_skin << m_position.first << m_position.second
-        << m_mapLocation;
+        << m_mapLocation << m_floor;
 }
 
 void Character::_readFromPacket(Protocol::IncomingPacket& pkt) {
     pkt >> m_name >> m_skin >> m_position.first >> m_position.second
-        >> m_mapLocation;
+        >> m_mapLocation >> m_floor;
 }
 
 } // namespace Core

@@ -8,6 +8,7 @@
 #include "core/project.hpp"
 
 #include "server/instance.hpp"
+#include "server/project.hpp"
 
 namespace fs = std::filesystem;
 
@@ -28,7 +29,7 @@ public:
         return m_serverPath;
     }
 
-    const ::Dummy::Core::Project& project() const {
+    const Project& project() const {
         return m_project;
     }
 
@@ -63,7 +64,7 @@ public:
 protected:
     void _spawnMainInstance();
 
-    ::Dummy::Core::Project m_project;
+    Project m_project;
     fs::path m_serverPath;
     Instance m_mainInstance;
     std::map<std::string,
