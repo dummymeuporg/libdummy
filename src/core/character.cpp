@@ -50,6 +50,11 @@ Character& Character::setMapLocation(const std::string& mapLocation) {
     return *this;
 }
 
+Character& Character::setFloor(std::uint8_t floor) {
+    m_floor = floor;
+    return *this;
+}
+
 std::string Character::filteredName(const std::string& name) {
     std::string filteredName("");
     bool isPreviousAlpha = false;

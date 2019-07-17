@@ -82,6 +82,7 @@ public:
     Character& setSkin(const std::string&);
     Character& setPosition(const Position&);
     Character& setMapLocation(const std::string&);
+    Character& setFloor(std::uint8_t);
 private:
     void _writeToStream(std::ofstream&) const;
     void _readFromStream(std::ifstream&);

@@ -4,12 +4,14 @@
 #include <filesystem>
 #include <map>
 #include <memory>
+#include <optional>
 
 #include <boost/filesystem.hpp>
 #include <boost/property_tree/ptree.hpp>
 #include <boost/property_tree/xml_parser.hpp>
 
 #include "core/map.hpp"
+#include "core/starting_point.hpp"
 
 namespace fs = std::filesystem;
 namespace pt = boost::property_tree;
@@ -26,29 +28,36 @@ class ProjectError : public std::exception {
 
 class ProjectFileNotFound : public ProjectError {
 public:
-    virtual const char* what() const noexcept {
+    const char* what() const noexcept override {
         return "project.xml file could not be found";
     }
 };
 
 class MapNotFound : public ProjectError {
 public:
-    virtual const char* what() const noexcept {
+    const char* what() const noexcept override {
         return "the map could not be found";
     }
 };
 
 class IncompleteStartingPosition : public ProjectError {
 public:
-    virtual const char* what() const noexcept {
+    const char* what() const noexcept override {
         return "the starting position is incomplete";
     }
 };
 
 class IncorrectStartingPosition : public ProjectError {
 public:
-    virtual const char* what() const noexcept {
+    const char* what() const noexcept override {
         return "the starting position is incorrect.";
+    }
+};
+
+class StartingPositionNotSet : public ProjectError {
+public:
+    const char* what() const noexcept override {
+        return "the starting position is not set.";
     }
 };
 
@@ -62,12 +71,11 @@ public:
         return m_projectPath;
     }
 
-    const std::pair<std::uint16_t, std::uint16_t>& startingPosition() const {
-        return m_startingPosition;
-    }
-
-    const std::string& startingMap() const {
-        return m_startingMap;
+    const StartingPoint& startingPoint() const {
+        if (!m_startingPoint.has_value()) {
+            throw StartingPositionNotSet();
+        }
+        return m_startingPoint.value();
     }
 
     void load();
@@ -80,8 +88,7 @@ protected:
 
     /* Private attributes */
     fs::path m_projectPath;
-    std::pair<std::uint16_t, std::uint16_t> m_startingPosition;
-    std::string m_startingMap;
+    std::optional<StartingPoint> m_startingPoint;
 };
 
 

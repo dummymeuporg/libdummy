@@ -43,7 +43,9 @@ void Project::load() {
 }
 
 void Project::_setStartingPoint(pt::ptree node) {
-    std::string x, y, map, floor;
+    std::string x, y, map, floorString;
+    std::pair<std::uint16_t, std::uint16_t> position;
+    std::uint8_t floor;
 
     for(const auto& child: node.get_child("<xmlattr>")) {
         if (child.first == "x") {
@@ -53,38 +55,40 @@ void Project::_setStartingPoint(pt::ptree node) {
         } else if (child.first == "map") {
             map = child.second.data();
         } else if (child.first == "floor") {
-            floor = child.second.data();
+            floorString = child.second.data();
         }
     }
 
-    if (x == "" || y == "" || map == "" || floor == "") {
+    if (x == "" || y == "" || map == "" || floorString == "") {
         throw IncompleteStartingPosition();
     }
     std::istringstream iss(x);
-    iss >> m_startingPosition.first;
+    iss >> position.first;
 
     if (iss.bad()) {
         throw IncorrectStartingPosition();
     }
-    std::cerr << "x = " << m_startingPosition.first << std::endl;
+    std::cerr << "x = " << position.first << std::endl;
 
     iss.str(y);
     iss.seekg(0);
-    iss >> m_startingPosition.second;
+    iss >> position.second;
 
     if (iss.bad()) {
         throw IncorrectStartingPosition();
     }
-    std::cerr << "y = " << m_startingPosition.second << std::endl;
+    std::cerr << "y = " << position.second << std::endl;
 
-    m_startingMap = map;
-
-    if (!mapExists(m_startingMap)) {
+    if (!mapExists(map)) {
         throw MapNotFound();
     }
 
+    iss.str(floorString);
+    iss.seekg(0);
+    iss >> floor;
+
     // From here, everything is correct.
-    std::cerr << "Starting map: " << m_startingMap << std::endl;
+    m_startingPoint = std::make_optional<StartingPoint>(map, position, floor);
 
 }
 
