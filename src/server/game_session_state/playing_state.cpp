@@ -60,6 +60,7 @@ PlayingState::_createMapUpdates(
                 std::make_unique<Dummy::Protocol::MapUpdate::CharacterOn>(
                     otherPlayer->serverPosition().first,
                     otherPlayer->serverPosition().second,
+                    otherPlayer->character()->floor(),
                     otherPlayer->character()->name(),
                     otherPlayer->character()->skin(),
                     otherPlayer->character()->direction()
@@ -78,6 +79,7 @@ PlayingState::_createMapUpdates(
                     >(
                         otherPlayer->serverPosition().first,
                         otherPlayer->serverPosition().second,
+                        otherPlayer->character()->floor(),
                         otherPlayer->character()->name(),
                         otherPlayer->character()->direction()
                     )));

@@ -13,8 +13,9 @@ namespace MapUpdate {
 
 class CharacterOn : public CharacterPosition {
 public:
-    CharacterOn(std::uint16_t,
-                std::uint16_t,
+    CharacterOn(std::uint16_t x,
+                std::uint16_t y,
+                std::uint8_t floor,
                 const std::string&,
                 const std::string&,
                 Dummy::Core::Character::Direction);

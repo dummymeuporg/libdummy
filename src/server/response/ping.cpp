@@ -71,23 +71,26 @@ Ping::_readCharacterOff(Dummy::Protocol::IncomingPacket& packet) {
 std::unique_ptr<const Dummy::Protocol::MapUpdate::CharacterOn>
 Ping::_readCharacterOn(Dummy::Protocol::IncomingPacket& packet) {
     std::uint16_t x, y;
+    std::uint8_t floor;
     std::string name, skin;
     Dummy::Core::Character::Direction direction;
-    packet >> x >> y >> name >> skin
+    packet >> x >> y >> floor >> name >> skin
         >> reinterpret_cast<std::uint8_t&>(direction);
     return std::make_unique<Dummy::Protocol::MapUpdate::CharacterOn>(
-        x, y, name, skin, direction
+        x, y, floor, name, skin, direction
     );
 }
 
 std::unique_ptr<const Dummy::Protocol::MapUpdate::CharacterPosition>
 Ping::_readCharacterPosition(Dummy::Protocol::IncomingPacket& packet) {
     std::uint16_t x, y;
+    std::uint8_t floor;
     std::string name;
     Dummy::Core::Character::Direction direction;
-    packet >> x >> y >> name >> reinterpret_cast<std::uint8_t&>(direction);
+    packet >> x >> y >> floor
+           >> name >> reinterpret_cast<std::uint8_t&>(direction);
     return std::make_unique<Dummy::Protocol::MapUpdate::CharacterPosition>(
-        x, y, name, direction
+        x, y, floor, name, direction
     );
 }
 

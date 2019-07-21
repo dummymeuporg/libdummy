@@ -13,8 +13,9 @@ namespace MapUpdate {
 
 class CharacterPosition : public Update {
 public:
-    CharacterPosition(std::uint16_t,
-                      std::uint16_t,
+    CharacterPosition(std::uint16_t x,
+                      std::uint16_t y,
+                      std::uint8_t floor,
                       const std::string&,
                       Dummy::Core::Character::Direction);
 
@@ -31,6 +32,10 @@ public:
         return m_y;
     }
 
+    std::uint8_t floor() const {
+        return m_floor;
+    }
+
     const std::string& name() const {
         return m_name;
     }
@@ -41,6 +46,7 @@ public:
 
 protected:
     std::uint16_t m_x, m_y;
+    std::uint8_t m_floor;
     std::string m_name;
     Dummy::Core::Character::Direction m_direction;
 };
