@@ -25,8 +25,8 @@ void PacketSerializer::visitMapUpdate(const CharacterOff& update) {
 
 void PacketSerializer::visitMapUpdate(const CharacterOn& update) {
     m_packet << Bridge::CHARACTER_ON
-        << update.x() << update.y() << update.name()
-        << update.chipset()
+        << update.x() << update.y() << update.floor()
+        << update.name() << update.chipset()
         << static_cast<std::uint8_t>(update.direction());
 }
 
