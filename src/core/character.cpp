@@ -122,6 +122,9 @@ void Character::_readFromStream(std::ifstream& ifs) {
     // read direction
     ifs.read(reinterpret_cast<char*>(&m_direction), sizeof(std::uint8_t));
 
+    // read floor
+    ifs.read(reinterpret_cast<char*>(&m_floor), sizeof(std::uint8_t));
+
 }
 
 void Character::_writeToStream(std::ofstream& ofs) const {
