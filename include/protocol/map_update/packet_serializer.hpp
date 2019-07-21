@@ -16,6 +16,7 @@ class PacketSerializer : public MapUpdateVisitor {
 public:
     PacketSerializer(OutgoingPacket&);
     void visit(const Update&);
+    void visitMapUpdate(const CharacterFloor&) override;
     void visitMapUpdate(const CharacterOff&) override;
     void visitMapUpdate(const CharacterOn&) override;
     void visitMapUpdate(const CharacterPosition&) override;

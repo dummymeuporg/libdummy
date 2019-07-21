@@ -12,10 +12,9 @@ namespace MapUpdate {
 CharacterPosition::CharacterPosition(
     std::uint16_t x,
     std::uint16_t y,
-    std::uint8_t floor,
     const std::string& name,
     Dummy::Core::Character::Direction direction
-) : m_x(x), m_y(y), m_floor(floor), m_name(name), m_direction(direction)
+) : m_x(x), m_y(y), m_name(name), m_direction(direction)
 {
 }
 

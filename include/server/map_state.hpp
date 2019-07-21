@@ -36,17 +36,17 @@ public:
     MapState();
     void update(const Dummy::Protocol::MapUpdate::Update&);
 
-    virtual void visitMapUpdate(
+    void visitMapUpdate(
         const Dummy::Protocol::MapUpdate::CharacterPosition&
-    );
+    ) override;
 
-    virtual void visitMapUpdate(
+    void visitMapUpdate(
         const Dummy::Protocol::MapUpdate::CharacterOff&
-    );
+    ) override;
 
-    virtual void visitMapUpdate(
+    void visitMapUpdate(
         const Dummy::Protocol::MapUpdate::CharacterOn&
-    );
+    ) override;
 
     const LivingsMap& livings() const {
         return m_livings;

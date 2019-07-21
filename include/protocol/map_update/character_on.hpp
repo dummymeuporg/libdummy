@@ -30,11 +30,16 @@ public:
         return m_direction;
     }
 
+    std::uint8_t floor() const {
+        return m_floor;
+    }
+
     virtual void serializeTo(Dummy::Protocol::OutgoingPacket&) const override;
     virtual void readFrom(Dummy::Protocol::IncomingPacket&) override;
 protected:
     std::string m_chipset;
     Dummy::Core::Character::Direction m_direction;
+    std::uint8_t m_floor;
 };
 
 } // name MapUpdate

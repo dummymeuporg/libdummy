@@ -13,6 +13,7 @@ public:
     }
 };
 
+class CharacterFloor;
 class CharacterOff;
 class CharacterOn;
 class CharacterPosition;
@@ -28,6 +29,10 @@ public:
     }
 
     virtual void visitMapUpdate(const CharacterOn&) {
+        throw MapUpdateNotHandled();
+    }
+
+    virtual void visitMapUpdate(const CharacterFloor&) {
         throw MapUpdateNotHandled();
     }
 };

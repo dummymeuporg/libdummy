@@ -6,6 +6,7 @@
 #include "protocol/outgoing_packet.hpp"
 #include "protocol/incoming_packet.hpp"
 #include "protocol/map_update/update.hpp"
+#include "protocol/map_update/character_floor.hpp"
 #include "protocol/map_update/character_off.hpp"
 #include "protocol/map_update/character_on.hpp"
 #include "protocol/map_update/character_position.hpp"
@@ -46,21 +47,25 @@ void Ping::readFrom(Dummy::Protocol::IncomingPacket& packet) {
         switch(code) {
         case Dummy::Protocol::Bridge::CHARACTER_OFF:
             /* Read character off */
-            addUpdate(_readCharacterOff(packet));
+            addUpdate(readCharacterOff(packet));
             break;
         case Dummy::Protocol::Bridge::CHARACTER_ON:
             /* Read character on */
-            addUpdate(_readCharacterOn(packet));
+            addUpdate(readCharacterOn(packet));
             break;
         case Dummy::Protocol::Bridge::CHARACTER_POSITION:
             /* Read character position */
-            addUpdate(_readCharacterPosition(packet));
+            addUpdate(readCharacterPosition(packet));
+            break;
+        case Dummy::Protocol::Bridge::CHARACTER_FLOOR:
+            addUpdate(readCharacterFloor(packet));
+            break;
         }
     }
 }
 
 std::unique_ptr<const Dummy::Protocol::MapUpdate::CharacterOff>
-Ping::_readCharacterOff(Dummy::Protocol::IncomingPacket& packet) {
+Ping::readCharacterOff(Dummy::Protocol::IncomingPacket& packet) {
     std::string name;
     packet >> name;
     return std::make_unique<Dummy::Protocol::MapUpdate::CharacterOff>(
@@ -69,7 +74,7 @@ Ping::_readCharacterOff(Dummy::Protocol::IncomingPacket& packet) {
 }
 
 std::unique_ptr<const Dummy::Protocol::MapUpdate::CharacterOn>
-Ping::_readCharacterOn(Dummy::Protocol::IncomingPacket& packet) {
+Ping::readCharacterOn(Dummy::Protocol::IncomingPacket& packet) {
     std::uint16_t x, y;
     std::uint8_t floor;
     std::string name, skin;
@@ -82,15 +87,24 @@ Ping::_readCharacterOn(Dummy::Protocol::IncomingPacket& packet) {
 }
 
 std::unique_ptr<const Dummy::Protocol::MapUpdate::CharacterPosition>
-Ping::_readCharacterPosition(Dummy::Protocol::IncomingPacket& packet) {
+Ping::readCharacterPosition(Dummy::Protocol::IncomingPacket& packet) {
     std::uint16_t x, y;
-    std::uint8_t floor;
     std::string name;
     Dummy::Core::Character::Direction direction;
-    packet >> x >> y >> floor
+    packet >> x >> y
            >> name >> reinterpret_cast<std::uint8_t&>(direction);
     return std::make_unique<Dummy::Protocol::MapUpdate::CharacterPosition>(
-        x, y, floor, name, direction
+        x, y, name, direction
+    );
+}
+
+std::unique_ptr<const Dummy::Protocol::MapUpdate::CharacterFloor>
+Ping::readCharacterFloor(Dummy::Protocol::IncomingPacket& packet) {
+    std::string name;
+    std::uint8_t floor;
+    packet >> name >> floor;
+    return std::make_unique<Dummy::Protocol::MapUpdate::CharacterFloor>(
+        name, floor
     );
 }
 

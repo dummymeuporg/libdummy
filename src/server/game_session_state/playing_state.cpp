@@ -79,7 +79,6 @@ PlayingState::_createMapUpdates(
                     >(
                         otherPlayer->serverPosition().first,
                         otherPlayer->serverPosition().second,
-                        otherPlayer->character()->floor(),
                         otherPlayer->character()->name(),
                         otherPlayer->character()->direction()
                     )));

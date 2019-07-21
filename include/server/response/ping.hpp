@@ -9,6 +9,7 @@ namespace Dummy {
 namespace Protocol {
 namespace MapUpdate {
 class Update;
+class CharacterFloor;
 class CharacterOn;
 class CharacterOff;
 class CharacterPosition;
@@ -34,13 +35,16 @@ public:
     }
 private:
     std::unique_ptr<const Dummy::Protocol::MapUpdate::CharacterOff>
-    _readCharacterOff(Dummy::Protocol::IncomingPacket&);
+    readCharacterOff(Dummy::Protocol::IncomingPacket&);
 
     std::unique_ptr<const Dummy::Protocol::MapUpdate::CharacterOn>
-    _readCharacterOn(Dummy::Protocol::IncomingPacket&);
+    readCharacterOn(Dummy::Protocol::IncomingPacket&);
 
     std::unique_ptr<const Dummy::Protocol::MapUpdate::CharacterPosition>
-    _readCharacterPosition(Dummy::Protocol::IncomingPacket&);
+    readCharacterPosition(Dummy::Protocol::IncomingPacket&);
+
+    std::unique_ptr<const Dummy::Protocol::MapUpdate::CharacterFloor>
+    readCharacterFloor(Dummy::Protocol::IncomingPacket&);
 
     MapUpdates m_mapUpdates;
 

@@ -28,6 +28,7 @@ const std::uint16_t SET_POSITION = 2;
 const std::uint16_t CHARACTER_OFF = 1;
 const std::uint16_t CHARACTER_ON = 2;
 const std::uint16_t CHARACTER_POSITION = 3;
+const std::uint16_t CHARACTER_FLOOR = 4;
 
 } // namespace Bridge
 } // namespace Protocol
