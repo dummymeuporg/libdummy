@@ -19,14 +19,19 @@ CreateCharacter::setCharacter(std::shared_ptr<Dummy::Core::Character> chr) {
 
 void
 CreateCharacter::serializeTo(Dummy::Protocol::OutgoingPacket& pkt) const {
-    pkt << m_status << *m_character;
+    pkt << m_status;
+    if (0 == m_status) {
+        pkt << *m_character;
+    }
 }
 
 void CreateCharacter::readFrom(Dummy::Protocol::IncomingPacket& pkt) {
     pkt >> m_status;
-    auto chr = std::make_shared<Dummy::Core::Character>();
-    pkt >> *chr;
-    setCharacter(chr);
+    if (0 == m_status) {
+        auto chr = std::make_shared<Dummy::Core::Character>();
+        pkt >> *chr;
+        setCharacter(chr);
+    }
 }
 
 } // namespace Response
