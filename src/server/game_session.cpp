@@ -1,11 +1,11 @@
 #include <iostream>
-#include "server/abstract_game_server.hpp"
-#include "server/account.hpp"
-#include "server/game_session.hpp"
-#include "server/game_session_state/initial_state.hpp"
+#include <dummy/server/abstract_game_server.hpp>
+#include <dummy/server/account.hpp>
+#include <dummy/server/game_session.hpp>
+#include <dummy/server/game_session_state/initial_state.hpp>
 
-#include "server/command/command.hpp"
-#include "server/response/response.hpp"
+#include <dummy/server/command/command.hpp>
+#include <dummy/server/response/response.hpp>
 
 namespace Dummy {
 namespace Server {

@@ -3,18 +3,18 @@
 
 #include <boost/range/iterator_range.hpp>
 
-#include "core/character.hpp"
+#include <dummy/core/character.hpp>
 
-#include "server/command/command.hpp"
-#include "server/command/create_character.hpp"
-#include "server/command/select_character.hpp"
-#include "server/response/create_character.hpp"
-#include "server/response/select_character.hpp"
-#include "server/abstract_game_server.hpp"
-#include "server/game_session.hpp"
-#include "server/game_session_state/loading_state.hpp"
-#include "server/game_session_state/manage_characters_state.hpp"
-#include "server/player.hpp"
+#include <dummy/server/command/command.hpp>
+#include <dummy/server/command/create_character.hpp>
+#include <dummy/server/command/select_character.hpp>
+#include <dummy/server/response/create_character.hpp>
+#include <dummy/server/response/select_character.hpp>
+#include <dummy/server/abstract_game_server.hpp>
+#include <dummy/server/game_session.hpp>
+#include <dummy/server/game_session_state/loading_state.hpp>
+#include <dummy/server/game_session_state/manage_characters_state.hpp>
+#include <dummy/server/player.hpp>
 
 
 namespace Dummy {

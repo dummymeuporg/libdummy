@@ -1,7 +1,7 @@
 #include <filesystem>
 
-#include "server/project.hpp"
-#include "remote/map.hpp"
+#include <dummy/server/project.hpp>
+#include <dummy/remote/map.hpp>
 
 namespace fs = std::filesystem;
 

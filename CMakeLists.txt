@@ -28,9 +28,9 @@ endmacro()
 link_directories(${Boost_LIBRARY_DIRS})
 
 file(GLOB_RECURSE SOURCES "src/*.cpp")
-file(GLOB_RECURSE HEADERS "include/*.hpp")
+file(GLOB_RECURSE HEADERS "include/dummy/*.hpp")
 
-GroupSources(include)
+GroupSources(include/dummy)
 GroupSources(src)
 
 add_library(dummy STATIC ${SOURCES} ${HEADERS})

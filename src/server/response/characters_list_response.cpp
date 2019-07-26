@@ -1,9 +1,10 @@
 #include <boost/core/ignore_unused.hpp>
 #include <boost/range/irange.hpp>
-#include "protocol/incoming_packet.hpp"
-#include "protocol/outgoing_packet.hpp"
-#include "server/response/characters_list_response.hpp"
-#include "server/response/response_visitor.hpp"
+
+#include <dummy/protocol/incoming_packet.hpp>
+#include <dummy/protocol/outgoing_packet.hpp>
+#include <dummy/server/response/characters_list_response.hpp>
+#include <dummy/server/response/response_visitor.hpp>
 
 namespace Dummy {
 namespace Server {

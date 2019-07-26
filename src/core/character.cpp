@@ -1,5 +1,5 @@
-#include "core/character.hpp"
-#include "core/errors.hpp"
+#include <dummy/core/character.hpp>
+#include <dummy/core/errors.hpp>
 
 
 namespace Dummy {

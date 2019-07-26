@@ -1,6 +1,6 @@
 #include <iostream>
-#include "remote/map.hpp"
-#include "server/project.hpp"
+#include <dummy/remote/map.hpp>
+#include <dummy/server/project.hpp>
 
 namespace Dummy {
 namespace Server {

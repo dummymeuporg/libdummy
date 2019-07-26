@@ -1,18 +1,18 @@
 #include <boost/range/irange.hpp>
 #include <memory>
 
-#include "core/character.hpp"
-#include "protocol/bridge.hpp"
-#include "protocol/outgoing_packet.hpp"
-#include "protocol/incoming_packet.hpp"
-#include "protocol/map_update/update.hpp"
-#include "protocol/map_update/character_floor.hpp"
-#include "protocol/map_update/character_off.hpp"
-#include "protocol/map_update/character_on.hpp"
-#include "protocol/map_update/character_position.hpp"
-#include "protocol/map_update/packet_serializer.hpp"
-#include "server/response/response_visitor.hpp"
-#include "server/response/ping.hpp"
+#include <dummy/core/character.hpp>
+#include <dummy/protocol/bridge.hpp>
+#include <dummy/protocol/outgoing_packet.hpp>
+#include <dummy/protocol/incoming_packet.hpp>
+#include <dummy/protocol/map_update/update.hpp>
+#include <dummy/protocol/map_update/character_floor.hpp>
+#include <dummy/protocol/map_update/character_off.hpp>
+#include <dummy/protocol/map_update/character_on.hpp>
+#include <dummy/protocol/map_update/character_position.hpp>
+#include <dummy/protocol/map_update/packet_serializer.hpp>
+#include <dummy/server/response/response_visitor.hpp>
+#include <dummy/server/response/ping.hpp>
 
 namespace Dummy {
 namespace Server {

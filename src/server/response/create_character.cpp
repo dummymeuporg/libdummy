@@ -1,8 +1,8 @@
-#include "core/character.hpp"
-#include "protocol/incoming_packet.hpp"
-#include "protocol/outgoing_packet.hpp"
-#include "server/response/create_character.hpp"
-#include "server/response/response_visitor.hpp"
+#include <dummy/core/character.hpp>
+#include <dummy/protocol/incoming_packet.hpp>
+#include <dummy/protocol/outgoing_packet.hpp>
+#include <dummy/server/response/create_character.hpp>
+#include <dummy/server/response/response_visitor.hpp>
 
 namespace Dummy {
 namespace Server {

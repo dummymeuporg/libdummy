@@ -1,5 +1,5 @@
-#include "server/player.hpp"
-#include "server/map.hpp"
+#include <dummy/server/player.hpp>
+#include <dummy/server/map.hpp>
 
 namespace Dummy {
 namespace Server {
