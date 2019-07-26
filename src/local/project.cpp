@@ -2,7 +2,7 @@
 #include <queue>
 #include <sstream>
 
-#include "local/project.hpp"
+#include <dummy/local/project.hpp>
 
 namespace fs = std::filesystem;
 namespace pt = boost::property_tree;

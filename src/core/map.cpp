@@ -3,9 +3,9 @@
 
 #include <boost/filesystem.hpp>
 
-#include "core/blocking_layer.hpp"
-#include "core/map.hpp"
-#include "core/project.hpp"
+#include <dummy/core/blocking_layer.hpp>
+#include <dummy/core/map.hpp>
+#include <dummy/core/project.hpp>
 
 namespace fs = std::filesystem;
 

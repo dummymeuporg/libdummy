@@ -1,6 +1,6 @@
-#include "server/command/set_position.hpp"
-#include "server/command/command_visitor.hpp"
-#include "server/response/response.hpp"
+#include <dummy/server/command/set_position.hpp>
+#include <dummy/server/command/command_visitor.hpp>
+#include <dummy/server/response/response.hpp>
 
 namespace Dummy {
 namespace Server {

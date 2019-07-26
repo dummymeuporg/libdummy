@@ -1,7 +1,7 @@
-#include "protocol/incoming_packet.hpp"
-#include "protocol/outgoing_packet.hpp"
-#include "server/response/teleport_map.hpp"
-#include "server/response/response_visitor.hpp"
+#include <dummy/protocol/incoming_packet.hpp>
+#include <dummy/protocol/outgoing_packet.hpp>
+#include <dummy/server/response/teleport_map.hpp>
+#include <dummy/server/response/response_visitor.hpp>
 
 namespace Dummy {
 namespace Server {

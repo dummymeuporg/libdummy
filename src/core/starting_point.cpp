@@ -1,4 +1,4 @@
-#include "core/starting_point.hpp"
+#include <dummy/core/starting_point.hpp>
 
 namespace Dummy {
 namespace Core {

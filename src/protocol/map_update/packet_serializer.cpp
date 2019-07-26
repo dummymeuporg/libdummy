@@ -1,11 +1,11 @@
-#include "protocol/bridge.hpp"
-#include "protocol/map_update/packet_serializer.hpp"
-#include "protocol/map_update/update.hpp"
-#include "protocol/map_update/character_floor.hpp"
-#include "protocol/map_update/character_on.hpp"
-#include "protocol/map_update/character_off.hpp"
-#include "protocol/map_update/character_position.hpp"
-#include "protocol/outgoing_packet.hpp"
+#include <dummy/protocol/bridge.hpp>
+#include <dummy/protocol/map_update/packet_serializer.hpp>
+#include <dummy/protocol/map_update/update.hpp>
+#include <dummy/protocol/map_update/character_floor.hpp>
+#include <dummy/protocol/map_update/character_on.hpp>
+#include <dummy/protocol/map_update/character_off.hpp>
+#include <dummy/protocol/map_update/character_position.hpp>
+#include <dummy/protocol/outgoing_packet.hpp>
 
 namespace Dummy {
 namespace Protocol {

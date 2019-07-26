@@ -1,4 +1,4 @@
-#include "protocol/map_update/update.hpp"
+#include <dummy/protocol/map_update/update.hpp>
 
 namespace Dummy {
 namespace Protocol {

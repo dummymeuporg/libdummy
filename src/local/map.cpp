@@ -3,10 +3,10 @@
 #include <iostream>
 #include <utility>
 
-#include "core/graphic_layer.hpp"
+#include <dummy/core/graphic_layer.hpp>
 
-#include "local/map.hpp"
-#include "local/project.hpp"
+#include <dummy/local/map.hpp>
+#include <dummy/local/project.hpp>
 
 namespace fs = std::filesystem;
 

@@ -1,7 +1,7 @@
-#include "core/blocking_layer.hpp"
-#include "core/graphic_layer.hpp"
-#include "local/map.hpp"
-#include "local/level.hpp"
+#include <dummy/core/blocking_layer.hpp>
+#include <dummy/core/graphic_layer.hpp>
+#include <dummy/local/map.hpp>
+#include <dummy/local/level.hpp>
 
 
 namespace Dummy {

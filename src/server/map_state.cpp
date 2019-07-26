@@ -1,9 +1,9 @@
-#include "protocol/living.hpp"
-#include "protocol/map_update/update.hpp"
-#include "protocol/map_update/character_on.hpp"
-#include "protocol/map_update/character_off.hpp"
-#include "protocol/map_update/character_position.hpp"
-#include "server/map_state.hpp"
+#include <dummy/protocol/living.hpp>
+#include <dummy/protocol/map_update/update.hpp>
+#include <dummy/protocol/map_update/character_on.hpp>
+#include <dummy/protocol/map_update/character_off.hpp>
+#include <dummy/protocol/map_update/character_position.hpp>
+#include <dummy/server/map_state.hpp>
 
 namespace Dummy {
 namespace Server {

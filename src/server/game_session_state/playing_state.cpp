@@ -1,17 +1,17 @@
-#include "server/command/command.hpp"
-#include "server/command/ping.hpp"
-#include "server/command/set_position.hpp"
-#include "server/response/ping.hpp"
-#include "server/response/set_position.hpp"
-#include "server/player.hpp"
-#include "server/game_session.hpp"
-#include "server/game_session_state/playing_state.hpp"
-#include "server/map.hpp"
+#include <dummy/server/command/command.hpp>
+#include <dummy/server/command/ping.hpp>
+#include <dummy/server/command/set_position.hpp>
+#include <dummy/server/response/ping.hpp>
+#include <dummy/server/response/set_position.hpp>
+#include <dummy/server/player.hpp>
+#include <dummy/server/game_session.hpp>
+#include <dummy/server/game_session_state/playing_state.hpp>
+#include <dummy/server/map.hpp>
 
-#include "protocol/map_update/update.hpp"
-#include "protocol/map_update/character_position.hpp"
-#include "protocol/map_update/character_off.hpp"
-#include "protocol/map_update/character_on.hpp"
+#include <dummy/protocol/map_update/update.hpp>
+#include <dummy/protocol/map_update/character_position.hpp>
+#include <dummy/protocol/map_update/character_off.hpp>
+#include <dummy/protocol/map_update/character_on.hpp>
 
 
 namespace Dummy {
