@@ -3,6 +3,7 @@
 
 #include <boost/range/iterator_range.hpp>
 
+#include <dummy/core/account.hpp>
 #include <dummy/core/character.hpp>
 
 #include <dummy/server/command/command.hpp>
@@ -85,12 +86,10 @@ void ManageCharactersState::visitCommand(
     try {
         std::shared_ptr<Dummy::Core::Character> chr =
             std::make_shared<Dummy::Core::Character>(
-                std::move(
-                    svr.createCharacter(
-                        m_gameSession.account(),
-                        createCharacter.name(), 
-                        createCharacter.skin()
-                    )
+                svr.createCharacter(
+                    m_gameSession.account(),
+                    createCharacter.name(),
+                    createCharacter.skin()
                 )
             );
 

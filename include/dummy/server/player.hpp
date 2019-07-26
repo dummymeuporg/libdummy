@@ -2,12 +2,14 @@
 
 #include <memory>
 
+#include <dummy/core/account.hpp>
 #include <dummy/core/character.hpp>
 #include <dummy/server/game_session.hpp>
 
 namespace Dummy {
 namespace Server {
 
+class Account;
 class Map;
 
 class Player : public std::enable_shared_from_this<Player> {

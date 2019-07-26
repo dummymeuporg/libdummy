@@ -1,4 +1,5 @@
 #include <iostream>
+#include <dummy/server/player.hpp>
 #include <dummy/server/abstract_game_server.hpp>
 #include <dummy/server/account.hpp>
 #include <dummy/server/game_session.hpp>
@@ -26,6 +27,9 @@ void GameSession::start() {
 
 void GameSession::close() {
     // XXX: Get the character out of the map, if needed.
+    if (nullptr != m_account && nullptr != m_player) {
+        m_abstractGameServer.saveCharacter(*m_account, *m_player->character());
+    }
     m_state.reset();
 }
 
