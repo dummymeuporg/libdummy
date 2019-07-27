@@ -20,6 +20,10 @@ public:
     bool isBlocking(std::uint16_t x, std::uint16_t y) const {
         return operator[](y * m_width + x);
     }
+
+    bool isBlocking(unsigned i) const {
+        return operator[](i);
+    }
 private:
     std::uint16_t m_width;
     std::uint16_t m_height;
