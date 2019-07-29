@@ -8,9 +8,9 @@ namespace Response {
 
 class Response;
 
-using ResponsePtr = std::unique_ptr<const Response>;
+using ResponsePtr = std::shared_ptr<const Response>;
 
-class Handler {
+class Handler : public std::enable_shared_from_this<Handler> {
 public:
     virtual void handleResponse(ResponsePtr) = 0;
 };

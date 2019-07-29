@@ -39,8 +39,8 @@ void InitialState::visitCommand(
         m_gameSession.abstractGameServer()
     );
 
-    std::unique_ptr<Dummy::Server::Response::ConnectResponse> response =
-        std::make_unique<Dummy::Server::Response::ConnectResponse>();
+    std::shared_ptr<Dummy::Server::Response::ConnectResponse> response =
+        std::make_shared<Dummy::Server::Response::ConnectResponse>();
     
     // XXX: connect the account and return a connect response accordingly.
     std::cerr << "Tagname is: " << connectCommand.tagName() << std::endl;

@@ -1,14 +1,18 @@
 #pragma once
 
+#include <memory>
+
 namespace Dummy {
 namespace Server {
 namespace Command {
 
 class Command;
 
+using CommandPtr = std::shared_ptr<const Dummy::Server::Command::Command>;
+
 class Handler {
 public:
-    virtual void handleCommand(const Command&) = 0;
+    virtual void handleCommand(CommandPtr) = 0;
 };
 
 } // namespace Command

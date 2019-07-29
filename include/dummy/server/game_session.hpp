@@ -28,6 +28,9 @@ namespace GameSessionState {
 
 class GameSessionCommunicator;
 
+using CommandPtr = std::shared_ptr<const Dummy::Server::Command::Command>;
+using ResponsePtr = std::shared_ptr<const Dummy::Server::Response::Response>;
+
 class GameSession : public std::enable_shared_from_this<GameSession>,
                     public Command::Handler {
 public:
@@ -41,14 +44,12 @@ public:
     void close();
     void changeState(std::shared_ptr<GameSessionState::State>);
 
-    void handleCommand(const Command::Command&) override;
+    void handleCommand(CommandPtr) override;
 
     std::unique_ptr<const Dummy::Server::Response::Response>
     getResponse();
 
-    void addResponse(
-        std::unique_ptr<const Dummy::Server::Response::Response>
-    );
+    void addResponse(ResponsePtr);
 
     AbstractGameServer& abstractGameServer() {
         return m_abstractGameServer;

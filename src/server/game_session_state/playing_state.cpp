@@ -159,8 +159,7 @@ void PlayingState::visitCommand(
 void PlayingState::visitCommand(
     const Dummy::Server::Command::Ping& ping
 ) {
-    std::unique_ptr<Dummy::Server::Response::Ping> response =
-        std::make_unique<Dummy::Server::Response::Ping>();
+    auto response(std::make_shared<Dummy::Server::Response::Ping>());
     MapUpdatesVector mapUpdates;
 
     // Get map updates
@@ -187,7 +186,7 @@ void PlayingState::visitCommand(
         response->addUpdate(std::move(update));
     }
 
-    m_gameSession.addResponse(std::move(response));
+    m_gameSession.addResponse(response);
 }
 
 void PlayingState::sendMessageToMap(
@@ -195,7 +194,10 @@ void PlayingState::sendMessageToMap(
     const std::string& author,
     const std::string& message
 ) {
-    boost::asio::post(m_gameSession.ioContext(), [this, author, map, message]()
+    boost::asio::post(m_gameSession.ioContext(),
+                      [author,
+                      map=map->shared_from_this(),
+                      message]()
     {
         map->dispatchMessage(author, message);
     });

@@ -27,7 +27,7 @@ GameSession::GameSession(
       m_account(nullptr),
       m_player(nullptr)
 {
-    m_gameSessionCommunicator->setCommandHandler(shared_from_this());
+
 }
 
 GameSession::~GameSession() {
@@ -35,6 +35,7 @@ GameSession::~GameSession() {
 }
 
 void GameSession::start() {
+    m_gameSessionCommunicator->setCommandHandler(shared_from_this());
     m_state = std::make_shared<GameSessionState::InitialState>(*this);
     m_state->resume();
 }
@@ -60,17 +61,15 @@ void GameSession::setPlayer(std::shared_ptr<Player> player) {
 }
 
 void
-GameSession::addResponse(
-    std::unique_ptr<const Dummy::Server::Response::Response> response
-) {
+GameSession::addResponse(ResponsePtr response) {
     //m_responses.emplace(std::move(response));
-    m_gameSessionCommunicator->forwardResponse(std::move(response));
+    m_gameSessionCommunicator->forwardResponse(response);
 }
 
 void
-GameSession::handleCommand(const Dummy::Server::Command::Command& command)
+GameSession::handleCommand(CommandPtr command)
 {
-    m_state->onCommand(command);
+    m_state->onCommand(*command);
 }
 
 std::unique_ptr<const Dummy::Server::Response::Response>

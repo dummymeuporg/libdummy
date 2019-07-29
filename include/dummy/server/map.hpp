@@ -19,7 +19,7 @@ class Instance;
 class MapObserver;
 class Player;
 
-class Map {
+class Map : public std::enable_shared_from_this<Map> {
 public:
     using PlayersList = std::map<std::string, std::shared_ptr<Player>>;
     Map(Instance&, const Remote::Map&, boost::asio::io_context&);

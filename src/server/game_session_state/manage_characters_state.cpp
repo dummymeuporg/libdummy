@@ -45,8 +45,8 @@ void ManageCharactersState::visitCommand(
 
     auto self(shared_from_this());
 
-    std::unique_ptr<Dummy::Server::Response::SelectCharacter> response =
-        std::make_unique<Dummy::Server::Response::SelectCharacter>();
+    std::shared_ptr<Dummy::Server::Response::SelectCharacter> response =
+        std::make_shared<Dummy::Server::Response::SelectCharacter>();
 
     if (m_charactersMap.find(selectCharacter.name())
             == std::end(m_charactersMap)
@@ -80,8 +80,8 @@ void ManageCharactersState::visitCommand(
     Dummy::Server::AbstractGameServer& svr(
         m_gameSession.abstractGameServer()
     );
-    std::unique_ptr<Dummy::Server::Response::CreateCharacter> response =
-        std::make_unique<Dummy::Server::Response::CreateCharacter>();
+    std::shared_ptr<Dummy::Server::Response::CreateCharacter> response =
+        std::make_shared<Dummy::Server::Response::CreateCharacter>();
 
     try {
         std::shared_ptr<Dummy::Core::Character> chr =

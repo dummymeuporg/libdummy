@@ -6,6 +6,7 @@
 #include <dummy/server/account.hpp>
 #include <dummy/server/errors.hpp>
 #include <dummy/server/game_session.hpp>
+#include <dummy/server/game_session_communicator.hpp>
 
 namespace fs = std::filesystem;
 
