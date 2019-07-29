@@ -13,11 +13,13 @@ namespace Dummy {
 namespace Server {
 
 AbstractGameServer::AbstractGameServer(
-    const fs::path& projectPath,
-    const fs::path& serverPath
-) : m_project(projectPath),
+   boost::asio::io_context& ioContext,
+   const fs::path& projectPath,
+   const fs::path& serverPath
+) : m_ioContext(ioContext),
+    m_project(projectPath),
     m_serverPath(serverPath),
-    m_mainInstance(*this)
+    m_mainInstance(*this, m_ioContext)
 {
     m_project.load();
     _spawnMainInstance();
@@ -164,7 +166,7 @@ AbstractGameServer::createCharacter(const Account& account,
 }
 
 std::shared_ptr<GameSession> AbstractGameServer::buildGameSession() {
-    return std::make_shared<GameSession>(*this);
+    return std::make_shared<GameSession>(*this, m_ioContext);
 }
 
 } // namespace Server

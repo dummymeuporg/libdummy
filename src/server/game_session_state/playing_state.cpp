@@ -1,5 +1,6 @@
 #include <dummy/server/command/command.hpp>
 #include <dummy/server/command/ping.hpp>
+#include <dummy/server/command/message.hpp>
 #include <dummy/server/command/set_position.hpp>
 #include <dummy/server/response/ping.hpp>
 #include <dummy/server/response/set_position.hpp>
@@ -22,8 +23,7 @@ using MapUpdatesVector = std::vector<
     std::unique_ptr<Dummy::Protocol::MapUpdate::Update>
 >;
 
-PlayingState::PlayingState(GameSession& gameSession) : State(gameSession)
-{
+PlayingState::PlayingState(GameSession& gameSession) : State(gameSession) {
 }
 
 void
@@ -139,6 +139,21 @@ void PlayingState::visitCommand(
     const Dummy::Server::Command::Message& message
 ) {
     // XXX: notify other players on the map.
+    auto player = m_gameSession.player().lock();
+    if(player == nullptr) {
+       // XXX: throw an exception?
+        std::cerr << "Error while acquiering player" << std::endl;
+        return;
+    }
+
+    auto map = player->map().lock();
+    if (map == nullptr) {
+        // XXX: throw an exception?
+        std::cerr << "Error while acquiering map" << std::endl;
+        return;
+    }
+
+    sendMessageToMap(map, player->name(), message.content());
 }
 
 void PlayingState::visitCommand(
@@ -173,6 +188,17 @@ void PlayingState::visitCommand(
     }
 
     m_gameSession.addResponse(std::move(response));
+}
+
+void PlayingState::sendMessageToMap(
+    std::shared_ptr<Map> map,
+    const std::string& author,
+    const std::string& message
+) {
+    boost::asio::post(m_gameSession.ioContext(), [this, author, map, message]()
+    {
+        map->dispatchMessage(author, message);
+    });
 }
 
 } // namespace GameSessionState

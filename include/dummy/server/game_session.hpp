@@ -1,5 +1,7 @@
 #pragma once
 
+#include <boost/asio.hpp>
+
 #include <memory>
 #include <queue>
 
@@ -24,7 +26,7 @@ namespace GameSessionState {
 
 class GameSession : public std::enable_shared_from_this<GameSession> {
 public:
-    GameSession(AbstractGameServer&);
+    GameSession(AbstractGameServer&, boost::asio::io_context&);
     virtual ~GameSession();
     void start();
     void close();
@@ -51,10 +53,17 @@ public:
         return m_player;
     }
 
+    boost::asio::io_context& ioContext() {
+        return m_ioContext;
+    }
+
     void setAccount(std::shared_ptr<Account> account);
     void setPlayer(std::shared_ptr<Player> player);
+    void receiveMessage(const std::string&,
+                        const std::string&);
 private:
     AbstractGameServer& m_abstractGameServer;
+    boost::asio::io_context& m_ioContext;
     std::shared_ptr<GameSessionState::State> m_state;
     std::shared_ptr<Account> m_account;
     std::shared_ptr<Player> m_player;

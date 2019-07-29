@@ -11,9 +11,15 @@
 namespace Dummy {
 namespace Server {
 
-GameSession::GameSession(AbstractGameServer& abstractGameServer)
-    : m_abstractGameServer(abstractGameServer), m_state(nullptr),
-      m_account(nullptr), m_player(nullptr)
+GameSession::GameSession(
+    AbstractGameServer& abstractGameServer,
+    boost::asio::io_context& ioContext
+)
+    : m_abstractGameServer(abstractGameServer),
+      m_ioContext(ioContext),
+      m_state(nullptr),
+      m_account(nullptr),
+      m_player(nullptr)
 {}
 
 GameSession::~GameSession() {
@@ -68,6 +74,15 @@ GameSession::getResponse() {
         return r;
     }
     return nullptr; // no response
+}
+
+void GameSession::receiveMessage(
+    const std::string& author,
+    const std::string& message
+) {
+    // XXX: add message response.
+    std::cerr << "Add response message. for " << author
+              << "," << message << std::endl;
 }
 
 

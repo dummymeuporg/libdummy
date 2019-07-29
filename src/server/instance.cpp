@@ -5,8 +5,10 @@
 namespace Dummy {
 namespace Server {
 
-Instance::Instance(AbstractGameServer& abstractGameServer) :
-    m_abstractGameServer(abstractGameServer) 
+Instance::Instance(
+    AbstractGameServer& abstractGameServer,
+    boost::asio::io_context& ioContext) :
+    m_abstractGameServer(abstractGameServer), m_ioContext(ioContext)
 {}
 
 void Instance::spawnMaps() {
@@ -15,7 +17,7 @@ void Instance::spawnMaps() {
     for (auto const &projectMap : project.maps()) {
         std::cerr << "Spawn map " << projectMap.first << std::endl;
         m_maps[projectMap.first] = std::make_shared<Map>(
-            *this, *projectMap.second
+            *this, *projectMap.second, m_ioContext
         );
     }
 }

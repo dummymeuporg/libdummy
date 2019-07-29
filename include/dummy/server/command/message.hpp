@@ -9,6 +9,9 @@ class Message : public Command {
 public:
     Message(const std::string&);
     void accept(CommandVisitor&) const override;
+    const std::string& content() const {
+        return m_content;
+    }
 private:
     std::string m_content;
 };

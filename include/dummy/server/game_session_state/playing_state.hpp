@@ -44,6 +44,12 @@ private:
         MapUpdatesVector&
     );
 
+    void sendMessageToMap(
+        std::shared_ptr<Map>,
+        const std::string&,
+        const std::string&
+    );
+
      MapState m_mapState;
 };
 

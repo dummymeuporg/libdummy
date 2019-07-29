@@ -7,8 +7,11 @@
 namespace Dummy {
 namespace Server {
 
-Map::Map(Instance& instance, const ::Dummy::Remote::Map& map)
-    : m_instance(instance), m_map(map)
+Map::Map(
+    Instance& instance,
+    const ::Dummy::Remote::Map& map,
+    boost::asio::io_service& ioService
+) : m_instance(instance), m_map(map), m_ioService(ioService)
 {
 }
 
@@ -32,6 +35,15 @@ Map::isBlocking(std::uint16_t x, std::uint16_t y, std::uint8_t floor) const {
     // XXX: refactor this.
     //return m_map.isBlocking(x, y);
     return false;
+}
+
+void Map::dispatchMessage(
+    const std::string& author,
+    const std::string& message
+) {
+    for (auto& [name, player]: m_players) {
+        player->gameSession().receiveMessage(author, message);
+    }
 }
 
 } // namespace Server

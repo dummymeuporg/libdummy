@@ -4,6 +4,8 @@
 #include <map>
 #include <memory>
 
+#include <boost/asio.hpp>
+
 #include <dummy/core/character.hpp>
 #include <dummy/core/project.hpp>
 
@@ -22,7 +24,8 @@ class Map;
 
 class AbstractGameServer {
 public:
-    AbstractGameServer(const fs::path& projectPath,
+    AbstractGameServer(boost::asio::io_context& ioContext,
+                       const fs::path& projectPath,
                        const fs::path& serverPath);
 
     const fs::path& serverPath() const {
@@ -64,6 +67,7 @@ public:
 protected:
     void _spawnMainInstance();
 
+    boost::asio::io_service& m_ioContext;
     Project m_project;
     fs::path m_serverPath;
     Instance m_mainInstance;
