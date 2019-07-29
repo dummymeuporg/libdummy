@@ -10,8 +10,8 @@ namespace Server {
 Map::Map(
     Instance& instance,
     const ::Dummy::Remote::Map& map,
-    boost::asio::io_service& ioService
-) : m_instance(instance), m_map(map), m_ioService(ioService)
+    boost::asio::io_context& ioContext
+) : m_instance(instance), m_map(map), m_ioContext(ioContext)
 {
 }
 

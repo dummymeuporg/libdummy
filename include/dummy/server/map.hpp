@@ -22,7 +22,7 @@ class Player;
 class Map {
 public:
     using PlayersList = std::map<std::string, std::shared_ptr<Player>>;
-    Map(Instance&, const Remote::Map&, boost::asio::io_service& ioService);
+    Map(Instance&, const Remote::Map&, boost::asio::io_context&);
     void addPlayer(std::shared_ptr<Player>);
     void removePlayer(std::shared_ptr<Player>);
     void dispatchMessage(
@@ -36,7 +36,7 @@ public:
 private:
     Instance& m_instance;
     const Dummy::Remote::Map& m_map;
-    boost::asio::io_service& m_ioService;
+    boost::asio::io_context& m_ioContext;
     PlayersList m_players;
     std::map<std::string, std::shared_ptr<MapObserver>> m_mapObservers;
 

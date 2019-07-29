@@ -18,6 +18,7 @@ public:
 class ConnectResponse;
 class CreateCharacter;
 class CharactersListResponse;
+class Message;
 class Ping;
 class SelectCharacter;
 class SetPosition;
@@ -34,6 +35,9 @@ public:
     virtual void visitResponse(const CreateCharacter&) {
         throw ResponseNotHandled();
     }
+    virtual void visitResponse(const Message&) {
+        throw ResponseNotHandled();
+    }
     virtual void visitResponse(const SelectCharacter&) {
         throw ResponseNotHandled();
     }
@@ -43,7 +47,6 @@ public:
     virtual void visitResponse(const Ping&) {
         throw ResponseNotHandled();
     }
-
     virtual void visitResponse(const SetPosition&) {
         throw ResponseNotHandled();
     }

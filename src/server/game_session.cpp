@@ -7,6 +7,8 @@
 
 #include <dummy/server/command/command.hpp>
 #include <dummy/server/response/response.hpp>
+#include <dummy/server/response/message.hpp>
+
 
 namespace Dummy {
 namespace Server {
@@ -78,11 +80,12 @@ GameSession::getResponse() {
 
 void GameSession::receiveMessage(
     const std::string& author,
-    const std::string& message
+    const std::string& content
 ) {
-    // XXX: add message response.
-    std::cerr << "Add response message. for " << author
-              << ", " << message << std::endl;
+    auto message(std::make_unique<Dummy::Server::Response::Message>());
+    message->setAuthor(author);
+    message->setContent(content);
+    addResponse(std::move(message));
 }
 
 
