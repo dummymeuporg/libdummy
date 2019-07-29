@@ -20,6 +20,8 @@ namespace Response {
 class Response;
 }
 
+class Map;
+
 namespace GameSessionState {
 
 using MapUpdatesVector = std::vector<
@@ -32,13 +34,15 @@ public:
     virtual void onCommand(const Command::Command&) override;
     virtual void resume() override;
 
-    virtual void visitCommand(const Command::Ping&) override;
-    virtual void visitCommand(const Command::SetPosition&) override;
+    void visitCommand(const Command::Ping&) override;
+    void visitCommand(const Command::SetPosition&) override;
+    void visitCommand(const Command::Message&) override;
 private:
-    void _createMapUpdates(
+    void createMapUpdates(
         std::shared_ptr<Player>,
         std::shared_ptr<Map>,
-        MapUpdatesVector&);
+        MapUpdatesVector&
+    );
 
      MapState m_mapState;
 };

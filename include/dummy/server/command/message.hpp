@@ -5,10 +5,12 @@ namespace Dummy {
 namespace Server {
 namespace Command {
 
-class Ping : public Command {
+class Message : public Command {
 public:
-    Ping();
-    virtual void accept(CommandVisitor&) const override;
+    Message(const std::string&);
+    void accept(CommandVisitor&) const override;
+private:
+    std::string m_content;
 };
 
 } // namespace Command

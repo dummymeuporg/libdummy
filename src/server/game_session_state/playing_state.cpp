@@ -33,7 +33,7 @@ PlayingState::resume() {
 
 
 void
-PlayingState::_createMapUpdates(
+PlayingState::createMapUpdates(
     std::shared_ptr<Player> player,
     std::shared_ptr<Map> map,
     MapUpdatesVector& mapUpdates)
@@ -136,6 +136,12 @@ void PlayingState::visitCommand(
 }
 
 void PlayingState::visitCommand(
+    const Dummy::Server::Command::Message& message
+) {
+    // XXX: notify other players on the map.
+}
+
+void PlayingState::visitCommand(
     const Dummy::Server::Command::Ping& ping
 ) {
     std::unique_ptr<Dummy::Server::Response::Ping> response =
@@ -154,7 +160,7 @@ void PlayingState::visitCommand(
         // XXX: throw an exception?
         std::cerr << "Error while acquiering map" << std::endl;
     }
-   _createMapUpdates(player, map, mapUpdates);
+   createMapUpdates(player, map, mapUpdates);
 
    // Apply map updates to the map state and put them into the response
    for (const auto& update: mapUpdates) {

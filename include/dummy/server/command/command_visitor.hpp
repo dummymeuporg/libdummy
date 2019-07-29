@@ -21,6 +21,7 @@ public:
 class CreateCharacter;
 class ConnectCommand;
 class GetPrimaryInfoCommand;
+class Message;
 class Ping;
 class SelectCharacter;
 class SetPosition;
@@ -32,19 +33,15 @@ public:
         throw CommandNotHandled();
     }
 
-    virtual void visitCommand(const GetPrimaryInfoCommand&) {
-        throw CommandNotHandled();
-    }
-
     virtual void visitCommand(const CreateCharacter&) {
         throw CommandNotHandled();
     }
 
-    virtual void visitCommand(const SelectCharacter&) {
+    virtual void visitCommand(const GetPrimaryInfoCommand&) {
         throw CommandNotHandled();
     }
 
-    virtual void visitCommand(const TeleportMap&) {
+    virtual void visitCommand(const Message&) {
         throw CommandNotHandled();
     }
 
@@ -53,6 +50,14 @@ public:
     }
 
     virtual void visitCommand(const SetPosition&) {
+        throw CommandNotHandled();
+    }
+
+    virtual void visitCommand(const SelectCharacter&) {
+        throw CommandNotHandled();
+    }
+
+    virtual void visitCommand(const TeleportMap&) {
         throw CommandNotHandled();
     }
 };
