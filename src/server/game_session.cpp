@@ -82,7 +82,7 @@ void GameSession::receiveMessage(
 ) {
     // XXX: add message response.
     std::cerr << "Add response message. for " << author
-              << "," << message << std::endl;
+              << ", " << message << std::endl;
 }
 
 
