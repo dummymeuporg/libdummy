@@ -1,3 +1,4 @@
+#include <dummy/server/response/response.hpp>
 #include <dummy/server/game_session_communicator.hpp>
 
 namespace Dummy {
@@ -33,13 +34,11 @@ void GameSessionCommunicator::forwardCommand(
     });
 }
 
-void GameSessionCommunicator::forwardResponse(
-    const Dummy::Server::Response::Response& response
-) {
+void GameSessionCommunicator::forwardResponse(ResponsePtr response) {
     boost::asio::post(m_ioContext, [this, &response]() {
         auto ptr = m_responseHandler.lock();
         if (ptr) {
-            ptr->handleResponse(response);
+            ptr->handleResponse(std::move(response));
         }
     });
 }

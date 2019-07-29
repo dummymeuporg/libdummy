@@ -10,6 +10,8 @@
 namespace Dummy {
 namespace Server {
 
+using ResponsePtr = std::unique_ptr<const Dummy::Server::Response::Response>;
+
 class GameSessionCommunicator :
     public std::enable_shared_from_this<GameSessionCommunicator>
 {
@@ -18,7 +20,7 @@ public:
     virtual ~GameSessionCommunicator();
 
     void forwardCommand(const Dummy::Server::Command::Command&);
-    void forwardResponse(const Dummy::Server::Response::Response&);
+    void forwardResponse(ResponsePtr);
 
     void setCommandHandler(std::shared_ptr<Dummy::Server::Command::Handler>);
     void setResponseHandler(std::shared_ptr<Dummy::Server::Response::Handler>);

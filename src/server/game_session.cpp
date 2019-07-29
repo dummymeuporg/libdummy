@@ -64,7 +64,7 @@ GameSession::addResponse(
     std::unique_ptr<const Dummy::Server::Response::Response> response
 ) {
     //m_responses.emplace(std::move(response));
-    m_gameSessionCommunicator->forwardResponse(*response);
+    m_gameSessionCommunicator->forwardResponse(std::move(response));
 }
 
 void
