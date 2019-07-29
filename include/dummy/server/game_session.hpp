@@ -2,6 +2,8 @@
 
 #include <boost/asio.hpp>
 
+#include <dummy/server/command/handler.hpp>
+
 #include <memory>
 #include <queue>
 
@@ -24,15 +26,22 @@ namespace GameSessionState {
     class State;
 }
 
-class GameSession : public std::enable_shared_from_this<GameSession> {
+class GameSessionCommunicator;
+
+class GameSession : public std::enable_shared_from_this<GameSession>,
+                    public Command::Handler {
 public:
-    GameSession(AbstractGameServer&, boost::asio::io_context&);
+    GameSession(
+        AbstractGameServer&,
+        std::shared_ptr<GameSessionCommunicator>,
+        boost::asio::io_context&
+    );
     virtual ~GameSession();
     void start();
     void close();
     void changeState(std::shared_ptr<GameSessionState::State>);
 
-    void handleCommand(const ::Dummy::Server::Command::Command&);
+    void handleCommand(const Command::Command&) override;
 
     std::unique_ptr<const Dummy::Server::Response::Response>
     getResponse();
@@ -63,6 +72,7 @@ public:
                         const std::string&);
 private:
     AbstractGameServer& m_abstractGameServer;
+    std::shared_ptr<GameSessionCommunicator> m_gameSessionCommunicator;
     boost::asio::io_context& m_ioContext;
     std::shared_ptr<GameSessionState::State> m_state;
     std::shared_ptr<Account> m_account;

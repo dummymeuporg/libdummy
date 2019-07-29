@@ -165,8 +165,12 @@ AbstractGameServer::createCharacter(const Account& account,
 
 }
 
-std::shared_ptr<GameSession> AbstractGameServer::buildGameSession() {
-    return std::make_shared<GameSession>(*this, m_ioContext);
+std::shared_ptr<GameSession>
+AbstractGameServer::buildGameSession(
+    std::shared_ptr<GameSessionCommunicator> communicator
+)
+{
+    return std::make_shared<GameSession>(*this, communicator, m_ioContext);
 }
 
 } // namespace Server

@@ -9,20 +9,26 @@
 #include <dummy/server/response/response.hpp>
 #include <dummy/server/response/message.hpp>
 
+#include <dummy/server/game_session_communicator.hpp>
+
 
 namespace Dummy {
 namespace Server {
 
 GameSession::GameSession(
     AbstractGameServer& abstractGameServer,
+    std::shared_ptr<GameSessionCommunicator> gameSessionCommunicator,
     boost::asio::io_context& ioContext
 )
     : m_abstractGameServer(abstractGameServer),
+      m_gameSessionCommunicator(gameSessionCommunicator),
       m_ioContext(ioContext),
       m_state(nullptr),
       m_account(nullptr),
       m_player(nullptr)
-{}
+{
+    m_gameSessionCommunicator->setCommandHandler(shared_from_this());
+}
 
 GameSession::~GameSession() {
     std::cerr << "Ending game session." << std::endl;
@@ -57,7 +63,8 @@ void
 GameSession::addResponse(
     std::unique_ptr<const Dummy::Server::Response::Response> response
 ) {
-    m_responses.emplace(std::move(response));
+    //m_responses.emplace(std::move(response));
+    m_gameSessionCommunicator->forwardResponse(*response);
 }
 
 void
