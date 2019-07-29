@@ -171,7 +171,13 @@ AbstractGameServer::buildGameSession(
     std::shared_ptr<GameSessionCommunicator> communicator
 )
 {
-    return std::make_shared<GameSession>(*this, communicator, m_ioContext);
+    auto gameSession(
+        std::make_shared<GameSession>(*this, communicator, m_ioContext)
+    );
+    // XXX: We keep track of the game session, otherwise it ain't got
+    // referenced, thus destroyed.
+    m_gameSessions.emplace(gameSession);
+    return gameSession;
 }
 
 } // namespace Server

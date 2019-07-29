@@ -3,6 +3,7 @@
 #include <filesystem>
 #include <map>
 #include <memory>
+#include <set>
 
 #include <boost/asio.hpp>
 
@@ -78,6 +79,7 @@ protected:
              std::shared_ptr<Account>> m_pendingAccounts;
     std::map<std::string,
              std::shared_ptr<Account>> m_connectedAccounts;
+    std::set<std::shared_ptr<GameSession>> m_gameSessions;
 };
 
 } // namespace Server

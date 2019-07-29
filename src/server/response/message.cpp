@@ -13,11 +13,11 @@ void Message::accept(ResponseVisitor& visitor) const {
 }
 
 void Message::serializeTo(Dummy::Protocol::OutgoingPacket& pkt) const {
-    pkt << m_status;
+    pkt << m_status << m_author << m_content;
 }
 
 void Message::readFrom(Dummy::Protocol::IncomingPacket& pkt) {
-    pkt >> m_status;
+    pkt >> m_status >> m_author >> m_content;
 }
 
 void Message::setAuthor(const std::string& author) {
