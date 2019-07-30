@@ -1,6 +1,7 @@
 #pragma once
 
 #include <cstdint>
+#include <memory>
 
 namespace Dummy {
 namespace Protocol {
@@ -12,7 +13,7 @@ namespace Response {
 
 class ResponseVisitor;
 
-class Response {
+class Response : public std::enable_shared_from_this<Response> {
 public:
     Response();
     std::uint8_t status() const {

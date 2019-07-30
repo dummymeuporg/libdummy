@@ -49,8 +49,7 @@ void SendCharactersState::visitCommand(
     const Dummy::Server::AbstractGameServer& svr(
         m_gameSession.abstractGameServer()
     );
-    std::unique_ptr<CharactersListResponse>
-        response = std::make_unique<CharactersListResponse>(); 
+    auto response = std::make_shared<CharactersListResponse>();
     fs::path accountPath(svr.serverPath()
         / "accounts" / m_gameSession.account().name() / "characters");
 

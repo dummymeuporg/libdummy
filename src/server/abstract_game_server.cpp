@@ -6,6 +6,7 @@
 #include <dummy/server/account.hpp>
 #include <dummy/server/errors.hpp>
 #include <dummy/server/game_session.hpp>
+#include <dummy/server/game_session_communicator.hpp>
 
 namespace fs = std::filesystem;
 
@@ -165,8 +166,18 @@ AbstractGameServer::createCharacter(const Account& account,
 
 }
 
-std::shared_ptr<GameSession> AbstractGameServer::buildGameSession() {
-    return std::make_shared<GameSession>(*this, m_ioContext);
+std::shared_ptr<GameSession>
+AbstractGameServer::buildGameSession(
+    std::shared_ptr<GameSessionCommunicator> communicator
+)
+{
+    auto gameSession(
+        std::make_shared<GameSession>(*this, communicator, m_ioContext)
+    );
+    // XXX: We keep track of the game session, otherwise it ain't got
+    // referenced, thus destroyed.
+    m_gameSessions.emplace(gameSession);
+    return gameSession;
 }
 
 } // namespace Server

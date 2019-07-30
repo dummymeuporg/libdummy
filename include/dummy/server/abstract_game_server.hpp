@@ -3,6 +3,7 @@
 #include <filesystem>
 #include <map>
 #include <memory>
+#include <set>
 
 #include <boost/asio.hpp>
 
@@ -19,6 +20,7 @@ namespace Server {
 
 class Account;
 class GameSession;
+class GameSessionCommunicator;
 class Player;
 class Map;
 
@@ -50,7 +52,9 @@ public:
     bool characterExists(const Core::Character&) const;
     bool skinExists(const std::string&) const;
 
-    std::shared_ptr<GameSession> buildGameSession();
+    std::shared_ptr<GameSession> buildGameSession(
+        std::shared_ptr<Dummy::Server::GameSessionCommunicator>
+    );
 
     ::Dummy::Core::Character createCharacter(const Account&,
                                              const std::string& characterName,
@@ -75,6 +79,7 @@ protected:
              std::shared_ptr<Account>> m_pendingAccounts;
     std::map<std::string,
              std::shared_ptr<Account>> m_connectedAccounts;
+    std::set<std::shared_ptr<GameSession>> m_gameSessions;
 };
 
 } // namespace Server
