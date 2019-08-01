@@ -50,5 +50,15 @@ void GameSessionCommunicator::forwardResponse(ResponsePtr response) {
     });
 }
 
+void GameSessionCommunicator::closeFromClient() {
+    m_responseHandler.reset();
+    //m_commandHandler.detach();
+}
+
+void GameSessionCommunicator::closeFromServer() {
+    m_commandHandler.reset();
+    //m_responseHandler.detach();
+}
+
 } // namespace Server
 } // namespace Dummy

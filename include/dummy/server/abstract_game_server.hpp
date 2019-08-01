@@ -56,15 +56,19 @@ public:
         std::shared_ptr<Dummy::Server::GameSessionCommunicator>
     );
 
-    ::Dummy::Core::Character createCharacter(const Account&,
-                                             const std::string& characterName,
-                                             const std::string& skin) const;
+    ::Dummy::Core::Character createCharacter(
+        const Account&,
+        const std::string& characterName,
+        const std::string& skin
+    ) const;
 
     void
     createCharacterFile(const Account&, const ::Dummy::Core::Character&) const;
 
     void
     saveCharacter(const Account&, const ::Dummy::Core::Character&) const;
+
+    void removeSession(std::shared_ptr<GameSession>);
 
     virtual void run();
 

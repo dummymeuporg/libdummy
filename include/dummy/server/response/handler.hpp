@@ -13,6 +13,7 @@ using ResponsePtr = std::shared_ptr<const Response>;
 class Handler : public std::enable_shared_from_this<Handler> {
 public:
     virtual void handleResponse(ResponsePtr) = 0;
+    virtual void commandHandlerClosed() = 0;
 };
 
 } // namespace Command

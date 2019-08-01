@@ -180,5 +180,11 @@ AbstractGameServer::buildGameSession(
     return gameSession;
 }
 
+void
+AbstractGameServer::removeSession(std::shared_ptr<GameSession> gameSession) {
+    std::cerr << "Removing game session." << std::endl;
+    m_gameSessions.erase(gameSession);
+}
+
 } // namespace Server
 } // namespace Dummy

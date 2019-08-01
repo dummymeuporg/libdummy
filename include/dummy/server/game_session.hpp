@@ -45,6 +45,7 @@ public:
     void changeState(std::shared_ptr<GameSessionState::State>);
 
     void handleCommand(CommandPtr) override;
+    void responseHandlerClosed() override;
 
     std::unique_ptr<const Dummy::Server::Response::Response>
     getResponse();
@@ -80,6 +81,7 @@ private:
     std::shared_ptr<Player> m_player;
     std::queue<std::unique_ptr<const Dummy::Server::Response::Response>>
         m_responses;
+    bool m_open;
 
 };
 

@@ -25,7 +25,8 @@ GameSession::GameSession(
       m_ioContext(ioContext),
       m_state(nullptr),
       m_account(nullptr),
-      m_player(nullptr)
+      m_player(nullptr),
+      m_open(false)
 {
 
 }
@@ -37,15 +38,19 @@ GameSession::~GameSession() {
 void GameSession::start() {
     m_gameSessionCommunicator->setCommandHandler(shared_from_this());
     m_state = std::make_shared<GameSessionState::InitialState>(*this);
+    m_open = true;
     m_state->resume();
 }
 
 void GameSession::close() {
     // XXX: Get the character out of the map, if needed.
+    auto self(shared_from_this());
     if (nullptr != m_account && nullptr != m_player) {
         m_abstractGameServer.saveCharacter(*m_account, *m_player->character());
     }
     m_state.reset();
+    m_abstractGameServer.removeSession(self);
+    m_open = false;
 }
 
 void GameSession::changeState(std::shared_ptr<GameSessionState::State> state) {
@@ -66,10 +71,13 @@ GameSession::addResponse(ResponsePtr response) {
     m_gameSessionCommunicator->forwardResponse(response);
 }
 
-void
-GameSession::handleCommand(CommandPtr command)
-{
+void GameSession::handleCommand(CommandPtr command) {
     m_state->onCommand(*command);
+}
+
+void GameSession::responseHandlerClosed() {
+    m_gameSessionCommunicator = nullptr;
+    close();
 }
 
 std::unique_ptr<const Dummy::Server::Response::Response>
