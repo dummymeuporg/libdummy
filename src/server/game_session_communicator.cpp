@@ -50,14 +50,20 @@ void GameSessionCommunicator::forwardResponse(ResponsePtr response) {
     });
 }
 
-void GameSessionCommunicator::closeFromClient() {
+void GameSessionCommunicator::closeFromCommandHandler() {
+    auto ptr = m_responseHandler.lock();
+    if (ptr) {
+        ptr->commandHandlerClosed();
+    }
     m_responseHandler.reset();
-    //m_commandHandler.detach();
 }
 
-void GameSessionCommunicator::closeFromServer() {
+void GameSessionCommunicator::closeFromResponseHandler() {
+    auto ptr = m_commandHandler.lock();
+    if (ptr) {
+        ptr->responseHandlerClosed();
+    }
     m_commandHandler.reset();
-    //m_responseHandler.detach();
 }
 
 } // namespace Server

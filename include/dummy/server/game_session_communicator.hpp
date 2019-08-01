@@ -26,8 +26,8 @@ public:
     void setCommandHandler(std::shared_ptr<Dummy::Server::Command::Handler>);
     void setResponseHandler(std::shared_ptr<Dummy::Server::Response::Handler>);
 
-    void closeFromClient();
-    void closeFromServer();
+    void closeFromCommandHandler();
+    void closeFromResponseHandler();
 
 private:
     boost::asio::io_context& m_ioContext;
