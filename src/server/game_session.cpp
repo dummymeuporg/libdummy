@@ -47,6 +47,7 @@ void GameSession::close() {
     auto self(shared_from_this());
     if (nullptr != m_account && nullptr != m_player) {
         m_abstractGameServer.saveCharacter(*m_account, *m_player->character());
+        m_player->leaveCurrentMap();
     }
     m_state.reset();
     m_abstractGameServer.removeSession(self);
