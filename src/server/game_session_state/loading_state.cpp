@@ -38,8 +38,8 @@ void LoadingState::visitCommand(
     Dummy::Server::AbstractGameServer& srv(m_gameSession.abstractGameServer());
     std::shared_ptr<Player> player = m_gameSession.player().lock();
 
-    std::unique_ptr<Dummy::Server::Response::TeleportMap> response =
-        std::make_unique<Dummy::Server::Response::TeleportMap>();
+    auto response =
+        std::make_shared<Dummy::Server::Response::TeleportMap>();
 
     if (m_teleportRequest.destinationMap() == teleportMap.mapName() &&
         m_teleportRequest.position() == teleportMap.destination())
@@ -66,7 +66,7 @@ void LoadingState::visitCommand(
     } else {
         response->setStatus(-1);
     }
-    m_gameSession.addResponse(std::move(response));
+    m_gameSession.addResponse(response);
 }
 
 } // namespace GameSessionState
