@@ -99,6 +99,7 @@ void Project::_browseNode(pt::ptree node) {
             for (const auto& child: it.second.get_child("<xmlattr>"))
             {
                 if (child.first == "name") {
+                    m_maps.insert(child.second.data());
                     onMapFound(child.second.data());
                 }
             }

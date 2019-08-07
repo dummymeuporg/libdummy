@@ -5,6 +5,7 @@
 #include <map>
 #include <memory>
 #include <optional>
+#include <set>
 
 #include <boost/filesystem.hpp>
 #include <boost/property_tree/ptree.hpp>
@@ -79,6 +80,11 @@ public:
     }
 
     void load();
+
+    const std::set<std::string>& maps() const {
+        return m_maps;
+    }
+
 protected:
     virtual void onMapFound(const std::string&);
     virtual bool mapExists(const std::string&);
@@ -89,6 +95,7 @@ protected:
     /* Private attributes */
     fs::path m_projectPath;
     std::optional<StartingPoint> m_startingPoint;
+    std::set<std::string> m_maps;
 };
 
 
