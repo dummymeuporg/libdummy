@@ -37,9 +37,15 @@ void LoadingState::visitCommand(
     auto self(shared_from_this());
     Dummy::Server::AbstractGameServer& srv(m_gameSession.abstractGameServer());
     std::shared_ptr<Player> player = m_gameSession.player().lock();
-
     auto response =
         std::make_shared<Dummy::Server::Response::TeleportMap>();
+
+    if (nullptr == player) {
+        response->setStatus(-1);
+        m_gameSession.addResponse(response);
+        return;
+    }
+
 
     if (m_teleportRequest.destinationMap() == teleportMap.mapName() &&
         m_teleportRequest.position() == teleportMap.destination())
@@ -59,9 +65,12 @@ void LoadingState::visitCommand(
             player->setMap(mapPt);
             response->setStatus(0);
 
+            std::cerr << "CHANGE STATE" << std::endl;
             m_gameSession.changeState(
                 std::make_shared<PlayingState>(m_gameSession)
             );
+        } else {
+            response->setStatus(-1);
         }
     } else {
         response->setStatus(-1);
