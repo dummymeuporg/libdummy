@@ -15,6 +15,7 @@ public:
     }
 };
 
+class ChangeCharacter;
 class ConnectResponse;
 class CreateCharacter;
 class CharactersListResponse;
@@ -26,6 +27,9 @@ class TeleportMap;
 
 class ResponseVisitor {
 public:
+    virtual void visitResponse(const ChangeCharacter&) {
+        throw ResponseNotHandled();
+    }
     virtual void visitResponse(const ConnectResponse&) {
         throw ResponseNotHandled();
     }

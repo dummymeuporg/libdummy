@@ -1,21 +1,24 @@
-#include <dummy/server/command/command.hpp>
-#include <dummy/server/command/ping.hpp>
-#include <dummy/server/command/message.hpp>
-#include <dummy/server/command/set_position.hpp>
-#include <dummy/server/response/ping.hpp>
-#include <dummy/server/response/set_position.hpp>
-#include <dummy/server/player.hpp>
-#include <dummy/server/abstract_game_server.hpp>
-#include <dummy/server/game_session.hpp>
-#include <dummy/server/game_session_state/playing_state.hpp>
-#include <dummy/server/game_session_state/manage_characters_state.hpp>
-#include <dummy/server/map.hpp>
-
 #include <dummy/protocol/map_update/update.hpp>
 #include <dummy/protocol/map_update/character_position.hpp>
 #include <dummy/protocol/map_update/character_off.hpp>
 #include <dummy/protocol/map_update/character_on.hpp>
 
+#include <dummy/server/command/command.hpp>
+#include <dummy/server/command/ping.hpp>
+#include <dummy/server/command/message.hpp>
+#include <dummy/server/command/set_position.hpp>
+
+#include <dummy/server/response/change_character.hpp>
+#include <dummy/server/response/ping.hpp>
+#include <dummy/server/response/set_position.hpp>
+
+#include <dummy/server/player.hpp>
+#include <dummy/server/abstract_game_server.hpp>
+#include <dummy/server/game_session.hpp>
+#include <dummy/server/map.hpp>
+
+#include <dummy/server/game_session_state/playing_state.hpp>
+#include <dummy/server/game_session_state/manage_characters_state.hpp>
 
 namespace Dummy {
 namespace Server {
@@ -58,7 +61,7 @@ PlayingState::createMapUpdates(
                 == std::end(m_mapState.livings()))
         {
             // A new character appeared. create a CharacterOn update 
-            mapUpdates.push_back(std::move(
+            mapUpdates.push_back(
                 std::make_unique<Dummy::Protocol::MapUpdate::CharacterOn>(
                     otherPlayer->serverPosition().first,
                     otherPlayer->serverPosition().second,
@@ -67,7 +70,7 @@ PlayingState::createMapUpdates(
                     otherPlayer->character()->skin(),
                     otherPlayer->character()->direction()
                 )
-            ));
+            );
             std::cerr << "Hello " << name << std::endl;
         } else {
             // Update the living status if necessary
@@ -75,7 +78,7 @@ PlayingState::createMapUpdates(
             if (living.x() != otherPlayer->serverPosition().first ||
                 living.y() != otherPlayer->serverPosition().second)
             {
-                mapUpdates.push_back(std::move(
+                mapUpdates.push_back(
                     std::make_unique<
                         Dummy::Protocol::MapUpdate::CharacterPosition
                     >(
@@ -83,8 +86,8 @@ PlayingState::createMapUpdates(
                         otherPlayer->serverPosition().second,
                         otherPlayer->character()->name(),
                         otherPlayer->character()->direction()
-                    )));
-                // XXX: update the skin / diretion?
+                    ));
+                // XXX: update the skin / direction?
                 std::cerr << "Updated " << name << std::endl;
             }
         }
@@ -159,7 +162,7 @@ void PlayingState::visitCommand(
 }
 
 void PlayingState::visitCommand(
-    const Dummy::Server::Command::Ping& ping
+    const Dummy::Server::Command::Ping&
 ) {
     auto response(std::make_shared<Dummy::Server::Response::Ping>());
     MapUpdatesVector mapUpdates;
@@ -221,8 +224,13 @@ void PlayingState::visitCommand(
     ));
     m_gameSession.changeState(state);
 
-    // XXX: emplace a ChangeCharacter response (so the client knows that
+    // Emplace a ChangeCharacter response (so the client knows that
     // he has to go back to the select character screen).
+    auto response(
+        std::make_shared<Dummy::Server::Response::ChangeCharacter>()
+    );
+    response->setStatus(0);
+    m_gameSession.addResponse(std::move(response));
 }
 
 void PlayingState::sendMessageToMap(
