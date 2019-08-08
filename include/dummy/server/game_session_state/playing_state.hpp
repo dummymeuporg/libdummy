@@ -37,6 +37,7 @@ public:
     void visitCommand(const Command::Ping&) override;
     void visitCommand(const Command::SetPosition&) override;
     void visitCommand(const Command::Message&) override;
+    void visitCommand(const Command::ChangeCharacter&) override;
 private:
     void createMapUpdates(
         std::shared_ptr<Player>,

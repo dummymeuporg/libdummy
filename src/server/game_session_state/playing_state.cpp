@@ -5,8 +5,10 @@
 #include <dummy/server/response/ping.hpp>
 #include <dummy/server/response/set_position.hpp>
 #include <dummy/server/player.hpp>
+#include <dummy/server/abstract_game_server.hpp>
 #include <dummy/server/game_session.hpp>
 #include <dummy/server/game_session_state/playing_state.hpp>
+#include <dummy/server/game_session_state/manage_characters_state.hpp>
 #include <dummy/server/map.hpp>
 
 #include <dummy/protocol/map_update/update.hpp>
@@ -187,6 +189,34 @@ void PlayingState::visitCommand(
     }
 
     m_gameSession.addResponse(response);
+}
+
+void PlayingState::visitCommand(
+    const Dummy::Server::Command::ChangeCharacter&
+) {
+    auto self(shared_from_this());
+    // XXX: Disconnect player from map, send a response
+    // (then switch back to manage characters state)
+    auto player = m_gameSession.player().lock();
+    if (nullptr == player) {
+        // XXX: throw an exception?
+        std::cerr << "Error while acquiering player." << std::endl;
+    }
+    // XXX: Ugly.
+    player->leaveCurrentMap();
+    m_gameSession.abstractGameServer().saveCharacter(
+        m_gameSession.account(),
+        *player->character()
+    );
+
+    // Get characters list.
+
+    // Reset player.
+    m_gameSession.setPlayer(nullptr);
+
+    // Change state.
+    //auto state(std::make_shared<ManageCharactersState>(m_gameSession));
+    //m_gameSession.changeState(state);
 }
 
 void PlayingState::sendMessageToMap(

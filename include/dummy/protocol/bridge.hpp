@@ -23,6 +23,7 @@ const std::uint16_t TELEPORT_MAP = 1;
 const std::uint16_t PING = 1;
 const std::uint16_t SET_POSITION = 2;
 const std::uint16_t MESSAGE = 3;
+const std::uint16_t CHANGE_CHARACTER = 4;
 
 
 /* map updates */
