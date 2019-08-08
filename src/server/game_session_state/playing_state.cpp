@@ -222,7 +222,7 @@ void PlayingState::visitCommand(
     m_gameSession.changeState(state);
 
     // XXX: emplace a ChangeCharacter response (so the client knows that
-    // he has to go back to the select character screen.
+    // he has to go back to the select character screen).
 }
 
 void PlayingState::sendMessageToMap(
