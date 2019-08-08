@@ -103,6 +103,22 @@ void GameSession::receiveMessage(
     addResponse(std::move(message));
 }
 
+CharactersMap GameSession::getCharactersList() const {
+    CharactersMap map;
+    fs::path accountPath(m_abstractGameServer.serverPath()
+        / "accounts" / account().name() / "characters");
+
+    for (const auto& entry: fs::directory_iterator(accountPath)) {
+        std::shared_ptr<Dummy::Core::Character> chr =
+            std::make_shared<Dummy::Core::Character>();
+        std::ifstream ifs(entry.path().string(),
+                          std::ios::binary | std::ofstream::out);
+        ifs >> *chr;
+        map[chr->name()] = chr;
+    }
+    return map;
+}
+
 
 } // namespace Server
 } // namespace Dummy

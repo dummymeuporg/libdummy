@@ -8,6 +8,9 @@
 #include <queue>
 
 namespace Dummy {
+namespace Core {
+class Character;
+} // namespace Core
 namespace Server {
 
 class AbstractGameServer;
@@ -30,6 +33,10 @@ class GameSessionCommunicator;
 
 using CommandPtr = std::shared_ptr<const Dummy::Server::Command::Command>;
 using ResponsePtr = std::shared_ptr<const Dummy::Server::Response::Response>;
+
+using CharactersMap =
+    std::map<std::string, std::shared_ptr<Dummy::Core::Character>>;
+
 
 class GameSession : public std::enable_shared_from_this<GameSession>,
                     public Command::Handler {
@@ -72,6 +79,9 @@ public:
     void setPlayer(std::shared_ptr<Player> player);
     void receiveMessage(const std::string&,
                         const std::string&);
+    CharactersMap getCharactersList() const;
+
+
 private:
     AbstractGameServer& m_abstractGameServer;
     std::shared_ptr<GameSessionCommunicator> m_gameSessionCommunicator;

@@ -46,29 +46,14 @@ void SendCharactersState::visitCommand(
     const Dummy::Server::Command::GetPrimaryInfoCommand& command
 ) {
     auto self(shared_from_this());
-    const Dummy::Server::AbstractGameServer& svr(
-        m_gameSession.abstractGameServer()
-    );
+
     auto response = std::make_shared<CharactersListResponse>();
-    fs::path accountPath(svr.serverPath()
-        / "accounts" / m_gameSession.account().name() / "characters");
 
-    std::cerr << "AccountPath: " << accountPath.string() << std::endl;
-    for (const auto& entry: fs::directory_iterator(accountPath)) {
-        std::cerr << "found " << entry << std::endl;
-        std::shared_ptr<Dummy::Core::Character> chr =
-            std::make_shared<Dummy::Core::Character>();
-        std::ifstream ifs(entry.path().string(),
-                          std::ios::binary | std::ofstream::out);
-        ifs >> *chr;
+    // Retrieve the account's characters list.
+    CharactersMap&& map(m_gameSession.getCharactersList());
+
+    for (const auto& [name, chr]: map) {
         response->addCharacter(chr);
-    }
-    std::cerr << "There are " << response->charactersList().size()
-        << " characters." << std::endl;
-
-    CharactersMap map;
-    for(auto chr: response->charactersList()) {
-        map[chr->name()] = chr;
     }
 
     std::cerr << "Will change state." << std::endl;
