@@ -210,13 +210,19 @@ void PlayingState::visitCommand(
     );
 
     // Get characters list.
+    CharactersMap&& map = m_gameSession.getCharactersList();
 
     // Reset player.
     m_gameSession.setPlayer(nullptr);
 
     // Change state.
-    //auto state(std::make_shared<ManageCharactersState>(m_gameSession));
-    //m_gameSession.changeState(state);
+    auto state(std::make_shared<ManageCharactersState>(
+        m_gameSession, std::move(map)
+    ));
+    m_gameSession.changeState(state);
+
+    // XXX: emplace a ChangeCharacter response (so the client knows that
+    // he has to go back to the select character screen.
 }
 
 void PlayingState::sendMessageToMap(
