@@ -18,6 +18,7 @@ public:
     };
 };
 
+class ChangeCharacter;
 class CreateCharacter;
 class ConnectCommand;
 class GetPrimaryInfoCommand;
@@ -29,6 +30,11 @@ class TeleportMap;
 
 class CommandVisitor {
 public:
+
+    virtual void visitCommand(const ChangeCharacter&) {
+        throw CommandNotHandled();
+    }
+
     virtual void visitCommand(const ConnectCommand&) {
         throw CommandNotHandled();
     }
