@@ -15,9 +15,9 @@ class Map;
 
 using GraphicLayers = std::map<std::int8_t, Dummy::Core::GraphicLayer>;
 
-class Level {
+class Floor {
 public:
-    Level(const Map&);
+    Floor(const Map&);
     void addGraphicLayer(std::int8_t,
                          Dummy::Core::GraphicLayer&&);
     const Dummy::Core::GraphicLayer& graphicLayer(std::int8_t position) const {
