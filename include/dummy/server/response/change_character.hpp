@@ -6,15 +6,24 @@ namespace Dummy {
 namespace Server {
 namespace Response {
 
+using Position = std::pair<std::uint16_t, std::uint16_t>;
 class ChangeCharacter : public Response {
 public:
     ChangeCharacter();
-    void setCharacter(std::shared_ptr<Dummy::Core::Character>);
     void accept(ResponseVisitor&) const override;
     void serializeTo(Dummy::Protocol::OutgoingPacket&) const override;
     void readFrom(Dummy::Protocol::IncomingPacket&) override;
+    const std::string& mapLocation() const {
+        return m_mapLocation;
+    }
+    const std::pair<std::uint16_t, std::uint16_t>& position() const {
+        return m_position;
+    }
+    void setMapLocation(const std::string&);
+    void setPosition(const Position&);
 private:
-    std::shared_ptr<Dummy::Core::Character> m_character;
+    std::string m_mapLocation;
+    Position m_position;
 };
 
 } // namespace Response

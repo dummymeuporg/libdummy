@@ -8,25 +8,29 @@ namespace Dummy {
 namespace Server {
 namespace Response {
 
-ChangeCharacter::ChangeCharacter() : m_character(nullptr) {}
+ChangeCharacter::ChangeCharacter() {}
 
 void ChangeCharacter::accept(ResponseVisitor& visitor) const {
     visitor.visitResponse(*this);
 }
 
 void ChangeCharacter::serializeTo(Dummy::Protocol::OutgoingPacket& pkt) const {
-    pkt << m_status << *m_character;
+    pkt << m_status << m_mapLocation << m_position.first
+        << m_position.second;
 }
 
 void ChangeCharacter::readFrom(Dummy::Protocol::IncomingPacket& pkt) {
-    pkt >> m_status;
+    pkt >> m_status >> m_mapLocation >> m_position.first
+        >> m_position.second;
 }
 
-void ChangeCharacter::setCharacter(std::shared_ptr<Dummy::Core::Character> chr)
-{
-    m_character = chr;
+void ChangeCharacter::setMapLocation(const std::string& mapLocation) {
+    m_mapLocation = mapLocation;
 }
 
+void ChangeCharacter::setPosition(const Position& position) {
+    m_position = position;
+}
 
 } // namespace Response
 } // namespace Server
