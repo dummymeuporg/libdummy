@@ -212,6 +212,10 @@ void PlayingState::visitCommand(
         *player->character()
     );
 
+    // Get the actual player position, for client synchronization.
+    auto playerMap(player->character()->mapLocation());
+    auto playerPosition(player->character()->position());
+
     // Get characters list.
     CharactersMap&& map = m_gameSession.getCharactersList();
 
@@ -230,6 +234,8 @@ void PlayingState::visitCommand(
         std::make_shared<Dummy::Server::Response::ChangeCharacter>()
     );
     response->setStatus(0);
+    response->setMapLocation(playerMap);
+    response->setPosition(playerPosition);
     m_gameSession.addResponse(std::move(response));
 }
 
