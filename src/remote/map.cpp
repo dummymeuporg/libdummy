@@ -31,7 +31,7 @@ void Map::load() {
     Dummy::Core::Map::loadBaseInfo(ifsMapFile);
     readBlkFile(ifsBlkFile);
 
-    for (int i = 0; i < m_levelsCount; ++i) {
+    for (int i = 0; i < m_floorsCount; ++i) {
         m_floors.push_back(std::move(loadBlockingLayer(ifsBlkFile)));
     }
 

@@ -40,8 +40,8 @@ void Map::load() {
     loadMapFile(ifsMapFile);
     readBlkFile(ifsBlkFile);
 
-    for (int i = 0; i < m_levelsCount; ++i) {
-        readMapLevel(ifsMapFile, ifsBlkFile);
+    for (int i = 0; i < m_floorsCount; ++i) {
+        readMapFloor(ifsMapFile, ifsBlkFile);
     }
 }
 
@@ -71,11 +71,11 @@ void Map::loadMapFile(std::ifstream& ifs) {
     }
 }
 
-void Map::readMapLevel(
+void Map::readMapFloor(
     std::ifstream& ifsMapFile,
     std::ifstream& ifsBlkFile)
 {
-    Level level(*this);
+    Floor floor(*this);
     std::size_t elements = m_width * m_height;
     std::uint8_t layersCount;
 
@@ -99,14 +99,14 @@ void Map::readMapLevel(
                 elements * sizeof(std::pair<std::int8_t, std::int8_t>)
             )
         );
-        level.addGraphicLayer(position, std::move(graphicLayer));
+        floor.addGraphicLayer(position, std::move(graphicLayer));
     }
     // Read the blocking layer
     Dummy::Core::BlockingLayer&& blockingLayer = loadBlockingLayer(ifsBlkFile);
-    level.setBlockingLayer(std::move(blockingLayer));
+    floor.setBlockingLayer(std::move(blockingLayer));
 
-    // Create the level.
-    m_levels.push_back(std::move(level));
+    // Create the floor.
+    m_floors.push_back(std::move(floor));
 }
 
 } // namespace Core

@@ -39,7 +39,7 @@ public:
 class Project;
 
 class BlockingLayer;
-using BlockingLevels = std::vector<BlockingLayer>;
+using BlockingFloors = std::vector<BlockingLayer>;
 
 class Map {
 public:
@@ -71,7 +71,7 @@ protected:
 protected:
     std::string m_name;
     std::uint16_t m_width, m_height;
-    std::uint8_t m_levelsCount;
+    std::uint8_t m_floorsCount;
     void internalLoadMapFile(std::string);
 };
 
