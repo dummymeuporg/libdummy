@@ -1,17 +1,17 @@
 #pragma once
 
 #include <dummy/core/map.hpp>
-#include <dummy/local/level.hpp>
+#include <dummy/local/floor.hpp>
 
 namespace Dummy
 {
 namespace Local
 {
 
-class Level;
+class Floor;
 class Project;
 
-using Levels = std::vector<Level>;
+using Floors = std::vector<Floor>;
 
 class Map : public Dummy::Core::Map {
 public:
@@ -28,18 +28,18 @@ public:
         return m_music;
     }
 
-    const Levels& levels() const {
-        return m_levels;
+    const Floors& floors() const {
+        return m_floors;
     }
 protected:
     void loadMapFile(std::ifstream&);
-    void readMapLevel(std::ifstream&, std::ifstream&);
+    void readMapFloor(std::ifstream&, std::ifstream&);
 
     const Project& m_project;
 
     std::string m_chipset;
     std::string m_music;
-    Levels m_levels;
+    Floors m_floors;
 };
 
 } // namespace Core

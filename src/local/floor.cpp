@@ -1,31 +1,31 @@
 #include <dummy/core/blocking_layer.hpp>
 #include <dummy/core/graphic_layer.hpp>
 #include <dummy/local/map.hpp>
-#include <dummy/local/level.hpp>
+#include <dummy/local/floor.hpp>
 
 
 namespace Dummy {
 namespace Local {
 
-Level::Level(const Map& map)
+Floor::Floor(const Map& map)
     : m_map(map), m_blockingLayer(m_map.width(), m_map.height()) {}
 
-void Level::addGraphicLayer(
+void Floor::addGraphicLayer(
     std::int8_t position,
     Dummy::Core::GraphicLayer&& layer
 ) {
     m_graphicLayers[position] = std::move(layer);
 }
 
-void Level::setBlockingLayer(Dummy::Core::BlockingLayer&& blockingLayer) {
+void Floor::setBlockingLayer(Dummy::Core::BlockingLayer&& blockingLayer) {
     m_blockingLayer = std::move(blockingLayer);
 }
 
-std::uint16_t Level::width() const {
+std::uint16_t Floor::width() const {
     return m_map.width();
 }
 
-std::uint16_t Level::height() const {
+std::uint16_t Floor::height() const {
     return m_map.height();
 }
 

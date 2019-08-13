@@ -16,7 +16,7 @@ namespace Core
 {
 
 Map::Map(const std::string& name) : m_name(name), m_width(1), m_height(1),
-    m_levelsCount(0)
+    m_floorsCount(0)
 {
 }
 
@@ -37,8 +37,8 @@ void Map::loadBaseInfo(std::ifstream& ifs) {
     std::cerr << m_name << " (" << m_width * 2 << "," << m_height * 2 << ")"
         << std::endl;
 
-    // read the number of levels
-    ifs.read(reinterpret_cast<char*>(&m_levelsCount), sizeof(std::uint8_t));
+    // read the number of floors
+    ifs.read(reinterpret_cast<char*>(&m_floorsCount), sizeof(std::uint8_t));
 }
 
 BlockingLayer Map::loadBlockingLayer(std::ifstream& ifs) {
