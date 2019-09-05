@@ -34,8 +34,6 @@ void Map::loadBaseInfo(std::ifstream& ifs) {
     // read dimensions
     ifs.read(reinterpret_cast<char*>(&m_width), sizeof(std::uint16_t));
     ifs.read(reinterpret_cast<char*>(&m_height), sizeof(std::uint16_t));
-    std::cerr << m_name << " (" << m_width * 2 << "," << m_height * 2 << ")"
-        << std::endl;
 
     // read the number of floors
     ifs.read(reinterpret_cast<char*>(&m_floorsCount), sizeof(std::uint8_t));
