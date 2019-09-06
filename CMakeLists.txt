@@ -5,6 +5,7 @@ include_directories(include)
 set(CMAKE_CXX_STANDARD 17)
 
 find_package(Boost 1.69.0 REQUIRED)
+find_package(Lua51 REQUIRED)
 
 add_definitions(-D_SILENCE_CXX17_ALLOCATOR_VOID_DEPRECATION_WARNING)
 

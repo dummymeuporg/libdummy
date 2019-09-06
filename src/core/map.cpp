@@ -5,6 +5,13 @@
 #include <dummy/core/map.hpp>
 #include <dummy/core/project.hpp>
 
+
+extern "C" {
+#include <lua.h>
+#include <lualib.h>
+#include <lauxlib.h>
+}
+
 namespace fs = std::filesystem;
 
 namespace Dummy
@@ -14,8 +21,15 @@ namespace Core
 {
 
 Map::Map(const std::string& name) : m_name(name), m_width(1), m_height(1),
-    m_floorsCount(0)
+    m_floorsCount(0), m_eventsState(nullptr)
 {
+}
+
+Map::~Map() {
+    if (nullptr != m_eventsState) {
+        ::lua_close(m_eventsState);
+        m_eventsState = nullptr;
+    }
 }
 
 void Map::loadBaseInfo(std::ifstream& ifs) {
@@ -56,7 +70,10 @@ void Map::readBlkFile(std::ifstream& ifs) {
 }
 
 void Map::loadLuaFile(const std::string& luaFile) {
-
+    auto err = ::luaL_loadfile(m_eventsState, luaFile.c_str());
+    if (LUA_ERRFILE == err) {
+        throw Dummy::Core::LuaFileNotFound();
+    }
 }
 
 } // namespace Core

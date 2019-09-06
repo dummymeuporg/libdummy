@@ -5,6 +5,12 @@
 #include <fstream>
 #include <vector>
 
+extern "C" {
+#include <lua.h>
+#include <lualib.h>
+#include <lauxlib.h>
+}
+
 namespace Dummy
 {
 
@@ -55,6 +61,7 @@ public:
     static const std::uint16_t VERSION = 1;
 
     Map(const std::string&);
+    virtual ~Map();
 
     const std::string& name() const {
         return m_name;
@@ -80,6 +87,7 @@ protected:
     std::string m_name;
     std::uint16_t m_width, m_height;
     std::uint8_t m_floorsCount;
+    ::lua_State* m_eventsState;
     void internalLoadMapFile(std::string);
 };
 

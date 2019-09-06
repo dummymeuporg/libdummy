@@ -37,13 +37,9 @@ void Map::load() {
     if (!ifsBlkFile.is_open()) {
         throw Dummy::Core::BlkFileNotFound();
     }
-
-    std::string ifsLuaFile((basePath / luaFile).string());
-        throw Dummy::Core::LuaFileNotFound();
-
     loadMapFile(ifsMapFile);
     readBlkFile(ifsBlkFile);
-    loadLuaFile(ifsLuaFile);
+    loadLuaFile((basePath / luaFile).string());
 
     for (int i = 0; i < m_floorsCount; ++i) {
         readMapFloor(ifsMapFile, ifsBlkFile);
