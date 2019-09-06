@@ -21,8 +21,10 @@ namespace Core
 {
 
 Map::Map(const std::string& name) : m_name(name), m_width(1), m_height(1),
-    m_floorsCount(0), m_eventsState(nullptr)
+    m_floorsCount(0), m_eventsState(::luaL_newstate())
 {
+    // Pass the Map instance to the lua extraspace
+    *static_cast<Map**>(lua_getextraspace(m_eventsState)) = this;
 }
 
 Map::~Map() {
@@ -70,10 +72,23 @@ void Map::readBlkFile(std::ifstream& ifs) {
 }
 
 void Map::loadLuaFile(const std::string& luaFile) {
-    auto err = ::luaL_loadfile(m_eventsState, luaFile.c_str());
-    if (LUA_ERRFILE == err) {
+    std::cerr << "File: " << luaFile << std::endl;
+
+    lua_register(
+        m_eventsState,
+        "OnTouchEvent",
+        &dispatch<&Map::luaOnTouchEvent>
+    );
+
+    int ret = luaL_dofile(m_eventsState, luaFile.c_str());
+    if (ret != 0) {
         throw Dummy::Core::LuaFileNotFound();
     }
+}
+
+int Map::luaOnTouchEvent(::lua_State* luaState) {
+    std::cerr << "OnTouchEvent!" << std::endl;
+    return 1;
 }
 
 } // namespace Core

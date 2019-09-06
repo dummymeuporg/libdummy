@@ -54,6 +54,8 @@ class Project;
 class BlockingLayer;
 using BlockingFloors = std::vector<BlockingLayer>;
 
+
+
 class Map {
 public:
     static const std::uint32_t MAP_MAGIC_WORD = 0xF000BABA;
@@ -83,6 +85,9 @@ protected:
     void readBlkFile(std::ifstream& ifs);
     void loadLuaFile(const std::string&);
 
+    // XXX: export this elsewhere?
+    int luaOnTouchEvent(::lua_State*);
+
 protected:
     std::string m_name;
     std::uint16_t m_width, m_height;
@@ -90,6 +95,14 @@ protected:
     ::lua_State* m_eventsState;
     void internalLoadMapFile(std::string);
 };
+
+typedef int (Map::*mem_func)(::lua_State* L);
+
+template <mem_func func>
+int dispatch(::lua_State * L) {
+    Map* ptr = *static_cast<Map**>(lua_getextraspace(L));
+    return ((*ptr).*func)(L);
+}
 
 } // namespace Core
 
