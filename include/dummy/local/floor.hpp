@@ -13,7 +13,9 @@ namespace Local {
 
 class Map;
 
+using Coords = std::pair<std::uint8_t, std::uint8_t>;
 using GraphicLayers = std::map<std::int8_t, Dummy::Core::GraphicLayer>;
+using TouchEvents = std::map<Coords, int>;
 
 class Floor {
 public:
@@ -55,6 +57,7 @@ protected:
     const Map& m_map;
     Dummy::Core::BlockingLayer m_blockingLayer;
     GraphicLayers m_graphicLayers;
+
 };
 
 } // namespace Local

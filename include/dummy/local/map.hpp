@@ -34,12 +34,13 @@ public:
 protected:
     void loadMapFile(std::ifstream&);
     void readMapFloor(std::ifstream&, std::ifstream&);
-
+    void loadLuaFile(const std::string&);
     const Project& m_project;
 
     std::string m_chipset;
     std::string m_music;
     Floors m_floors;
+
 };
 
 } // namespace Core

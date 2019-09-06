@@ -26,6 +26,7 @@ void Map::load() {
     fs::path basePath(m_project.projectPath() / "maps");
     std::string mapFile(m_name + ".map");
     std::string blkFile(m_name + ".blk");
+    std::string luaFile(m_name + ".lua");
 
     std::ifstream ifsMapFile(basePath / mapFile, std::ios::binary);
     if (!ifsMapFile.is_open()) {
@@ -37,8 +38,12 @@ void Map::load() {
         throw Dummy::Core::BlkFileNotFound();
     }
 
+    std::string ifsLuaFile((basePath / luaFile).string());
+        throw Dummy::Core::LuaFileNotFound();
+
     loadMapFile(ifsMapFile);
     readBlkFile(ifsBlkFile);
+    loadLuaFile(ifsLuaFile);
 
     for (int i = 0; i < m_floorsCount; ++i) {
         readMapFloor(ifsMapFile, ifsBlkFile);

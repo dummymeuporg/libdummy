@@ -55,6 +55,10 @@ void Map::readBlkFile(std::ifstream& ifs) {
     }
 }
 
+void Map::loadLuaFile(const std::string& luaFile) {
+
+}
+
 } // namespace Core
 
 } // namespace Dummy

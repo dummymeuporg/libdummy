@@ -36,6 +36,13 @@ public:
     }
 };
 
+class LuaFileNotFound : public MapError {
+public:
+    virtual const char* what() const noexcept {
+        return "the lua file could not be found";
+    }
+};
+
 class Project;
 
 class BlockingLayer;
@@ -67,6 +74,7 @@ protected:
     void loadBaseInfo(std::ifstream&);
     BlockingLayer loadBlockingLayer(std::ifstream&);
     void readBlkFile(std::ifstream& ifs);
+    void loadLuaFile(const std::string&);
 
 protected:
     std::string m_name;
