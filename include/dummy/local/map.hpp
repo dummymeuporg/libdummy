@@ -8,10 +8,12 @@ namespace Dummy
 namespace Local
 {
 
+class Event;
 class Floor;
 class Project;
 
 using Floors = std::vector<Floor>;
+using Events = std::map<std::uint16_t, std::shared_ptr<Event>>;
 
 class Map : public Dummy::Core::Map {
 public:
@@ -32,6 +34,8 @@ public:
         return m_floors;
     }
 protected:
+    // XXX: Move this elsewhere?
+    int luaOnTouchEvent(::lua_State*) override;
     void loadMapFile(std::ifstream&);
     void readMapFloor(std::ifstream&, std::ifstream&);
     const Project& m_project;

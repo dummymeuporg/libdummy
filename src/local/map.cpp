@@ -5,6 +5,7 @@
 
 #include <dummy/core/graphic_layer.hpp>
 
+#include <dummy/local/event.hpp>
 #include <dummy/local/map.hpp>
 #include <dummy/local/project.hpp>
 
@@ -108,6 +109,34 @@ void Map::readMapFloor(
 
     // Create the floor.
     m_floors.push_back(std::move(floor));
+}
+
+int Map::luaOnTouchEvent(::lua_State* luaState) {
+    std::cerr << "OnTouchEvent!" << std::endl;
+    int isNum;
+    std::uint16_t x, y;
+    std::uint8_t floor;
+    x = lua_tointegerx(luaState, 1, &isNum);
+    if (0 == isNum) {
+        // XXX: Throw an exception
+    }
+
+    y = lua_tointegerx(luaState, 2, &isNum);
+    if (0 == isNum) {
+        // XXX: Throw an exception
+    }
+
+    floor = lua_tointegerx(luaState, 3, &isNum);
+    if (0 == isNum) {
+        // XXX: Throw an exception
+    }
+
+    std::string luaCallback = lua_tostring(luaState, 4);
+    auto index = y * m_width + x;
+    m_floors[floor].touchEvents()[index] = std::make_shared<Event>(
+        luaCallback
+    );
+    return 1;
 }
 
 } // namespace Core

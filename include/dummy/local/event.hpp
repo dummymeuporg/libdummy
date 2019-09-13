@@ -7,7 +7,7 @@ namespace Local {
 
 class Event {
 public:
-    Event();
+    Event(const std::string&);
 private:
     std::string m_luaCallback;
 };

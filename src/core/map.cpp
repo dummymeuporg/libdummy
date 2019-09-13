@@ -86,11 +86,6 @@ void Map::loadLuaFile(const std::string& luaFile) {
     }
 }
 
-int Map::luaOnTouchEvent(::lua_State* luaState) {
-    std::cerr << "OnTouchEvent!" << std::endl;
-    return 1;
-}
-
 } // namespace Core
 
 } // namespace Dummy

@@ -86,7 +86,7 @@ protected:
     void loadLuaFile(const std::string&);
 
     // XXX: export this elsewhere?
-    int luaOnTouchEvent(::lua_State*);
+    virtual int luaOnTouchEvent(::lua_State*) = 0;
 
 protected:
     std::string m_name;
