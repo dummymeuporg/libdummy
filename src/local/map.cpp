@@ -40,11 +40,12 @@ void Map::load() {
     }
     loadMapFile(ifsMapFile);
     readBlkFile(ifsBlkFile);
-    loadLuaFile((basePath / luaFile).string());
 
     for (int i = 0; i < m_floorsCount; ++i) {
         readMapFloor(ifsMapFile, ifsBlkFile);
     }
+
+    loadLuaFile((basePath / luaFile).string());
 }
 
 void Map::loadMapFile(std::ifstream& ifs) {
@@ -133,9 +134,10 @@ int Map::luaOnTouchEvent(::lua_State* luaState) {
 
     std::string luaCallback = lua_tostring(luaState, 4);
     auto index = y * m_width + x;
-    m_floors[floor].touchEvents()[index] = std::make_shared<Event>(
+    auto& currentFloor(m_floors[floor]);
+    currentFloor.touchEvents().emplace(index, std::make_shared<Event>(
         luaCallback
-    );
+    ));
     return 1;
 }
 
