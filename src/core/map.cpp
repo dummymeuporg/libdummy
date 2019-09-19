@@ -1,8 +1,6 @@
 #include <iostream>
 #include <fstream>
 
-#include <boost/filesystem.hpp>
-
 #include <dummy/core/blocking_layer.hpp>
 #include <dummy/core/map.hpp>
 #include <dummy/core/project.hpp>

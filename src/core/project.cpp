@@ -45,7 +45,7 @@ void Project::load() {
 void Project::_setStartingPoint(pt::ptree node) {
     std::string x, y, map, floorString;
     std::pair<std::uint16_t, std::uint16_t> position;
-    std::uint16_t floor;
+    std::uint8_t floor;
 
     for(const auto& child: node.get_child("<xmlattr>")) {
         if (child.first == "x") {

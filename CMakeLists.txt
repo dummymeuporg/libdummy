@@ -6,6 +6,8 @@ set(CMAKE_CXX_STANDARD 17)
 
 find_package(Boost 1.69.0 REQUIRED)
 
+add_definitions(-D_SILENCE_CXX17_ALLOCATOR_VOID_DEPRECATION_WARNING)
+
 macro(GroupSources curdir)
     file(
         GLOB children RELATIVE ${PROJECT_SOURCE_DIR}/${curdir}
