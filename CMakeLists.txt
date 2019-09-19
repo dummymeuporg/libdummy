@@ -38,7 +38,7 @@ GroupSources(src)
 
 add_library(dummy STATIC ${SOURCES} ${HEADERS})
 
-target_include_directories(dummy PUBLIC ${Boost_INCLUDE_DIR})
+target_include_directories(dummy PUBLIC ${Boost_INCLUDE_DIR} ${LUA_INCLUDE_DIR})
 
 
 #add_executable(sha512_tests
