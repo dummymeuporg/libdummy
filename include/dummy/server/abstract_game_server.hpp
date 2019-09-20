@@ -73,6 +73,7 @@ public:
     virtual void run();
 
 protected:
+    void createSymLink(const std::string&, const std::string&) const;
     void _spawnMainInstance();
 
     boost::asio::io_service& m_ioContext;
