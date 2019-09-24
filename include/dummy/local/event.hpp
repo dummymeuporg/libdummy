@@ -5,10 +5,16 @@
 namespace Dummy {
 namespace Local {
 
+class Floor;
+
 class Event {
 public:
-    Event(const std::string&);
+    Event(const Floor&, const std::string&);
+    const std::string& luaCallback() const {
+        return m_luaCallback;
+    }
 private:
+    const Floor& m_floor;
     std::string m_luaCallback;
 };
 

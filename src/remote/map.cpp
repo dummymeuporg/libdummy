@@ -42,5 +42,15 @@ int Map::luaOnTouchEvent(::lua_State*) {
     return 1;
 }
 
+int Map::luaMessage(::lua_State*) {
+    // XXX: What do we do?
+    return 1;
+}
+
+int Map::luaTeleport(::lua_State*) {
+    // XXX: What do we do?
+    return 1;
+}
+
 } // namespace Remote
 } // namespace Dummy

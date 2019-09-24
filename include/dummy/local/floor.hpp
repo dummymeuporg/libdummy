@@ -57,6 +57,10 @@ public:
     Events& touchEvents() {
         return m_touchEvents;
     }
+
+    const Events& touchEvents() const {
+        return m_touchEvents;
+    }
 protected:
     const Map& m_map;
     Dummy::Core::BlockingLayer m_blockingLayer;

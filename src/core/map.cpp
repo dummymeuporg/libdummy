@@ -80,6 +80,18 @@ void Map::loadLuaFile(const std::string& luaFile) {
         &dispatch<&Map::luaOnTouchEvent>
     );
 
+    lua_register(
+        m_eventsState,
+        "Message",
+        &dispatch<&Map::luaMessage>
+    );
+
+    lua_register(
+        m_eventsState,
+        "Teleport",
+        &dispatch<&Map::luaTeleport>
+    );
+
     int ret = luaL_dofile(m_eventsState, luaFile.c_str());
     if (ret != 0) {
         throw Dummy::Core::LuaFileNotFound();

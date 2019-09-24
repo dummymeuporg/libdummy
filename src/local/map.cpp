@@ -6,6 +6,7 @@
 #include <dummy/core/graphic_layer.hpp>
 
 #include <dummy/local/event.hpp>
+#include <dummy/local/event_observer.hpp>
 #include <dummy/local/map.hpp>
 #include <dummy/local/project.hpp>
 
@@ -136,10 +137,30 @@ int Map::luaOnTouchEvent(::lua_State* luaState) {
     auto index = y * m_width + x;
     auto& currentFloor(m_floors[floor]);
     currentFloor.touchEvents().emplace(index, std::make_shared<Event>(
+        *this,
         luaCallback
     ));
     return 1;
 }
+
+int Map::luaMessage(::lua_State* luaState) {
+    auto observer = m_eventObserver.lock();
+    if (observer) {
+        std::string message = lua_tostring(luaState, 1);
+        return 1;
+    }
+    return 0;
+}
+
+int Map::luaTeleport(::lua_State* luaState) {
+    auto observer = m_eventObserver.lock();
+    if (observer) {
+
+        return 1;
+    }
+    return 0;
+}
+
 
 } // namespace Core
 } // namespace Dummy

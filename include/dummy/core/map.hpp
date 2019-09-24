@@ -79,6 +79,10 @@ public:
 
     virtual void load() = 0;
 
+    ::lua_State* luaState() {
+        return m_eventsState;
+    }
+
 protected:
     void loadBaseInfo(std::ifstream&);
     BlockingLayer loadBlockingLayer(std::ifstream&);
@@ -87,6 +91,8 @@ protected:
 
     // XXX: export this elsewhere?
     virtual int luaOnTouchEvent(::lua_State*) = 0;
+    virtual int luaMessage(::lua_State*) = 0;
+    virtual int luaTeleport(::lua_State*) = 0;
 
 protected:
     std::string m_name;

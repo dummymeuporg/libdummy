@@ -9,6 +9,7 @@ namespace Local
 {
 
 class Event;
+class EventObserver;
 class Floor;
 class Project;
 
@@ -33,16 +34,22 @@ public:
     const Floors& floors() const {
         return m_floors;
     }
+
+    void setEventObserver(std::shared_ptr<EventObserver>);
 protected:
     // XXX: Move this elsewhere?
     int luaOnTouchEvent(::lua_State*) override;
+    int luaMessage(::lua_State*) override;
+    int luaTeleport(::lua_State*) override;
+
+
     void loadMapFile(std::ifstream&);
     void readMapFloor(std::ifstream&, std::ifstream&);
     const Project& m_project;
-
     std::string m_chipset;
     std::string m_music;
     Floors m_floors;
+    std::weak_ptr<EventObserver> m_eventObserver;
 
 };
 
