@@ -19,7 +19,7 @@ namespace Local
 {
 
 Map::Map(const Project& project, const std::string& name)
-    : Dummy::Core::Map(name), m_project(project)
+    : Dummy::Core::Map(name), m_project(project), m_eventObserver(nullptr)
 {
     std::cerr << "Local map constructor" << std::endl;
 }
@@ -136,6 +136,7 @@ int Map::luaOnTouchEvent(::lua_State* luaState) {
     auto index = y * m_width + x;
     auto& currentFloor(m_floors[floor]);
     currentFloor.touchEvents().emplace(index, std::make_shared<Event>(
+        m_eventsState,
         *this,
         luaCallback
     ));
@@ -143,18 +144,16 @@ int Map::luaOnTouchEvent(::lua_State* luaState) {
 }
 
 int Map::luaMessage(::lua_State* luaState) {
-    auto observer = m_eventObserver.lock();
-    if (observer) {
+    if (m_eventObserver != nullptr) {
         std::string message = lua_tostring(luaState, 1);
-        observer->onMessage(message);
+        m_eventObserver->onMessage(message);
         return 1;
     }
     return 0;
 }
 
 int Map::luaTeleport(::lua_State* luaState) {
-    auto observer = m_eventObserver.lock();
-    if (observer) {
+    if (m_eventObserver != nullptr) {
         std::uint16_t x, y;
         std::uint8_t floor;
         int isNum;
@@ -175,13 +174,13 @@ int Map::luaTeleport(::lua_State* luaState) {
             // XXX: Throw an exception
         }
 
-        observer->onTeleport(mapDestination, x, y, floor);
+        m_eventObserver->onTeleport(mapDestination, x, y, floor);
         return 1;
     }
     return 0;
 }
 
-void Map::setEventObserver(std::shared_ptr<EventObserver> eventObserver) {
+void Map::setEventObserver(EventObserver* eventObserver) {
     m_eventObserver = eventObserver;
 }
 

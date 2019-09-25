@@ -35,7 +35,7 @@ public:
         return m_floors;
     }
 
-    void setEventObserver(std::shared_ptr<EventObserver>);
+    void setEventObserver(EventObserver*);
 protected:
     // XXX: Move this elsewhere?
     int luaOnTouchEvent(::lua_State*) override;
@@ -49,7 +49,7 @@ protected:
     std::string m_chipset;
     std::string m_music;
     Floors m_floors;
-    std::weak_ptr<EventObserver> m_eventObserver;
+    EventObserver* m_eventObserver;
 
 };
 
