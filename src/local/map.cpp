@@ -114,21 +114,20 @@ void Map::readMapFloor(
 }
 
 int Map::luaOnTouchEvent(::lua_State* luaState) {
-    std::cerr << "OnTouchEvent!" << std::endl;
     int isNum;
     std::uint16_t x, y;
     std::uint8_t floor;
-    x = lua_tointegerx(luaState, 1, &isNum);
+    x = static_cast<std::uint16_t>(lua_tointegerx(luaState, 1, &isNum));
     if (0 == isNum) {
         // XXX: Throw an exception
     }
 
-    y = lua_tointegerx(luaState, 2, &isNum);
+    y = static_cast<std::uint16_t>(lua_tointegerx(luaState, 2, &isNum));
     if (0 == isNum) {
         // XXX: Throw an exception
     }
 
-    floor = lua_tointegerx(luaState, 3, &isNum);
+    floor = static_cast<std::uint8_t>(lua_tointegerx(luaState, 3, &isNum));
     if (0 == isNum) {
         // XXX: Throw an exception
     }
@@ -147,6 +146,7 @@ int Map::luaMessage(::lua_State* luaState) {
     auto observer = m_eventObserver.lock();
     if (observer) {
         std::string message = lua_tostring(luaState, 1);
+        observer->onMessage(message);
         return 1;
     }
     return 0;
@@ -155,10 +155,34 @@ int Map::luaMessage(::lua_State* luaState) {
 int Map::luaTeleport(::lua_State* luaState) {
     auto observer = m_eventObserver.lock();
     if (observer) {
+        std::uint16_t x, y;
+        std::uint8_t floor;
+        int isNum;
+        std::string mapDestination = lua_tostring(luaState, 1);
 
+        x = static_cast<std::uint16_t>(lua_tointegerx(luaState, 2, &isNum));
+        if (0 == isNum) {
+            // XXX: Throw an exception
+        }
+
+        y = static_cast<std::uint16_t>(lua_tointegerx(luaState, 3, &isNum));
+        if (0 == isNum) {
+            // XXX: Throw an exception
+        }
+
+        floor = static_cast<std::uint8_t>(lua_tointegerx(luaState, 4, &isNum));
+        if (0 == isNum) {
+            // XXX: Throw an exception
+        }
+
+        observer->onTeleport(mapDestination, x, y, floor);
         return 1;
     }
     return 0;
+}
+
+void Map::setEventObserver(std::shared_ptr<EventObserver> eventObserver) {
+    m_eventObserver = eventObserver;
 }
 
 

@@ -9,12 +9,12 @@ extern "C" {
 }
 
 namespace Dummy {
-namespace Core {
+namespace Local {
 
 class EventObserver {
 public:
     virtual void onMessage(const std::string&) = 0;
-    virtual int onTeleport(
+    virtual void onTeleport(
         const std::string&,
         std::uint16_t,
         std::uint16_t,
@@ -22,5 +22,5 @@ public:
     ) = 0;
 };
 
-} // namespace Core
+} // namespace Local
 } // namespace Dummy
