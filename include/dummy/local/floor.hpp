@@ -2,6 +2,7 @@
 
 #include <dummy/core/blocking_layer.hpp>
 #include <dummy/core/graphic_layer.hpp>
+#include <dummy/local/event.hpp>
 
 #include <cstdint>
 #include <map>
@@ -13,7 +14,9 @@ namespace Local {
 
 class Map;
 
+using Coords = std::pair<std::uint8_t, std::uint8_t>;
 using GraphicLayers = std::map<std::int8_t, Dummy::Core::GraphicLayer>;
+using Events = std::map<std::uint16_t, std::shared_ptr<Event>>;
 
 class Floor {
 public:
@@ -51,10 +54,18 @@ public:
     bool isBlocking(std::uint16_t x, std::uint16_t y) const {
         return m_blockingLayer.isBlocking(x, y);
     }
+    Events& touchEvents() {
+        return m_touchEvents;
+    }
+
+    const Events& touchEvents() const {
+        return m_touchEvents;
+    }
 protected:
     const Map& m_map;
     Dummy::Core::BlockingLayer m_blockingLayer;
     GraphicLayers m_graphicLayers;
+    Events m_touchEvents;
 };
 
 } // namespace Local

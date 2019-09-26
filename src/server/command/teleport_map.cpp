@@ -9,17 +9,26 @@ namespace Command {
 TeleportMap::TeleportMap(
     const std::string& mapName,
     const std::pair<std::uint16_t, std::uint16_t>& destination,
+    std::uint8_t floor,
     const std::string& instance
-) : m_mapName(mapName), m_destination(destination), m_instance(instance)
+) : m_mapName(mapName),
+    m_destination(destination),
+    m_floor(floor),
+    m_instance(instance)
 {
 
 }
 
 TeleportMap::TeleportMap(
     const std::string& mapName,
-    std::uint16_t x, std::uint16_t y,
+    std::uint16_t x,
+    std::uint16_t y,
+    std::uint8_t floor,
     const std::string& instance
-) : m_mapName(mapName), m_destination(x, y), m_instance(instance)
+) : m_mapName(mapName),
+    m_destination(x, y),
+    m_floor(floor),
+    m_instance(instance)
 {
 }
 

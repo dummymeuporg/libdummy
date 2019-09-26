@@ -11,12 +11,15 @@
 #include <dummy/server/response/change_character.hpp>
 #include <dummy/server/response/ping.hpp>
 #include <dummy/server/response/set_position.hpp>
+#include <dummy/server/response/teleport_map.hpp>
 
 #include <dummy/server/player.hpp>
 #include <dummy/server/abstract_game_server.hpp>
 #include <dummy/server/game_session.hpp>
+#include <dummy/server/instance.hpp>
 #include <dummy/server/map.hpp>
 
+#include <dummy/server/game_session_state/loading_state.hpp>
 #include <dummy/server/game_session_state/playing_state.hpp>
 #include <dummy/server/game_session_state/manage_characters_state.hpp>
 
@@ -251,6 +254,82 @@ void PlayingState::sendMessageToMap(
     {
         map->dispatchMessage(author, message);
     });
+}
+
+void PlayingState::visitCommand(
+    const Dummy::Server::Command::TeleportMap& teleportMap
+) {
+    std::cerr << "Server: teleport to " << teleportMap.mapName()
+        << std::endl;
+    auto response =
+        std::make_shared<Dummy::Server::Response::TeleportMap>();
+
+    auto& gameServer(m_gameSession.abstractGameServer());
+    const auto& mapName(teleportMap.mapName());
+    const auto& mapNames(gameServer.project().maps());
+    auto& mainInstance(gameServer.mainInstance());
+
+    if (mapNames.find(mapName) == std::end(mapNames)) {
+        // XXX: Throw an exception?
+        std::cerr << "Cannot find map name." << std::endl;
+        m_gameSession.close();
+    }
+
+    const auto& destinationMap(mapNames.at(mapName));
+    if (teleportMap.x() > destinationMap->width()*2 ||
+        teleportMap.y() > destinationMap->height()*2)
+    {
+        // XXX: Throw an exception?
+        std::cerr << "Coordinates are not valid." << std::endl;
+        m_gameSession.close();
+    }
+
+    if (teleportMap.floor() >= destinationMap->floorsCount()) {
+        // XXX: Throw an exception?
+        std::cerr << "Floor is not valid." << std::endl;
+        m_gameSession.close();
+    }
+
+    // TODO: Check that there actually is a teleport command written in the
+    // lua file.
+
+    // ...
+    auto serverMap = mainInstance.map(mapName).lock();
+
+    if (serverMap == nullptr) {
+        // XXX: Throw an exception?
+        std::cerr << "Could not access to destination map server."
+                  << std::endl;
+        m_gameSession.close();
+    }
+
+    auto player = m_gameSession.player().lock();
+
+    if (nullptr == player) {
+        // XXX: Throw an exception?
+        std::cerr << "Could not access the players.";
+    }
+
+    auto oldServerMap = player->map().lock();
+    if (nullptr == oldServerMap) {
+        // XXX: Throw an exception?
+        std::cerr << "Cannot access the current player's map." << std::endl;
+    }
+
+    oldServerMap->removePlayer(player);
+    serverMap->addPlayer(player);
+
+    Dummy::Protocol::TeleportRequest request(
+        mapName,
+        teleportMap.destination(),
+        teleportMap.floor(),
+        "main"
+    );
+    m_gameSession.addResponse(response);
+    response->setStatus(0);
+    m_gameSession.changeState(
+        std::make_shared<LoadingState>(m_gameSession, std::move(request))
+    );
 }
 
 } // namespace GameSessionState

@@ -97,15 +97,33 @@ void AbstractGameServer::createCharacterFile(
     fs::path symlinkPath(m_serverPath / "characters" / character.filename());
 
     // Create a (relative) symlink to reference the character.
-    fs::create_symlink(
-        fs::path("..")
+    createSymLink(
+        (fs::path("..")
         / "accounts"
         / account.name()
         / "characters"
-        / character.filename(),
-        symlinkPath
+        / character.filename()).string(),
+        symlinkPath.string()
     );
 
+}
+
+void AbstractGameServer::createSymLink(
+    const std::string& src,
+    const std::string& dst
+) const {
+#if defined(WIN32) // Windows
+    //XXX: Create some real file, with content indicating the relative
+    //path to the file being 'symlinked'
+    std::ofstream ofs(dst);
+    if (ofs.is_open()) {
+        ofs.write(src.c_str(), src.size());
+        ofs.close();
+    }
+#else // Not Windows
+    // Create a (relative) symlink to reference the character.
+    fs::create_symlink(src, dst);
+#endif
 }
 
 void AbstractGameServer::saveCharacter(

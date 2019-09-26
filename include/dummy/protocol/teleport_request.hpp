@@ -11,8 +11,8 @@ class TeleportRequest {
 public:
     TeleportRequest(const std::string&,
                     const std::pair<std::uint16_t, std::uint16_t>&,
-                    const std::string&,
-                    std::uint8_t = 0);
+                    std::uint8_t,
+                    const std::string&);
 
     const std::string& destinationMap() const {
         return m_destinationMap;

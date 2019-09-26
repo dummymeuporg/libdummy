@@ -2,6 +2,7 @@
 
 #include <map>
 
+#include <dummy/server/command/teleport_map.hpp>
 #include <dummy/server/game_session.hpp>
 #include <dummy/server/map_state.hpp>
 #include <dummy/server/game_session_state/state.hpp>
@@ -38,6 +39,7 @@ public:
     void visitCommand(const Command::SetPosition&) override;
     void visitCommand(const Command::Message&) override;
     void visitCommand(const Command::ChangeCharacter&) override;
+    void visitCommand(const Command::TeleportMap&) override;
 private:
     void createMapUpdates(
         std::shared_ptr<Player>,

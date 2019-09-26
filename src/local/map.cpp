@@ -5,6 +5,8 @@
 
 #include <dummy/core/graphic_layer.hpp>
 
+#include <dummy/local/event.hpp>
+#include <dummy/local/event_observer.hpp>
 #include <dummy/local/map.hpp>
 #include <dummy/local/project.hpp>
 
@@ -17,7 +19,7 @@ namespace Local
 {
 
 Map::Map(const Project& project, const std::string& name)
-    : Dummy::Core::Map(name), m_project(project)
+    : Dummy::Core::Map(name), m_project(project), m_eventObserver(nullptr)
 {
     std::cerr << "Local map constructor" << std::endl;
 }
@@ -26,6 +28,7 @@ void Map::load() {
     fs::path basePath(m_project.projectPath() / "maps");
     std::string mapFile(m_name + ".map");
     std::string blkFile(m_name + ".blk");
+    std::string luaFile(m_name + ".lua");
 
     std::ifstream ifsMapFile(basePath / mapFile, std::ios::binary);
     if (!ifsMapFile.is_open()) {
@@ -36,13 +39,14 @@ void Map::load() {
     if (!ifsBlkFile.is_open()) {
         throw Dummy::Core::BlkFileNotFound();
     }
-
     loadMapFile(ifsMapFile);
     readBlkFile(ifsBlkFile);
 
     for (int i = 0; i < m_floorsCount; ++i) {
         readMapFloor(ifsMapFile, ifsBlkFile);
     }
+
+    loadLuaFile((basePath / luaFile).string());
 }
 
 void Map::loadMapFile(std::ifstream& ifs) {
@@ -108,6 +112,78 @@ void Map::readMapFloor(
     // Create the floor.
     m_floors.push_back(std::move(floor));
 }
+
+int Map::luaOnTouchEvent(::lua_State* luaState) {
+    int isNum;
+    std::uint16_t x, y;
+    std::uint8_t floor;
+    x = static_cast<std::uint16_t>(lua_tointegerx(luaState, 1, &isNum));
+    if (0 == isNum) {
+        // XXX: Throw an exception
+    }
+
+    y = static_cast<std::uint16_t>(lua_tointegerx(luaState, 2, &isNum));
+    if (0 == isNum) {
+        // XXX: Throw an exception
+    }
+
+    floor = static_cast<std::uint8_t>(lua_tointegerx(luaState, 3, &isNum));
+    if (0 == isNum) {
+        // XXX: Throw an exception
+    }
+
+    std::string luaCallback = lua_tostring(luaState, 4);
+    auto index = y * m_width + x;
+    auto& currentFloor(m_floors[floor]);
+    currentFloor.touchEvents().emplace(index, std::make_shared<Event>(
+        m_eventsState,
+        *this,
+        luaCallback
+    ));
+    return 1;
+}
+
+int Map::luaMessage(::lua_State* luaState) {
+    if (m_eventObserver != nullptr) {
+        std::string message = lua_tostring(luaState, 1);
+        m_eventObserver->onMessage(message);
+        return 1;
+    }
+    return 0;
+}
+
+int Map::luaTeleport(::lua_State* luaState) {
+    if (m_eventObserver != nullptr) {
+        std::uint16_t x, y;
+        std::uint8_t floor;
+        int isNum;
+        std::string mapDestination = lua_tostring(luaState, 1);
+
+        x = static_cast<std::uint16_t>(lua_tointegerx(luaState, 2, &isNum));
+        if (0 == isNum) {
+            // XXX: Throw an exception
+        }
+
+        y = static_cast<std::uint16_t>(lua_tointegerx(luaState, 3, &isNum));
+        if (0 == isNum) {
+            // XXX: Throw an exception
+        }
+
+        floor = static_cast<std::uint8_t>(lua_tointegerx(luaState, 4, &isNum));
+        if (0 == isNum) {
+            // XXX: Throw an exception
+        }
+
+        m_eventObserver->onTeleport(mapDestination, x, y, floor);
+        return 1;
+    }
+    return 0;
+}
+
+void Map::setEventObserver(EventObserver* eventObserver) {
+    m_eventObserver = eventObserver;
+}
+
 
 } // namespace Core
 } // namespace Dummy

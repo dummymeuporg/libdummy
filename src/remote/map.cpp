@@ -32,9 +32,24 @@ void Map::load() {
     readBlkFile(ifsBlkFile);
 
     for (int i = 0; i < m_floorsCount; ++i) {
-        m_floors.push_back(std::move(loadBlockingLayer(ifsBlkFile)));
+        m_floors.push_back(loadBlockingLayer(ifsBlkFile));
     }
 
+}
+
+int Map::luaOnTouchEvent(::lua_State*) {
+    // XXX: What do we do?
+    return 1;
+}
+
+int Map::luaMessage(::lua_State*) {
+    // XXX: What do we do?
+    return 1;
+}
+
+int Map::luaTeleport(::lua_State*) {
+    // XXX: What do we do?
+    return 1;
 }
 
 } // namespace Remote
