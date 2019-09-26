@@ -48,6 +48,7 @@ void LoadingState::visitCommand(
 
 
     if (m_teleportRequest.destinationMap() == teleportMap.mapName() &&
+        m_teleportRequest.floor() == teleportMap.floor() &&
         m_teleportRequest.position() == teleportMap.destination())
     {
         std::cerr << "Teleport request valid." << std::endl;

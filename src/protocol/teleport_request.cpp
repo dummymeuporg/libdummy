@@ -7,8 +7,8 @@ namespace Protocol {
 TeleportRequest::TeleportRequest(
     const std::string& destinationMap,
     const std::pair<std::uint16_t, std::uint16_t>& pos,
-    const std::string& destinationInstance,
-    std::uint8_t floor
+    std::uint8_t floor,
+    const std::string& destinationInstance
 ) : m_destinationMap(destinationMap), m_position(pos),
     m_floor(floor),
     m_destinationInstance(destinationInstance)

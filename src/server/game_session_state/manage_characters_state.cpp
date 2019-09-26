@@ -61,7 +61,8 @@ void ManageCharactersState::visitCommand(
         m_gameSession.setPlayer(player);
 
         Dummy::Protocol::TeleportRequest teleportRequest(
-            chr->mapLocation(), chr->position(), "main"
+            chr->mapLocation(), chr->position(), chr->floor(),
+            "main"
         );
         m_gameSession.changeState(
             std::make_shared<LoadingState>(

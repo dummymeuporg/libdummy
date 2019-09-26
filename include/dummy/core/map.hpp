@@ -83,6 +83,10 @@ public:
         return m_eventsState;
     }
 
+    std::uint8_t floorsCount() const {
+        return m_floorsCount;
+    }
+
 protected:
     void loadBaseInfo(std::ifstream&);
     BlockingLayer loadBlockingLayer(std::ifstream&);
