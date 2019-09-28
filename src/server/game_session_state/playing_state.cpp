@@ -318,6 +318,7 @@ void PlayingState::visitCommand(
 
     oldServerMap->removePlayer(player);
     serverMap->addPlayer(player);
+    player->setMap(serverMap);
 
     Dummy::Protocol::TeleportRequest request(
         mapName,

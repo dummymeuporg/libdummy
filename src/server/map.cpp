@@ -19,6 +19,7 @@ void
 Map::addPlayer(std::shared_ptr<Player> player) {
     if (m_players.find(player->name()) == std::end(m_players)) {
         m_players[player->name()] = player;
+        player->setMap(shared_from_this());
     }
 }
 

@@ -21,7 +21,7 @@ void Player::leaveCurrentMap() {
 }
 
 void Player::setMap(std::weak_ptr<Map> map) {
-    leaveCurrentMap();
+    //leaveCurrentMap();
     m_map = map;
 }
 

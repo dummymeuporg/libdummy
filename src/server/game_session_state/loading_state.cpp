@@ -62,8 +62,8 @@ void LoadingState::visitCommand(
         }
 
         if (auto mapPt = newServerMap.lock()) {
-            mapPt->addPlayer(player);
             player->setMap(mapPt);
+            mapPt->addPlayer(player);
             response->setStatus(0);
 
             std::cerr << "CHANGE STATE" << std::endl;
