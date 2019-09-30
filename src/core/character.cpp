@@ -55,6 +55,11 @@ Character& Character::setFloor(std::uint8_t floor) {
     return *this;
 }
 
+Character& Character::setInstance(const std::string& instance) {
+    m_instance = instance;
+    return *this;
+}
+
 std::string Character::filteredName(const std::string& name) {
     std::string filteredName("");
     bool isPreviousAlpha = false;
@@ -125,6 +130,12 @@ void Character::_readFromStream(std::ifstream& ifs) {
     // read floor
     ifs.read(reinterpret_cast<char*>(&m_floor), sizeof(std::uint8_t));
 
+    // read instance
+    ifs.read(reinterpret_cast<char*>(&size), sizeof(std::uint32_t));
+    str.resize(size);
+    ifs.read(str.data(), size);
+    m_instance = std::move(str);
+
 }
 
 void Character::_writeToStream(std::ofstream& ofs) const {
@@ -134,34 +145,58 @@ void Character::_writeToStream(std::ofstream& ofs) const {
     std::uint32_t mapLocationSize(static_cast<std::uint32_t>(
         m_mapLocation.size()
     ));
+    std::uint32_t instanceSize(static_cast<std::uint32_t>(m_instance.size()));
 
     ofs.write(reinterpret_cast<const char*>(&magicWord),
               sizeof(std::uint32_t));
     ofs.write(reinterpret_cast<const char*>(&nameSize), sizeof(std::uint32_t));
-    ofs.write(m_name.c_str(), m_name.size());
+    ofs.write(
+        m_name.c_str(),
+        static_cast<std::streamsize>(m_name.size())
+    );
     ofs.write(reinterpret_cast<const char*>(&skinSize), sizeof(std::uint32_t));
-    ofs.write(m_skin.c_str(), m_skin.size());
+    ofs.write(
+        m_skin.c_str(),
+        static_cast<std::streamsize>(m_skin.size())
+    );
     ofs.write(reinterpret_cast<const char*>(&m_position.first),
               sizeof(std::uint16_t));
     ofs.write(reinterpret_cast<const char*>(&m_position.second),
               sizeof(std::uint16_t));
     ofs.write(reinterpret_cast<const char*>(&mapLocationSize),
               sizeof(std::uint32_t));
-    ofs.write(m_mapLocation.c_str(), m_mapLocation.size());
+    ofs.write(
+        m_mapLocation.c_str(),
+        static_cast<std::streamsize>(m_mapLocation.size())
+    );
     ofs.write(reinterpret_cast<const char*>(&m_direction),
               sizeof(std::uint8_t));
     ofs.write(reinterpret_cast<const char*>(&m_floor),
               sizeof(std::uint8_t));
+
+    // Write instance.
+    ofs.write(
+        reinterpret_cast<const char*>(&instanceSize),
+        sizeof(std::uint32_t)
+    );
+
+
+    ofs.write(
+        m_instance.c_str(),
+        static_cast<std::streamsize>(m_instance.size())
+    );
+
+
 }
 
 void Character::_writeToPacket(Protocol::OutgoingPacket& pkt) const {
     pkt << m_name << m_skin << m_position.first << m_position.second
-        << m_mapLocation << m_floor;
+        << m_mapLocation << m_floor << m_instance;
 }
 
 void Character::_readFromPacket(Protocol::IncomingPacket& pkt) {
     pkt >> m_name >> m_skin >> m_position.first >> m_position.second
-        >> m_mapLocation >> m_floor;
+        >> m_mapLocation >> m_floor >> m_instance;
 }
 
 } // namespace Core

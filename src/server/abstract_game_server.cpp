@@ -177,6 +177,7 @@ AbstractGameServer::createCharacter(const Account& account,
     chr.setPosition(position);
     chr.setMapLocation(startingPoint.mapName());
     chr.setFloor(startingPoint.floor());
+    chr.setInstance(startingPoint.instance());
 
     createCharacterFile(account, chr);
 

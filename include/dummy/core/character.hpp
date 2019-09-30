@@ -54,6 +54,10 @@ public:
         return m_floor;
     }
 
+    const std::string& instance() const {
+        return m_instance;
+    }
+
     friend std::ifstream&
     operator>>(std::ifstream& ifs, Character& chr) {
         chr._readFromStream(ifs);
@@ -83,6 +87,7 @@ public:
     Character& setPosition(const Position&);
     Character& setMapLocation(const std::string&);
     Character& setFloor(std::uint8_t);
+    Character& setInstance(const std::string&);
 private:
     void _writeToStream(std::ofstream&) const;
     void _readFromStream(std::ifstream&);
@@ -94,6 +99,7 @@ private:
     Direction m_direction;
     Position m_position;
     std::uint8_t m_floor;
+    std::string m_instance;
 };
 
 } // namespace Core
