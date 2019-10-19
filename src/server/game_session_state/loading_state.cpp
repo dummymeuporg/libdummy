@@ -63,6 +63,10 @@ void LoadingState::visitCommand(
 
         if (auto mapPt = newServerMap.lock()) {
             player->setMap(mapPt);
+            player->character()->setMapLocation(
+                m_teleportRequest.destinationMap()
+            );
+            player->character()->setPosition(m_teleportRequest.position());
             mapPt->addPlayer(player);
             response->setStatus(0);
 
