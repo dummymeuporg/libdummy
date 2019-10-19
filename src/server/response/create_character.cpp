@@ -34,6 +34,10 @@ void CreateCharacter::readFrom(Dummy::Protocol::IncomingPacket& pkt) {
     }
 }
 
+std::shared_ptr<Response> CreateCharacter::clone() const {
+    return std::make_shared<CreateCharacter>(*this);
+}
+
 } // namespace Response
 } // namespace Server
 } // namespace Dummy

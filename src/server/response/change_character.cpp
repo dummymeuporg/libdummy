@@ -14,6 +14,10 @@ void ChangeCharacter::accept(ResponseVisitor& visitor) const {
     visitor.visitResponse(*this);
 }
 
+std::shared_ptr<Response> ChangeCharacter::clone() const {
+    return std::make_shared<ChangeCharacter>(*this);
+}
+
 void ChangeCharacter::serializeTo(Dummy::Protocol::OutgoingPacket& pkt) const {
     pkt << m_status << m_mapLocation << m_position.first
         << m_position.second;

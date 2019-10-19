@@ -20,6 +20,10 @@ void ConnectResponse::readFrom(Dummy::Protocol::IncomingPacket& pkt) {
     pkt >> m_status;
 }
 
+std::shared_ptr<Response> ConnectResponse::clone() const {
+    return std::make_shared<ConnectResponse>(*this);
+}
+
 } // namespace Response
 } // namespace Server
 } // namespace Dummy

@@ -24,7 +24,7 @@ void Ping::accept(ResponseVisitor& visitor) const {
 
 void
 Ping::addUpdate(
-    std::unique_ptr<const Dummy::Protocol::MapUpdate::Update> update
+    std::shared_ptr<const Dummy::Protocol::MapUpdate::Update> update
 ) {
     m_mapUpdates.push_back(std::move(update));
 }
@@ -64,16 +64,16 @@ void Ping::readFrom(Dummy::Protocol::IncomingPacket& packet) {
     }
 }
 
-std::unique_ptr<const Dummy::Protocol::MapUpdate::CharacterOff>
+std::shared_ptr<const Dummy::Protocol::MapUpdate::CharacterOff>
 Ping::readCharacterOff(Dummy::Protocol::IncomingPacket& packet) {
     std::string name;
     packet >> name;
-    return std::make_unique<Dummy::Protocol::MapUpdate::CharacterOff>(
+    return std::make_shared<Dummy::Protocol::MapUpdate::CharacterOff>(
         name
     );
 }
 
-std::unique_ptr<const Dummy::Protocol::MapUpdate::CharacterOn>
+std::shared_ptr<const Dummy::Protocol::MapUpdate::CharacterOn>
 Ping::readCharacterOn(Dummy::Protocol::IncomingPacket& packet) {
     std::uint16_t x, y;
     std::uint8_t floor;
@@ -81,31 +81,35 @@ Ping::readCharacterOn(Dummy::Protocol::IncomingPacket& packet) {
     Dummy::Core::Character::Direction direction;
     packet >> x >> y >> floor >> name >> skin
         >> reinterpret_cast<std::uint8_t&>(direction);
-    return std::make_unique<Dummy::Protocol::MapUpdate::CharacterOn>(
+    return std::make_shared<Dummy::Protocol::MapUpdate::CharacterOn>(
         x, y, floor, name, skin, direction
     );
 }
 
-std::unique_ptr<const Dummy::Protocol::MapUpdate::CharacterPosition>
+std::shared_ptr<const Dummy::Protocol::MapUpdate::CharacterPosition>
 Ping::readCharacterPosition(Dummy::Protocol::IncomingPacket& packet) {
     std::uint16_t x, y;
     std::string name;
     Dummy::Core::Character::Direction direction;
     packet >> x >> y
            >> name >> reinterpret_cast<std::uint8_t&>(direction);
-    return std::make_unique<Dummy::Protocol::MapUpdate::CharacterPosition>(
+    return std::make_shared<Dummy::Protocol::MapUpdate::CharacterPosition>(
         x, y, name, direction
     );
 }
 
-std::unique_ptr<const Dummy::Protocol::MapUpdate::CharacterFloor>
+std::shared_ptr<const Dummy::Protocol::MapUpdate::CharacterFloor>
 Ping::readCharacterFloor(Dummy::Protocol::IncomingPacket& packet) {
     std::string name;
     std::uint8_t floor;
     packet >> name >> floor;
-    return std::make_unique<Dummy::Protocol::MapUpdate::CharacterFloor>(
+    return std::make_shared<Dummy::Protocol::MapUpdate::CharacterFloor>(
         name, floor
     );
+}
+
+std::shared_ptr<Response> Ping::clone() const {
+    return std::make_shared<Ping>(*this);
 }
 
 } // namespace Response

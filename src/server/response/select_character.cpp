@@ -20,6 +20,10 @@ void SelectCharacter::readFrom(Dummy::Protocol::IncomingPacket& pkt) {
     pkt >> m_status;
 }
 
+std::shared_ptr<Response> SelectCharacter::clone() const {
+    return std::make_shared<SelectCharacter>(*this);
+}
+
 } // namespace Response
 } // namespace Server
 } // namespace Dummy

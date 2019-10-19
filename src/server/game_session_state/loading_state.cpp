@@ -63,6 +63,10 @@ void LoadingState::visitCommand(
 
         if (auto mapPt = newServerMap.lock()) {
             player->setMap(mapPt);
+            player->character()->setMapLocation(
+                m_teleportRequest.destinationMap()
+            );
+            player->character()->setPosition(m_teleportRequest.position());
             mapPt->addPlayer(player);
             response->setStatus(0);
 
@@ -74,7 +78,16 @@ void LoadingState::visitCommand(
             response->setStatus(-1);
         }
     } else {
-        response->setStatus(-1);
+        std::cerr << "Error with teleport request." << std::endl;
+        std::cerr << m_teleportRequest.destinationMap() << " "
+                  << teleportMap.mapName() << std::endl;
+        std::cerr << static_cast<int>(m_teleportRequest.floor()) << " "
+                  << static_cast<int>(teleportMap.floor()) << std::endl;
+        std::cerr << m_teleportRequest.position().first << " "
+                  << teleportMap.destination().first << std::endl;
+        std::cerr << m_teleportRequest.position().second << " "
+                  << teleportMap.destination().second << std::endl;
+        response->setStatus(-2);
     }
     m_gameSession.addResponse(response);
 }

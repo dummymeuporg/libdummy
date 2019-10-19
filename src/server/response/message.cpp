@@ -12,6 +12,10 @@ void Message::accept(ResponseVisitor& visitor) const {
     visitor.visitResponse(*this);
 }
 
+std::shared_ptr<Response> Message::clone() const {
+    return std::make_shared<Message>(*this);
+}
+
 void Message::serializeTo(Dummy::Protocol::OutgoingPacket& pkt) const {
     pkt << m_status << m_author << m_content;
 }

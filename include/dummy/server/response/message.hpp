@@ -11,6 +11,7 @@ namespace Response {
 class Message : public Response {
 public:
     void accept(ResponseVisitor&) const override;
+    std::shared_ptr<Response> clone() const override;
     void serializeTo(Dummy::Protocol::OutgoingPacket&) const override;
     void readFrom(Dummy::Protocol::IncomingPacket&) override;
 

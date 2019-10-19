@@ -19,6 +19,10 @@ void SetPosition::readFrom(Dummy::Protocol::IncomingPacket& pkt) {
     pkt >> m_status;
 }
 
+std::shared_ptr<Response> SetPosition::clone() const {
+    return std::make_shared<SetPosition>(*this);
+}
+
 } // namespace Response
 } // namespace Server
 } // namespace Dummy

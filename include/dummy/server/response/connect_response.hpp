@@ -9,6 +9,7 @@ namespace Response {
 class ConnectResponse : public Response {
 public:
     virtual void accept(ResponseVisitor&) const override;
+    std::shared_ptr<Response> clone() const override;
     virtual void serializeTo(Dummy::Protocol::OutgoingPacket&) const override;
     virtual void readFrom(Dummy::Protocol::IncomingPacket&) override;
 };

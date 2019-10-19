@@ -47,6 +47,8 @@ public:
     }
 
     inline const Position& position() const {
+        std::cerr << "position():" << m_position.first << ", "
+                  << m_position.second << std::endl;
         return m_position;
     }
 

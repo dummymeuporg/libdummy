@@ -48,8 +48,8 @@ PlayingState::createMapUpdates(
 {
 
     // Get the players around.
-    std::cerr << "There are " << map->players().size() << " on the map."
-        << std::endl;
+    //std::cerr << "There are " << map->players().size() << " on the map."
+    //    << std::endl;
     for (const auto& [name, otherPlayer]: map->players()) {
         /* ignore the self player */
         if (player->name() == name) {
@@ -260,7 +260,8 @@ void PlayingState::visitCommand(
     const Dummy::Server::Command::TeleportMap& teleportMap
 ) {
     std::cerr << "Server: teleport to " << teleportMap.mapName()
-        << std::endl;
+        << " (" << teleportMap.x() << ", "
+        << teleportMap.y() << ")" << std::endl;
     auto response =
         std::make_shared<Dummy::Server::Response::TeleportMap>();
 
