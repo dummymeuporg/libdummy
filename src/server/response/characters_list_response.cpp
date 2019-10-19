@@ -45,6 +45,16 @@ void CharactersListResponse::readFrom(Dummy::Protocol::IncomingPacket& pkt) {
     }
 }
 
+std::shared_ptr<Response> CharactersListResponse::clone() const {
+    auto response(std::make_shared<CharactersListResponse>());
+    for (const auto& character: m_charactersList) {
+        response->addCharacter(
+            std::make_shared<Dummy::Core::Character>(*character)
+        );
+    }
+    return std::move(response);
+}
+
 } // namespace Response
 } // namespace Server
 } // namespace Dummy

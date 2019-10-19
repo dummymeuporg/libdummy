@@ -16,6 +16,7 @@ namespace Response {
 class CreateCharacter : public Response {
 public:
     virtual void accept(ResponseVisitor&) const override;
+    std::shared_ptr<Response> clone() const override;
     std::shared_ptr<Dummy::Core::Character> character() const {
         return m_character;
     }

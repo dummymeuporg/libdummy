@@ -15,6 +15,7 @@ public:
     using CharactersList =
         std::vector<std::shared_ptr<Dummy::Core::Character>>;
     virtual void accept(ResponseVisitor&) const override;
+    std::shared_ptr<Response> clone() const override;
     const CharactersList& charactersList() const {
         return m_charactersList;
     }

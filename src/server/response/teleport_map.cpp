@@ -20,6 +20,10 @@ void TeleportMap::readFrom(Dummy::Protocol::IncomingPacket& pkt) {
     pkt >> m_status;
 }
 
+std::shared_ptr<Response> TeleportMap::clone() const {
+    return std::make_shared<TeleportMap>(*this);
+}
+
 } // namespace Response
 } // namespace Server
 } // namespace Dummy

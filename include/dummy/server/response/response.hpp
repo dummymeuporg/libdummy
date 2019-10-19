@@ -22,6 +22,7 @@ public:
 
     void setStatus(std::uint8_t status);
     virtual void accept(ResponseVisitor&) const = 0;
+    virtual std::shared_ptr<Response> clone() const = 0;
     virtual void serializeTo(Dummy::Protocol::OutgoingPacket&) const = 0;
     virtual void readFrom(Dummy::Protocol::IncomingPacket&) = 0;
 protected:

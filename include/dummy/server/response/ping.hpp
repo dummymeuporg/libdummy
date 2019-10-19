@@ -21,29 +21,30 @@ namespace Response {
 class ResponseVisitor;
 
 using MapUpdates = \
-    std::vector<std::unique_ptr<const Dummy::Protocol::MapUpdate::Update>>;
+    std::vector<std::shared_ptr<const Dummy::Protocol::MapUpdate::Update>>;
 
 
 class Ping : public Response {
 public:
     virtual void accept(ResponseVisitor&) const override;
-    void addUpdate(std::unique_ptr<const Dummy::Protocol::MapUpdate::Update>);
+    std::shared_ptr<Response> clone() const override;
+    void addUpdate(std::shared_ptr<const Dummy::Protocol::MapUpdate::Update>);
     virtual void serializeTo(Dummy::Protocol::OutgoingPacket&) const override;
     virtual void readFrom(Dummy::Protocol::IncomingPacket&) override;
     const MapUpdates& mapUpdates() const {
         return m_mapUpdates;
     }
 private:
-    std::unique_ptr<const Dummy::Protocol::MapUpdate::CharacterOff>
+    std::shared_ptr<const Dummy::Protocol::MapUpdate::CharacterOff>
     readCharacterOff(Dummy::Protocol::IncomingPacket&);
 
-    std::unique_ptr<const Dummy::Protocol::MapUpdate::CharacterOn>
+    std::shared_ptr<const Dummy::Protocol::MapUpdate::CharacterOn>
     readCharacterOn(Dummy::Protocol::IncomingPacket&);
 
-    std::unique_ptr<const Dummy::Protocol::MapUpdate::CharacterPosition>
+    std::shared_ptr<const Dummy::Protocol::MapUpdate::CharacterPosition>
     readCharacterPosition(Dummy::Protocol::IncomingPacket&);
 
-    std::unique_ptr<const Dummy::Protocol::MapUpdate::CharacterFloor>
+    std::shared_ptr<const Dummy::Protocol::MapUpdate::CharacterFloor>
     readCharacterFloor(Dummy::Protocol::IncomingPacket&);
 
     MapUpdates m_mapUpdates;

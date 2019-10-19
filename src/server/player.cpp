@@ -27,6 +27,8 @@ void Player::setMap(std::weak_ptr<Map> map) {
 
 void
 Player::setPosition(const std::pair<std::uint16_t, std::uint16_t>& pos) {
+    std::cerr << "Server, set position: " << pos.first <<
+                 " " << pos.second << std::endl;
     m_character->setPosition(pos); 
 }
 

@@ -31,7 +31,7 @@ std::string Character::filename() const {
 }
 
 Character& Character::setName(const std::string& name) {
-    m_name = std::move(Character::filteredName(name));
+    m_name = Character::filteredName(name);
     return *this;
 }
 
@@ -42,6 +42,8 @@ Character& Character::setSkin(const std::string& skin) {
 
 Character& Character::setPosition(const Position& position) {
     m_position = position;
+    std::cerr << "set position: " << position.first << " "
+              << position.second << std::endl;
     return *this;
 }
 
