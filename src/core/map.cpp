@@ -92,6 +92,12 @@ void Map::loadLuaFile(const std::string& luaFile) {
         &dispatch<&Map::luaTeleport>
     );
 
+    lua_register(
+        m_eventsState,
+        "AddFoe",
+        &dispatch<&Map::luaAddFoe>
+    );
+
     int ret = luaL_dofile(m_eventsState, luaFile.c_str());
     if (ret != 0) {
         throw Dummy::Core::LuaFileNotFound();

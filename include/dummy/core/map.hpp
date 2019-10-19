@@ -11,6 +11,8 @@ extern "C" {
 #include <lauxlib.h>
 }
 
+#include <dummy/core/foe.hpp>
+
 namespace Dummy
 {
 
@@ -97,11 +99,13 @@ protected:
     virtual int luaOnTouchEvent(::lua_State*) = 0;
     virtual int luaMessage(::lua_State*) = 0;
     virtual int luaTeleport(::lua_State*) = 0;
+    virtual int luaAddFoe(::lua_State*) = 0;
 
 protected:
     std::string m_name;
     std::uint16_t m_width, m_height;
     std::uint8_t m_floorsCount;
+    std::vector<Foe> m_foes;
     ::lua_State* m_eventsState;
     void internalLoadMapFile(std::string);
 };
