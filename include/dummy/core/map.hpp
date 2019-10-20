@@ -99,7 +99,7 @@ protected:
     virtual int luaOnTouchEvent(::lua_State*) = 0;
     virtual int luaMessage(::lua_State*) = 0;
     virtual int luaTeleport(::lua_State*) = 0;
-    virtual int luaAddFoe(::lua_State*) = 0;
+    int luaAddFoe(::lua_State*);
 
 protected:
     std::string m_name;
