@@ -20,16 +20,11 @@ AbstractGameServer::AbstractGameServer(
 ) : m_ioContext(ioContext),
     m_project(projectPath),
     m_serverPath(serverPath),
-    m_mainInstance(*this, m_ioContext)
+    m_mainInstance(*this, m_ioContext, "main")
 {
     m_project.load();
-    _spawnMainInstance();
 }
 
-void AbstractGameServer::_spawnMainInstance()
-{
-    m_mainInstance.spawnMaps();
-}
 
 void AbstractGameServer::run() {
 
@@ -203,6 +198,14 @@ void
 AbstractGameServer::removeSession(std::shared_ptr<GameSession> gameSession) {
     std::cerr << "Removing game session." << std::endl;
     m_gameSessions.erase(gameSession);
+}
+
+void AbstractGameServer::spawnInstance(const std::string& name) {
+    m_instances[name] = std::make_shared<Instance>(*this, m_ioContext, name);
+}
+
+void AbstractGameServer::releaseInstance(const std::string& name) {
+
 }
 
 } // namespace Server

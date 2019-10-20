@@ -36,5 +36,9 @@ void Player::setPosition(std::uint16_t x, std::uint16_t y) {
     setPosition(std::pair<std::uint16_t, std::uint16_t>(x, y));
 }
 
+void Player::setInstance(std::weak_ptr<Instance> instance) {
+    m_instance = instance;
+}
+
 } // namespace Server
 } // namespace Dummy

@@ -10,6 +10,7 @@ namespace Dummy {
 namespace Server {
 
 class Account;
+class Instance;
 class Map;
 
 class Player : public std::enable_shared_from_this<Player> {
@@ -37,15 +38,21 @@ public:
         return m_map;
     }
 
+    std::weak_ptr<Instance> instance() const {
+        return m_instance;
+    }
+
     void setMap(std::weak_ptr<Map>);
     void setPosition(const std::pair<std::uint16_t, std::uint16_t>&);
     void setPosition(std::uint16_t, std::uint16_t);
+    void setInstance(std::weak_ptr<Instance>);
     void leaveCurrentMap();
 
 private:
     GameSession& m_gameSession;
     std::shared_ptr<Dummy::Core::Character> m_character;
     std::weak_ptr<Map> m_map;
+    std::weak_ptr<Instance> m_instance;
 
 };
 

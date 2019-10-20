@@ -291,11 +291,26 @@ void PlayingState::visitCommand(
         m_gameSession.close();
     }
 
+    auto player = m_gameSession.player().lock();
+
+    if (nullptr == player) {
+        // XXX: Throw an exception?
+        std::cerr << "Could not access the player.";
+        m_gameSession.close();
+    }
+
+    auto instance(player->instance().lock());
+    if (nullptr == instance) {
+        // XXX: Throw an exception?
+        std::cerr << "Could not access the player's instance." << std::endl;
+        m_gameSession.close();
+    }
+
     // TODO: Check that there actually is a teleport command written in the
     // lua file.
 
     // ...
-    auto serverMap = mainInstance.map(mapName).lock();
+    auto serverMap = instance->map(mapName).lock();
 
     if (serverMap == nullptr) {
         // XXX: Throw an exception?
@@ -304,12 +319,6 @@ void PlayingState::visitCommand(
         m_gameSession.close();
     }
 
-    auto player = m_gameSession.player().lock();
-
-    if (nullptr == player) {
-        // XXX: Throw an exception?
-        std::cerr << "Could not access the players.";
-    }
 
     auto oldServerMap = player->map().lock();
     if (nullptr == oldServerMap) {
@@ -325,7 +334,7 @@ void PlayingState::visitCommand(
         mapName,
         teleportMap.destination(),
         teleportMap.floor(),
-        "main"
+        instance->name()
     );
     m_gameSession.addResponse(response);
     response->setStatus(0);
