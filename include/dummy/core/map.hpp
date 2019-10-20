@@ -89,6 +89,10 @@ public:
         return m_floorsCount;
     }
 
+    const std::vector<Foe>& foes() const {
+        return m_foes;
+    }
+
 protected:
     void loadBaseInfo(std::ifstream&);
     BlockingLayer loadBlockingLayer(std::ifstream&);
