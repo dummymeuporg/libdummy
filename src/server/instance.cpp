@@ -7,19 +7,37 @@ namespace Server {
 
 Instance::Instance(
     AbstractGameServer& abstractGameServer,
-    boost::asio::io_context& ioContext) :
-    m_abstractGameServer(abstractGameServer), m_ioContext(ioContext)
+    boost::asio::io_context& ioContext,
+    const std::string& name) :
+    m_abstractGameServer(abstractGameServer), m_ioContext(ioContext),
+    m_name(name)
 {}
 
-void Instance::spawnMaps() {
-    // XXX: simplify it
-    const Dummy::Server::Project& project(m_abstractGameServer.project());
-    for (auto const &projectMap : project.maps()) {
-        std::cerr << "Spawn map " << projectMap.first << std::endl;
-        m_maps[projectMap.first] = std::make_shared<Map>(
-            *this, *projectMap.second, m_ioContext
+
+void Instance::addPlayer(const std::string& name, std::weak_ptr<Player> player)
+{
+    m_players[name] = player;
+}
+
+void Instance::removePlayer(const std::string& name) {
+    m_players.erase(name);
+}
+
+std::weak_ptr<Map> Instance::map(const std::string& name) {
+    if (m_maps.find(name) == std::end(m_maps)) {
+        // Ensure that the map exists by its name.
+        const Dummy::Server::Project& project(m_abstractGameServer.project());
+        if (project.maps().find(name) == std::end(project.maps())) {
+            // XXX: throw an exception.
+        }
+
+        // Spawn the map.
+        m_maps[name] = std::make_shared<Map>(
+            *this, *project.maps().at(name), m_ioContext
         );
+
     }
+    return m_maps[name];
 }
 
 } // namespace Server

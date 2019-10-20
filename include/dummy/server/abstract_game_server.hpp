@@ -40,13 +40,19 @@ public:
 
     std::shared_ptr<Account>
     connect(const std::string&, const std::string&);
+
     void disconnect(const std::string&);
+
     void addPending(const std::string&, const std::string&);
+
     bool isPending(const std::string&) const;
+
     bool isAuthenticated(const std::string&) const;
+
     Instance& mainInstance() {
         return m_mainInstance;
     }
+
 
     /* Character creation. */
     bool characterExists(const Core::Character&) const;
@@ -70,7 +76,18 @@ public:
 
     void removeSession(std::shared_ptr<GameSession>);
 
+    void spawnInstance(const std::string&);
+
+    void releaseInstance(const std::string&);
+
     virtual void run();
+
+    std::weak_ptr<Instance> instance(const std::string& name) {
+        if (m_instances.find(name) == std::end(m_instances)) {
+            spawnInstance(name);
+        }
+        return m_instances[name];
+    }
 
 protected:
     void createSymLink(const std::string&, const std::string&) const;
@@ -80,6 +97,8 @@ protected:
     Project m_project;
     fs::path m_serverPath;
     Instance m_mainInstance;
+
+    std::map<std::string, std::shared_ptr<Instance>> m_instances;
     std::map<std::string,
              std::shared_ptr<Account>> m_pendingAccounts;
     std::map<std::string,
