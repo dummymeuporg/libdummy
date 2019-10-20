@@ -13,6 +13,7 @@
 #include <dummy/server/response/set_position.hpp>
 #include <dummy/server/response/teleport_map.hpp>
 
+#include <dummy/server/foe.hpp>
 #include <dummy/server/player.hpp>
 #include <dummy/server/abstract_game_server.hpp>
 #include <dummy/server/game_session.hpp>
@@ -47,9 +48,6 @@ PlayingState::createMapUpdates(
     MapUpdatesVector& mapUpdates)
 {
 
-    // Get the players around.
-    //std::cerr << "There are " << map->players().size() << " on the map."
-    //    << std::endl;
     for (const auto& [name, otherPlayer]: map->players()) {
         /* ignore the self player */
         if (player->name() == name) {
@@ -96,9 +94,48 @@ PlayingState::createMapUpdates(
         }
     }
 
+    // Foes
+    for (const auto& [name, foe]: map->foes()) {
+        if (m_mapState.livings().find(foe.name())
+                == std::end(m_mapState.livings()))
+        {
+            // A foe appeared.
+            mapUpdates.push_back(
+                std::make_unique<Dummy::Protocol::MapUpdate::CharacterOn>(
+                    foe.x(),
+                    foe.y(),
+                    foe.floor(),
+                    foe.name(),
+                    foe.chipset(),
+                    Dummy::Core::Character::Direction::DOWN
+                )
+            );
+            std::cerr << "Hello " << name << std::endl;
+        } else {
+            // Update the living status if necessary
+            const auto& living(m_mapState.living(foe.name()));
+            if (living.x() != foe.x() || living.y() != foe.y())
+            {
+                mapUpdates.push_back(
+                    std::make_unique<
+                        Dummy::Protocol::MapUpdate::CharacterPosition
+                    >(
+                        foe.x(),
+                        foe.y(),
+                        foe.name(),
+                        Dummy::Core::Character::Direction::DOWN
+                    ));
+                // XXX: update the skin / direction?
+                std::cerr << "Updated " << name << std::endl;
+            }
+        }
+    }
+
     // Check if any player left the map
     for(const auto& [name, living]: m_mapState.livings()) {
-        if (map->players().find(name) == std::end(map->players())) {
+        if (map->players().find(name) == std::end(map->players())
+                && map->foes().find(name) == std::end(map->foes()))
+        {
             std::unique_ptr<Dummy::Protocol::MapUpdate::CharacterOff> update =
                 std::make_unique<Dummy::Protocol::MapUpdate::CharacterOff>(
                     name

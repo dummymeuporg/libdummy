@@ -125,7 +125,7 @@ int Map::luaAddFoe(::lua_State* luaState) {
         // XXX: Throw an exception
     }
 
-    m_foes.push_back(Foe(chipset, y, x, floor));
+    m_foes.push_back(Foe(chipset, x, y, floor));
 
     return 1;
 }

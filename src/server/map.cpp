@@ -1,6 +1,7 @@
 #include <dummy/core/map.hpp>
 
 #include <dummy/server/abstract_game_server.hpp>
+#include <dummy/server/foe.hpp>
 #include <dummy/server/player.hpp>
 #include <dummy/server/map.hpp>
 
@@ -13,6 +14,13 @@ Map::Map(
     boost::asio::io_context& ioContext
 ) : m_instance(instance), m_map(map), m_ioContext(ioContext)
 {
+    std::size_t index(0);
+
+    for (const auto& foe: m_map.foes()) {
+        std::stringstream ss;
+        ss << "NPC " << index++;
+        m_foes[ss.str()] = Foe(foe, ss.str());
+    }
 }
 
 void

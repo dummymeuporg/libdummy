@@ -20,7 +20,7 @@ public:
         return m_position;
     }
 
-    std::uint8_t floor() {
+    std::uint8_t floor() const {
         return m_floor;
     }
 
