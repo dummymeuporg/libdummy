@@ -21,18 +21,20 @@ void PacketSerializer::visit(const Update& update) {
 }
 
 void PacketSerializer::visitMapUpdate(const LivingOff& update) {
-    m_packet << Bridge::CHARACTER_OFF << update.id();
+    m_packet << Bridge::LIVING_OFF << update.id();
 }
 
 void PacketSerializer::visitMapUpdate(const LivingOn& update) {
-    m_packet << Bridge::CHARACTER_ON
+    m_packet << Bridge::LIVING_ON
+        << update.id()
         << update.x() << update.y() << update.floor()
         << update.name() << update.chipset()
         << static_cast<std::uint8_t>(update.direction());
 }
 
 void PacketSerializer::visitMapUpdate(const NamedLivingOn& update) {
-    m_packet << Bridge::CHARACTER_ON
+    m_packet << Bridge::NAMED_LIVING_ON
+        << update.id()
         << update.x() << update.y() << update.floor()
         << update.name() << update.chipset()
         << static_cast<std::uint8_t>(update.direction());

@@ -46,11 +46,11 @@ void Ping::readFrom(Dummy::Protocol::IncomingPacket& packet) {
         std::uint16_t code;
         packet >> code;
         switch(code) {
-        case Dummy::Protocol::Bridge::CHARACTER_OFF:
+        case Dummy::Protocol::Bridge::LIVING_OFF:
             /* Read character off */
             addUpdate(readCharacterOff(packet));
             break;
-        case Dummy::Protocol::Bridge::CHARACTER_ON:
+        case Dummy::Protocol::Bridge::LIVING_ON:
             /* Read character on */
             addUpdate(readCharacterOn(packet));
             break;
