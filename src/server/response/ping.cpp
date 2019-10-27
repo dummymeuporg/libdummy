@@ -7,8 +7,8 @@
 #include <dummy/protocol/incoming_packet.hpp>
 #include <dummy/protocol/map_update/update.hpp>
 #include <dummy/protocol/map_update/character_floor.hpp>
-#include <dummy/protocol/map_update/character_off.hpp>
-#include <dummy/protocol/map_update/character_on.hpp>
+#include <dummy/protocol/map_update/living_off.hpp>
+#include <dummy/protocol/map_update/named_living_on.hpp>
 #include <dummy/protocol/map_update/character_position.hpp>
 #include <dummy/protocol/map_update/packet_serializer.hpp>
 #include <dummy/server/response/response_visitor.hpp>
@@ -64,16 +64,16 @@ void Ping::readFrom(Dummy::Protocol::IncomingPacket& packet) {
     }
 }
 
-std::shared_ptr<const Dummy::Protocol::MapUpdate::CharacterOff>
+std::shared_ptr<const Dummy::Protocol::MapUpdate::LivingOff>
 Ping::readCharacterOff(Dummy::Protocol::IncomingPacket& packet) {
     std::string name;
     packet >> name;
-    return std::make_shared<Dummy::Protocol::MapUpdate::CharacterOff>(
+    return std::make_shared<Dummy::Protocol::MapUpdate::LivingOff>(
         name
     );
 }
 
-std::shared_ptr<const Dummy::Protocol::MapUpdate::CharacterOn>
+std::shared_ptr<const Dummy::Protocol::MapUpdate::LivingOn>
 Ping::readCharacterOn(Dummy::Protocol::IncomingPacket& packet) {
     std::uint16_t x, y;
     std::uint8_t floor;
@@ -81,7 +81,7 @@ Ping::readCharacterOn(Dummy::Protocol::IncomingPacket& packet) {
     Dummy::Core::Character::Direction direction;
     packet >> x >> y >> floor >> name >> skin
         >> reinterpret_cast<std::uint8_t&>(direction);
-    return std::make_shared<Dummy::Protocol::MapUpdate::CharacterOn>(
+    return std::make_shared<Dummy::Protocol::MapUpdate::LivingOn>(
         x, y, floor, name, skin, direction
     );
 }

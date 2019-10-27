@@ -1,7 +1,7 @@
 #include <dummy/protocol/map_update/update.hpp>
 #include <dummy/protocol/map_update/character_position.hpp>
-#include <dummy/protocol/map_update/character_off.hpp>
-#include <dummy/protocol/map_update/character_on.hpp>
+#include <dummy/protocol/map_update/living_off.hpp>
+#include <dummy/protocol/map_update/named_living_on.hpp>
 
 #include <dummy/server/command/command.hpp>
 #include <dummy/server/command/ping.hpp>
@@ -48,22 +48,25 @@ PlayingState::createMapUpdates(
     MapUpdatesVector& mapUpdates)
 {
 
-    for (const auto& [name, otherPlayer]: map->players()) {
+    for (const auto& [id, observer]: map->observers()) {
         /* ignore the self player */
-        if (player->name() == name) {
+        if (player->id() == id) {
             continue;
         }
 
-        std::cerr << "Player " << name << std::endl;
+        std::cerr << "living " << id << std::endl;
 
+        // Do we have a new living incoming?
+        /*
         std::shared_ptr<const Dummy::Core::Character>
             chr(otherPlayer->character());
-        if (m_mapState.livings().find(chr->name())
-                == std::end(m_mapState.livings()))
+        */
+        if (m_mapState.livings().find(id) == std::end(m_mapState.livings()))
         {
-            // A new character appeared. create a CharacterOn update 
+            // A new character appeared. create a CharacterOn update
+            // observer->notifyOn(mapUpdates);
             mapUpdates.push_back(
-                std::make_unique<Dummy::Protocol::MapUpdate::CharacterOn>(
+                std::make_unique<Dummy::Protocol::MapUpdate::LivingOn>(
                     otherPlayer->serverPosition().first,
                     otherPlayer->serverPosition().second,
                     otherPlayer->character()->floor(),
@@ -101,7 +104,7 @@ PlayingState::createMapUpdates(
         {
             // A foe appeared.
             mapUpdates.push_back(
-                std::make_unique<Dummy::Protocol::MapUpdate::CharacterOn>(
+                std::make_unique<Dummy::Protocol::MapUpdate::LivingOn>(
                     foe.x(),
                     foe.y(),
                     foe.floor(),
@@ -136,8 +139,8 @@ PlayingState::createMapUpdates(
         if (map->players().find(name) == std::end(map->players())
                 && map->foes().find(name) == std::end(map->foes()))
         {
-            std::unique_ptr<Dummy::Protocol::MapUpdate::CharacterOff> update =
-                std::make_unique<Dummy::Protocol::MapUpdate::CharacterOff>(
+            std::unique_ptr<Dummy::Protocol::MapUpdate::LivingOff> update =
+                std::make_unique<Dummy::Protocol::MapUpdate::LivingOff>(
                     name
                 );
             mapUpdates.push_back(std::move(update));

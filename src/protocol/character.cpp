@@ -9,7 +9,7 @@ Character::Character(std::uint16_t x,
                      const std::string& name,
                      const std::string& chipset,
                      Dummy::Core::Character::Direction direction)
-    : Living(x, y, name, chipset, direction)
+    : Living(x, y, chipset, direction)
 {
 }
 

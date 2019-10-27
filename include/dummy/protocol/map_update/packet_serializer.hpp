@@ -8,8 +8,8 @@ class OutgoingPacket;
 namespace MapUpdate {
 
 class Update;
-class CharacterOff;
-class CharacterOn;
+class LivingOff;
+class LivingOn;
 class CharacterPosition;
 
 class PacketSerializer : public MapUpdateVisitor {
@@ -17,8 +17,8 @@ public:
     PacketSerializer(OutgoingPacket&);
     void visit(const Update&);
     void visitMapUpdate(const CharacterFloor&) override;
-    void visitMapUpdate(const CharacterOff&) override;
-    void visitMapUpdate(const CharacterOn&) override;
+    void visitMapUpdate(const LivingOff&) override;
+    void visitMapUpdate(const LivingOn&) override;
     void visitMapUpdate(const CharacterPosition&) override;
 private:
     Dummy::Protocol::OutgoingPacket& m_packet;

@@ -15,8 +15,8 @@ class Living;
 namespace MapUpdate {
 class Update;
 class CharacterPosition;
-class CharacterOff;
-class CharacterOn;
+class LivingOff;
+class LivingOn;
 }
 
 } // namespace Protocol
@@ -31,7 +31,7 @@ public:
 namespace Server {
 class MapState : public Dummy::Protocol::MapUpdate::MapUpdateVisitor {
 public:
-    using LivingsMap = std::map<std::string,
+    using LivingsMap = std::map<std::uint32_t,
                                 std::shared_ptr<Dummy::Protocol::Living>>;
     MapState();
     void update(const Dummy::Protocol::MapUpdate::Update&);
@@ -41,19 +41,19 @@ public:
     ) override;
 
     void visitMapUpdate(
-        const Dummy::Protocol::MapUpdate::CharacterOff&
+        const Dummy::Protocol::MapUpdate::LivingOff&
     ) override;
 
     void visitMapUpdate(
-        const Dummy::Protocol::MapUpdate::CharacterOn&
+        const Dummy::Protocol::MapUpdate::LivingOn&
     ) override;
 
     const LivingsMap& livings() const {
         return m_livings;
     }
     
-    const Dummy::Protocol::Living& living(const std::string& name) const {
-        return *m_livings.at(name);
+    const Dummy::Protocol::Living& living(std::uint32_t id) const {
+        return *m_livings.at(id);
     }
 private:
     LivingsMap m_livings;

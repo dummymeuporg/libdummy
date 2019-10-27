@@ -4,6 +4,8 @@
 #include <string>
 #include <utility>
 
+#include <dummy/server/map_observer.hpp>
+
 namespace Dummy {
 
 namespace Core {
@@ -13,14 +15,9 @@ class Foe;
 
 namespace Server {
 
-class Foe {
+class Foe : public MapObserver {
 public:
-    Foe() {}
-    Foe(const Core::Foe&, const std::string&);
-
-    const std::string& name() const {
-        return m_name;
-    }
+    Foe(const Core::Foe&);
 
     const std::string& chipset() const {
         return m_chipset;

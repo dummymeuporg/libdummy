@@ -5,6 +5,7 @@
 #include <dummy/core/account.hpp>
 #include <dummy/core/character.hpp>
 #include <dummy/server/game_session.hpp>
+#include <dummy/server/map_observer.hpp>
 
 namespace Dummy {
 namespace Server {
@@ -13,7 +14,7 @@ class Account;
 class Instance;
 class Map;
 
-class Player : public std::enable_shared_from_this<Player> {
+class Player : public MapObserver {
 public:
     Player(GameSession&,
            std::shared_ptr<::Dummy::Core::Character>);
