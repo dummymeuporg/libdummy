@@ -1,5 +1,6 @@
 #include <dummy/protocol/named_living.hpp>
 #include <dummy/protocol/map_update/update.hpp>
+#include <dummy/protocol/map_update/living_on.hpp>
 #include <dummy/protocol/map_update/named_living_on.hpp>
 #include <dummy/protocol/map_update/living_off.hpp>
 #include <dummy/protocol/map_update/character_position.hpp>
@@ -37,7 +38,22 @@ void MapState::visitMapUpdate(
 void MapState::visitMapUpdate(
     const Dummy::Protocol::MapUpdate::LivingOn& update) {
     std::unique_ptr<Dummy::Protocol::Living> living =
+        std::make_unique<Dummy::Protocol::Living>(
+            update.id(),
+            update.x(),
+            update.y(),
+            update.chipset(),
+            update.direction()
+        );
+    m_livings[update.id()] = std::move(living);
+}
+
+void MapState::visitMapUpdate(
+    const Dummy::Protocol::MapUpdate::NamedLivingOn& update
+) {
+    std::unique_ptr<Dummy::Protocol::NamedLiving> living =
         std::make_unique<Dummy::Protocol::NamedLiving>(
+            update.id(),
             update.x(),
             update.y(),
             update.name(),

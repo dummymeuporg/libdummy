@@ -3,6 +3,7 @@
 #include <dummy/protocol/map_update/update.hpp>
 #include <dummy/protocol/map_update/character_floor.hpp>
 #include <dummy/protocol/map_update/named_living_on.hpp>
+#include <dummy/protocol/map_update/living_on.hpp>
 #include <dummy/protocol/map_update/living_off.hpp>
 #include <dummy/protocol/map_update/character_position.hpp>
 #include <dummy/protocol/outgoing_packet.hpp>
@@ -24,6 +25,13 @@ void PacketSerializer::visitMapUpdate(const LivingOff& update) {
 }
 
 void PacketSerializer::visitMapUpdate(const LivingOn& update) {
+    m_packet << Bridge::CHARACTER_ON
+        << update.x() << update.y() << update.floor()
+        << update.name() << update.chipset()
+        << static_cast<std::uint8_t>(update.direction());
+}
+
+void PacketSerializer::visitMapUpdate(const NamedLivingOn& update) {
     m_packet << Bridge::CHARACTER_ON
         << update.x() << update.y() << update.floor()
         << update.name() << update.chipset()

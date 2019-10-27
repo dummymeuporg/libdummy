@@ -13,6 +13,7 @@ class Living {
 public:
     Living(std::uint16_t,
            std::uint16_t,
+           std::uint8_t,
            const std::string&,
            Dummy::Core::Character::Direction);
 
@@ -39,6 +40,7 @@ public:
 protected:
     std::uint16_t m_x;
     std::uint16_t m_y;
+    std::uint8_t m_floor;
     std::string m_chipset;
     Dummy::Core::Character::Direction m_direction;
 };

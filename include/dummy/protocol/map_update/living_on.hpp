@@ -34,6 +34,7 @@ public:
         return m_floor;
     }
 
+
     virtual void serializeTo(Dummy::Protocol::OutgoingPacket&) const override;
     virtual void readFrom(Dummy::Protocol::IncomingPacket&) override;
 protected:

@@ -94,7 +94,8 @@ void LoadingState::visitCommand(
                 m_teleportRequest.destinationMap()
             );
             player->character()->setPosition(m_teleportRequest.position());
-            mapPt->addPlayer(player);
+            //mapPt->addPlayer(player);
+            mapPt->addObserver(player);
             response->setStatus(0);
 
             std::cerr << "CHANGE STATE" << std::endl;

@@ -6,9 +6,11 @@ namespace Protocol {
 
 Living::Living(std::uint16_t x,
                std::uint16_t y,
+               std::uint8_t floor,
                const std::string& chipset,
                Dummy::Core::Character::Direction direction)
-    : m_x(x), m_y(y), m_chipset(chipset), m_direction(direction)
+    : m_x(x), m_y(y), m_floor(floor),
+      m_chipset(chipset), m_direction(direction)
 {
 }
 

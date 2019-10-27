@@ -4,6 +4,7 @@
 namespace Dummy {
 namespace Server {
 
+MapObserver::MapObserver() {}
 MapObserver::MapObserver(std::uint32_t id) : m_id(id) {}
 MapObserver::MapObserver(std::uint32_t id, std::weak_ptr<Map> map)
     : m_id(id), m_map(map) {}

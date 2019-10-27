@@ -36,7 +36,7 @@ public:
     void addPlayer(std::shared_ptr<Player>);
     void removePlayer(std::shared_ptr<Player>);
     void dispatchMessage(
-        const std::string& author,
+        const std::uint32_t author,
         const std::string& message
     );
     bool isBlocking(std::uint16_t, std::uint16_t, std::uint8_t) const;

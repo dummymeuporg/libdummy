@@ -1,6 +1,8 @@
 #pragma once
 
+#include <cstdint>
 #include <memory>
+#include <string>
 
 #include <dummy/server/response/response.hpp>
 
@@ -15,7 +17,7 @@ public:
     void serializeTo(Dummy::Protocol::OutgoingPacket&) const override;
     void readFrom(Dummy::Protocol::IncomingPacket&) override;
 
-    const std::string& author() const {
+    std::uint32_t author() const {
         return m_author;
     }
 
@@ -23,10 +25,11 @@ public:
         return m_content;
     }
 
-    void setAuthor(const std::string&);
+    void setAuthor(std::uint32_t);
     void setContent(const std::string&);
 private:
-    std::string m_author, m_content;
+    std::uint32_t m_author;
+    std::string m_content;
 };
 
 } // namespace Response

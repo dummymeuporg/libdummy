@@ -35,6 +35,10 @@ public:
         return m_floor;
     }
 
+    void notifyOn(MapUpdatesVector&) override;
+    void notifyPosition(MapUpdatesVector&) override;
+    std::pair<std::uint16_t, std::uint16_t> position() override;
+
 private:
     std::string m_name;
     std::string m_chipset;

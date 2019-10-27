@@ -49,6 +49,10 @@ public:
     void setInstance(std::weak_ptr<Instance>);
     void leaveCurrentMap();
 
+    void notifyOn(MapUpdatesVector&) override;
+    void notifyPosition(MapUpdatesVector&) override;
+    std::pair<std::uint16_t, std::uint16_t> position() override;
+
 private:
     GameSession& m_gameSession;
     std::shared_ptr<Dummy::Core::Character> m_character;

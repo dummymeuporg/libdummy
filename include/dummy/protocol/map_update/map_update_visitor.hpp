@@ -16,6 +16,7 @@ public:
 class CharacterFloor;
 class LivingOff;
 class LivingOn;
+class NamedLivingOn;
 class CharacterPosition;
 
 class MapUpdateVisitor {
@@ -33,6 +34,10 @@ public:
     }
 
     virtual void visitMapUpdate(const CharacterFloor&) {
+        throw MapUpdateNotHandled();
+    }
+
+    virtual void visitMapUpdate(const NamedLivingOn&) {
         throw MapUpdateNotHandled();
     }
 };

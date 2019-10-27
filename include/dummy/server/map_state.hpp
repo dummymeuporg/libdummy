@@ -48,6 +48,10 @@ public:
         const Dummy::Protocol::MapUpdate::LivingOn&
     ) override;
 
+    void visitMapUpdate(
+        const Dummy::Protocol::MapUpdate::NamedLivingOn &
+    ) override;
+
     const LivingsMap& livings() const {
         return m_livings;
     }

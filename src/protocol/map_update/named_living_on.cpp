@@ -9,28 +9,31 @@ namespace Protocol {
 
 namespace MapUpdate {
 
-LivingOn::LivingOn(std::uint32_t id,
-                   std::uint16_t x,
-                   std::uint16_t y,
-                   std::uint8_t floor,
-                   const std::string& chipset,
-                   Dummy::Core::Character::Direction direction)
-    : CharacterPosition(id, x, y, direction), m_chipset(chipset),
+NamedLivingOn::NamedLivingOn(std::uint32_t id,
+                             std::uint16_t x,
+                             std::uint16_t y,
+                             std::uint8_t floor,
+                             const std::string& name,
+                             const std::string& chipset,
+                             Dummy::Core::Character::Direction direction)
+    : CharacterPosition(id, x, y, direction),
+      m_name(name),
+      m_chipset(chipset),
       m_floor(floor)
 {
 }
 
-void LivingOn::accept(MapUpdateVisitor& visitor) const {
+void NamedLivingOn::accept(MapUpdateVisitor& visitor) const {
     visitor.visitMapUpdate(*this);
 }
 
 void
-LivingOn::serializeTo(Dummy::Protocol::OutgoingPacket& packet) const {
+NamedLivingOn::serializeTo(Dummy::Protocol::OutgoingPacket& packet) const {
     packet << m_name << m_chipset << m_x << m_y << m_floor
         << static_cast<std::uint8_t>(m_direction);
 }
 
-void LivingOn::readFrom(Dummy::Protocol::IncomingPacket& packet) {
+void NamedLivingOn::readFrom(Dummy::Protocol::IncomingPacket& packet) {
     packet >> m_name >> m_chipset >> m_x >> m_y >> m_floor
         >> reinterpret_cast<std::uint8_t&>(m_direction);
 }
