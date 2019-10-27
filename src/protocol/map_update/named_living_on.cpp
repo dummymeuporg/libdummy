@@ -29,12 +29,12 @@ void NamedLivingOn::accept(MapUpdateVisitor& visitor) const {
 
 void
 NamedLivingOn::serializeTo(Dummy::Protocol::OutgoingPacket& packet) const {
-    packet << m_name << m_chipset << m_x << m_y << m_floor
+    packet << m_id << m_name << m_chipset << m_x << m_y << m_floor
         << static_cast<std::uint8_t>(m_direction);
 }
 
 void NamedLivingOn::readFrom(Dummy::Protocol::IncomingPacket& packet) {
-    packet >> m_name >> m_chipset >> m_x >> m_y >> m_floor
+    packet >> m_id >> m_name >> m_chipset >> m_x >> m_y >> m_floor
         >> reinterpret_cast<std::uint8_t&>(m_direction);
 }
 

@@ -27,12 +27,12 @@ void LivingOn::accept(MapUpdateVisitor& visitor) const {
 
 void
 LivingOn::serializeTo(Dummy::Protocol::OutgoingPacket& packet) const {
-    packet << m_id << m_chipset << m_x << m_y << m_floor
+    packet << m_id << m_x << m_y << m_floor << m_chipset
         << static_cast<std::uint8_t>(m_direction);
 }
 
 void LivingOn::readFrom(Dummy::Protocol::IncomingPacket& packet) {
-    packet >> m_id >> m_chipset >> m_x >> m_y >> m_floor
+    packet >> m_id >> m_x >> m_y >> m_floor >> m_chipset
         >> reinterpret_cast<std::uint8_t&>(m_direction);
 }
 
