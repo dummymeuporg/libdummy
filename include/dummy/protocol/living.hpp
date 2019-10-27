@@ -13,7 +13,7 @@ class Living {
 public:
     Living(std::uint16_t,
            std::uint16_t,
-           const std::string&,
+           std::uint8_t,
            const std::string&,
            Dummy::Core::Character::Direction);
 
@@ -23,10 +23,6 @@ public:
 
     std::uint16_t y() const {
         return m_y;
-    }
-
-    const std::string& name() const {
-        return m_name;
     }
 
     const std::string& chipset() const {
@@ -39,13 +35,12 @@ public:
 
     void setPosition(std::uint16_t, std::uint16_t);
     void setDirection(Dummy::Core::Character::Direction);
-    void setName(const std::string&);
     void setChipset(const std::string&);
 
 protected:
     std::uint16_t m_x;
     std::uint16_t m_y;
-    std::string m_name;
+    std::uint8_t m_floor;
     std::string m_chipset;
     Dummy::Core::Character::Direction m_direction;
 };

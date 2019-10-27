@@ -1,7 +1,8 @@
-#include <dummy/protocol/living.hpp>
+#include <dummy/protocol/named_living.hpp>
 #include <dummy/protocol/map_update/update.hpp>
-#include <dummy/protocol/map_update/character_on.hpp>
-#include <dummy/protocol/map_update/character_off.hpp>
+#include <dummy/protocol/map_update/living_on.hpp>
+#include <dummy/protocol/map_update/named_living_on.hpp>
+#include <dummy/protocol/map_update/living_off.hpp>
 #include <dummy/protocol/map_update/character_position.hpp>
 #include <dummy/server/map_state.hpp>
 
@@ -17,34 +18,49 @@ void MapState::update(const Dummy::Protocol::MapUpdate::Update& update) {
 void MapState::visitMapUpdate(
     const Dummy::Protocol::MapUpdate::CharacterPosition& update
 ) {
-    if (m_livings.find(update.name()) == std::end(m_livings)) {
+    if (m_livings.find(update.id()) == std::end(m_livings)) {
         throw LivingNotFound();
     }
 
-    auto& living = m_livings[update.name()];
+    auto& living = m_livings[update.id()];
     living->setPosition(update.x(), update.y());
 }
 
 void MapState::visitMapUpdate(
-    const Dummy::Protocol::MapUpdate::CharacterOff& update
+    const Dummy::Protocol::MapUpdate::LivingOff& update
 ) {
-    if (m_livings.find(update.name()) == std::end(m_livings)) {
+    if (m_livings.find(update.id()) == std::end(m_livings)) {
         throw LivingNotFound();
     }
-    m_livings.erase(update.name());
+    m_livings.erase(update.id());
 }
 
 void MapState::visitMapUpdate(
-    const Dummy::Protocol::MapUpdate::CharacterOn& update) {
+    const Dummy::Protocol::MapUpdate::LivingOn& update) {
     std::unique_ptr<Dummy::Protocol::Living> living =
         std::make_unique<Dummy::Protocol::Living>(
+            update.id(),
+            update.x(),
+            update.y(),
+            update.chipset(),
+            update.direction()
+        );
+    m_livings[update.id()] = std::move(living);
+}
+
+void MapState::visitMapUpdate(
+    const Dummy::Protocol::MapUpdate::NamedLivingOn& update
+) {
+    std::unique_ptr<Dummy::Protocol::NamedLiving> living =
+        std::make_unique<Dummy::Protocol::NamedLiving>(
+            update.id(),
             update.x(),
             update.y(),
             update.name(),
             update.chipset(),
             update.direction()
         );
-    m_livings[update.name()] = std::move(living);
+    m_livings[update.id()] = std::move(living);
 }
 
 } // namespace Server

@@ -49,7 +49,7 @@ private:
 
     void sendMessageToMap(
         std::shared_ptr<Map>,
-        const std::string&,
+        std::uint32_t,
         const std::string&
     );
 

@@ -12,19 +12,19 @@ class OutgoingPacket;
 
 namespace MapUpdate {
 
-class CharacterOff : public Update {
+class LivingOff : public Update {
 public:
-    CharacterOff(const std::string&);
+    LivingOff(std::uint32_t id);
 
     virtual void accept(MapUpdateVisitor&) const override;
     virtual void serializeTo(Dummy::Protocol::OutgoingPacket&) const override;
     virtual void readFrom(Dummy::Protocol::IncomingPacket&) override;
 
-    const std::string& name() const {
-        return m_name;
+    std::uint32_t id() const {
+        return m_id;
     }
 private:
-    std::string m_name;
+    std::uint32_t m_id;
 };
 
 } // namespace MapUpdate

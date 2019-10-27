@@ -7,8 +7,9 @@
 #include <dummy/protocol/incoming_packet.hpp>
 #include <dummy/protocol/map_update/update.hpp>
 #include <dummy/protocol/map_update/character_floor.hpp>
-#include <dummy/protocol/map_update/character_off.hpp>
-#include <dummy/protocol/map_update/character_on.hpp>
+#include <dummy/protocol/map_update/living_on.hpp>
+#include <dummy/protocol/map_update/living_off.hpp>
+#include <dummy/protocol/map_update/named_living_on.hpp>
 #include <dummy/protocol/map_update/character_position.hpp>
 #include <dummy/protocol/map_update/packet_serializer.hpp>
 #include <dummy/server/response/response_visitor.hpp>
@@ -64,37 +65,38 @@ void Ping::readFrom(Dummy::Protocol::IncomingPacket& packet) {
     }
 }
 
-std::shared_ptr<const Dummy::Protocol::MapUpdate::CharacterOff>
+std::shared_ptr<const Dummy::Protocol::MapUpdate::LivingOff>
 Ping::readCharacterOff(Dummy::Protocol::IncomingPacket& packet) {
-    std::string name;
-    packet >> name;
-    return std::make_shared<Dummy::Protocol::MapUpdate::CharacterOff>(
-        name
+    std::uint32_t id;
+    packet >> id;
+    return std::make_shared<Dummy::Protocol::MapUpdate::LivingOff>(
+        id
     );
 }
 
-std::shared_ptr<const Dummy::Protocol::MapUpdate::CharacterOn>
+std::shared_ptr<const Dummy::Protocol::MapUpdate::LivingOn>
 Ping::readCharacterOn(Dummy::Protocol::IncomingPacket& packet) {
+    std::uint32_t id;
     std::uint16_t x, y;
     std::uint8_t floor;
-    std::string name, skin;
+    std::string skin;
     Dummy::Core::Character::Direction direction;
-    packet >> x >> y >> floor >> name >> skin
+    packet >> id >> x >> y >> floor >> skin
         >> reinterpret_cast<std::uint8_t&>(direction);
-    return std::make_shared<Dummy::Protocol::MapUpdate::CharacterOn>(
-        x, y, floor, name, skin, direction
+    return std::make_shared<const Dummy::Protocol::MapUpdate::LivingOn>(
+        id, x, y, floor, skin, direction
     );
 }
 
 std::shared_ptr<const Dummy::Protocol::MapUpdate::CharacterPosition>
 Ping::readCharacterPosition(Dummy::Protocol::IncomingPacket& packet) {
+    std::uint32_t id;
     std::uint16_t x, y;
-    std::string name;
     Dummy::Core::Character::Direction direction;
-    packet >> x >> y
-           >> name >> reinterpret_cast<std::uint8_t&>(direction);
+    packet >> id >> x >> y
+           >> reinterpret_cast<std::uint8_t&>(direction);
     return std::make_shared<Dummy::Protocol::MapUpdate::CharacterPosition>(
-        x, y, name, direction
+        id, x, y, direction
     );
 }
 

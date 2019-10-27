@@ -1,7 +1,7 @@
 #include <dummy/protocol/map_update/update.hpp>
 #include <dummy/protocol/map_update/character_position.hpp>
-#include <dummy/protocol/map_update/character_off.hpp>
-#include <dummy/protocol/map_update/character_on.hpp>
+#include <dummy/protocol/map_update/living_off.hpp>
+#include <dummy/protocol/map_update/named_living_on.hpp>
 
 #include <dummy/server/command/command.hpp>
 #include <dummy/server/command/ping.hpp>
@@ -48,22 +48,33 @@ PlayingState::createMapUpdates(
     MapUpdatesVector& mapUpdates)
 {
 
-    for (const auto& [name, otherPlayer]: map->players()) {
-        /* ignore the self player */
-        if (player->name() == name) {
+    for (const auto& [id, observer]: map->observers()) {
+
+        auto observerPtr = observer.lock();
+
+        if (nullptr == observerPtr) {
             continue;
         }
 
-        std::cerr << "Player " << name << std::endl;
+        /* ignore the self player */
+        if (player->id() == id) {
+            continue;
+        }
 
+        std::cerr << "living " << id << std::endl;
+
+        // Do we have a new living incoming?
+        /*
         std::shared_ptr<const Dummy::Core::Character>
             chr(otherPlayer->character());
-        if (m_mapState.livings().find(chr->name())
-                == std::end(m_mapState.livings()))
+        */
+        if (m_mapState.livings().find(id) == std::end(m_mapState.livings()))
         {
-            // A new character appeared. create a CharacterOn update 
+            // A new character appeared. create a CharacterOn update
+            observerPtr->notifyOn(mapUpdates);
+            /*
             mapUpdates.push_back(
-                std::make_unique<Dummy::Protocol::MapUpdate::CharacterOn>(
+                std::make_unique<Dummy::Protocol::MapUpdate::LivingOn>(
                     otherPlayer->serverPosition().first,
                     otherPlayer->serverPosition().second,
                     otherPlayer->character()->floor(),
@@ -72,13 +83,15 @@ PlayingState::createMapUpdates(
                     otherPlayer->character()->direction()
                 )
             );
-            std::cerr << "Hello " << name << std::endl;
+            */
         } else {
             // Update the living status if necessary
-            const auto& living(m_mapState.living(chr->name()));
-            if (living.x() != otherPlayer->serverPosition().first ||
-                living.y() != otherPlayer->serverPosition().second)
+            const auto& living(m_mapState.living(observerPtr->id()));
+            if (living.x() != observerPtr->position().first ||
+                living.y() != observerPtr->position().second)
             {
+                observerPtr->notifyPosition(mapUpdates);
+                /*
                 mapUpdates.push_back(
                     std::make_unique<
                         Dummy::Protocol::MapUpdate::CharacterPosition
@@ -90,18 +103,20 @@ PlayingState::createMapUpdates(
                     ));
                 // XXX: update the skin / direction?
                 std::cerr << "Updated " << name << std::endl;
+                */
             }
         }
     }
 
     // Foes
+    /*
     for (const auto& [name, foe]: map->foes()) {
         if (m_mapState.livings().find(foe.name())
                 == std::end(m_mapState.livings()))
         {
             // A foe appeared.
             mapUpdates.push_back(
-                std::make_unique<Dummy::Protocol::MapUpdate::CharacterOn>(
+                std::make_unique<Dummy::Protocol::MapUpdate::LivingOn>(
                     foe.x(),
                     foe.y(),
                     foe.floor(),
@@ -130,18 +145,19 @@ PlayingState::createMapUpdates(
             }
         }
     }
+    */
 
     // Check if any player left the map
-    for(const auto& [name, living]: m_mapState.livings()) {
-        if (map->players().find(name) == std::end(map->players())
-                && map->foes().find(name) == std::end(map->foes()))
+
+    for(const auto& [id, living]: m_mapState.livings()) {
+        if (map->observers().find(id) == std::end(map->observers()))
         {
-            std::unique_ptr<Dummy::Protocol::MapUpdate::CharacterOff> update =
-                std::make_unique<Dummy::Protocol::MapUpdate::CharacterOff>(
-                    name
+            std::unique_ptr<Dummy::Protocol::MapUpdate::LivingOff> update =
+                std::make_unique<Dummy::Protocol::MapUpdate::LivingOff>(
+                    id
                 );
             mapUpdates.push_back(std::move(update));
-            std::cerr << "Bye bye " << name << std::endl;
+            std::cerr << "Bye bye " << id << std::endl;
         }
     }
 
@@ -198,7 +214,7 @@ void PlayingState::visitCommand(
         return;
     }
 
-    sendMessageToMap(map, player->name(), message.content());
+    sendMessageToMap(map, player->id(), message.content());
 }
 
 void PlayingState::visitCommand(
@@ -281,7 +297,7 @@ void PlayingState::visitCommand(
 
 void PlayingState::sendMessageToMap(
     std::shared_ptr<Map> map,
-    const std::string& author,
+    std::uint32_t author,
     const std::string& message
 ) {
     boost::asio::post(m_gameSession.ioContext(),
