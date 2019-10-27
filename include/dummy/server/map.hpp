@@ -3,6 +3,7 @@
 #include <map>
 #include <memory>
 #include <string>
+#include <set>
 
 #include <boost/asio.hpp>
 
@@ -28,7 +29,7 @@ class Player;
 class Map : public std::enable_shared_from_this<Map> {
 public:
     using PlayersList = std::map<std::string, std::shared_ptr<Player>>;
-    using FoesList = std::map<std::string, Dummy::Server::Foe>;
+    using Foes = std::set<std::shared_ptr<Dummy::Server::Foe>>;
     using Observers = std::map<std::uint32_t, std::weak_ptr<MapObserver>>;
     Map(Instance&, const Remote::Map&, boost::asio::io_context&);
     void addObserver(std::shared_ptr<MapObserver>);
@@ -43,7 +44,7 @@ public:
     const PlayersList& players() const {
         return m_players;
     }
-    const FoesList& foes() const {
+    const Foes& foes() const {
         return m_foes;
     }
 
@@ -55,7 +56,7 @@ private:
     const Dummy::Remote::Map& m_map;
     boost::asio::io_context& m_ioContext;
     PlayersList m_players;
-    FoesList m_foes;
+    Foes m_foes;
     Observers m_observers;
     std::uint32_t m_idGenerator;
 
