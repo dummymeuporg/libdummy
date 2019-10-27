@@ -17,13 +17,14 @@ const std::uint16_t CREATE_CHARACTER = 1;
 const std::uint16_t SELECT_CHARACTER = 2;
 
 /* Loading state */
-const std::uint16_t TELEPORT_MAP = 1;
+const std::uint16_t TELEPORT_MAP = 5;
 
 /* Playing state */
 const std::uint16_t PING = 1;
 const std::uint16_t SET_POSITION = 2;
 const std::uint16_t MESSAGE = 3;
 const std::uint16_t CHANGE_CHARACTER = 4;
+const std::uint16_t PLAYING_TELEPORT_MAP = 5;
 
 
 /* map updates */
