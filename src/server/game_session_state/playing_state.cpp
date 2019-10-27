@@ -64,91 +64,25 @@ PlayingState::createMapUpdates(
         std::cerr << "living " << id << std::endl;
 
         // Do we have a new living incoming?
-        /*
-        std::shared_ptr<const Dummy::Core::Character>
-            chr(otherPlayer->character());
-        */
         if (m_mapState.livings().find(id) == std::end(m_mapState.livings()))
         {
             // A new character appeared. create a CharacterOn update
+            std::cerr << id << " is on." << std::endl;
             observerPtr->notifyOn(mapUpdates);
-            /*
-            mapUpdates.push_back(
-                std::make_unique<Dummy::Protocol::MapUpdate::LivingOn>(
-                    otherPlayer->serverPosition().first,
-                    otherPlayer->serverPosition().second,
-                    otherPlayer->character()->floor(),
-                    otherPlayer->character()->name(),
-                    otherPlayer->character()->skin(),
-                    otherPlayer->character()->direction()
-                )
-            );
-            */
+
         } else {
             // Update the living status if necessary
             const auto& living(m_mapState.living(observerPtr->id()));
             if (living.x() != observerPtr->position().first ||
                 living.y() != observerPtr->position().second)
             {
+                std::cerr << id << " moved." << std::endl;
                 observerPtr->notifyPosition(mapUpdates);
-                /*
-                mapUpdates.push_back(
-                    std::make_unique<
-                        Dummy::Protocol::MapUpdate::CharacterPosition
-                    >(
-                        otherPlayer->serverPosition().first,
-                        otherPlayer->serverPosition().second,
-                        otherPlayer->character()->name(),
-                        otherPlayer->character()->direction()
-                    ));
-                // XXX: update the skin / direction?
-                std::cerr << "Updated " << name << std::endl;
-                */
             }
         }
     }
 
-    // Foes
-    /*
-    for (const auto& [name, foe]: map->foes()) {
-        if (m_mapState.livings().find(foe.name())
-                == std::end(m_mapState.livings()))
-        {
-            // A foe appeared.
-            mapUpdates.push_back(
-                std::make_unique<Dummy::Protocol::MapUpdate::LivingOn>(
-                    foe.x(),
-                    foe.y(),
-                    foe.floor(),
-                    foe.name(),
-                    foe.chipset(),
-                    Dummy::Core::Character::Direction::DOWN
-                )
-            );
-            std::cerr << "Hello " << name << std::endl;
-        } else {
-            // Update the living status if necessary
-            const auto& living(m_mapState.living(foe.name()));
-            if (living.x() != foe.x() || living.y() != foe.y())
-            {
-                mapUpdates.push_back(
-                    std::make_unique<
-                        Dummy::Protocol::MapUpdate::CharacterPosition
-                    >(
-                        foe.x(),
-                        foe.y(),
-                        foe.name(),
-                        Dummy::Core::Character::Direction::DOWN
-                    ));
-                // XXX: update the skin / direction?
-                std::cerr << "Updated " << name << std::endl;
-            }
-        }
-    }
-    */
-
-    // Check if any player left the map
-
+    // Check if any living left the map
     for(const auto& [id, living]: m_mapState.livings()) {
         if (map->observers().find(id) == std::end(map->observers()))
         {
@@ -161,14 +95,6 @@ PlayingState::createMapUpdates(
         }
     }
 
-    // Write map updates to outgoing packet.
-    /*
-    std::uint16_t count = mapUpdates.size();
-    pkt << count;
-    for (const auto& update: mapUpdates) {
-        pkt << update->code() << *update;
-    }
-    */
 }
 
 void PlayingState::onCommand(const ::Dummy::Server::Command::Command& command)
