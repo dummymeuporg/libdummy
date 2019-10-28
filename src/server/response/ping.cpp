@@ -5,6 +5,8 @@
 #include <dummy/protocol/bridge.hpp>
 #include <dummy/protocol/outgoing_packet.hpp>
 #include <dummy/protocol/incoming_packet.hpp>
+
+#include <dummy/protocol/map_update/errors.hpp>
 #include <dummy/protocol/map_update/update.hpp>
 #include <dummy/protocol/map_update/character_floor.hpp>
 #include <dummy/protocol/map_update/living_on.hpp>
@@ -12,6 +14,8 @@
 #include <dummy/protocol/map_update/named_living_on.hpp>
 #include <dummy/protocol/map_update/character_position.hpp>
 #include <dummy/protocol/map_update/packet_serializer.hpp>
+
+
 #include <dummy/server/response/response_visitor.hpp>
 #include <dummy/server/response/ping.hpp>
 
@@ -64,6 +68,8 @@ void Ping::readFrom(Dummy::Protocol::IncomingPacket& packet) {
         case Dummy::Protocol::Bridge::CHARACTER_FLOOR:
             addUpdate(readCharacterFloor(packet));
             break;
+        default:
+            throw Dummy::Protocol::MapUpdate::UnknownUpdateCode();
         }
     }
 }
