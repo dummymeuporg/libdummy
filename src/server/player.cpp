@@ -18,7 +18,7 @@ Player::Player(GameSession& gameSession,
 void Player::leaveCurrentMap() {
     auto self(shared_from_this());
     if (auto m = m_map.lock()) {
-        //m->removePlayer(shared_from_this());
+        m->removeObserver(m_id.value());
         m_map.reset();
     }
 }
