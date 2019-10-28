@@ -15,9 +15,7 @@ Foe::Foe(const Dummy::Core::Foe& foe)
     : m_chipset(foe.chipset()),
       m_position{foe.position().first*2, foe.position().second*2},
       m_floor(foe.floor())
-{
-
-}
+{}
 
 void Foe::notifyOn(MapUpdatesVector& mapUpdates) {
     mapUpdates.push_back(
@@ -46,7 +44,6 @@ void Foe::notifyPosition(MapUpdatesVector& mapUpdates) {
 
 void Foe::receiveMessage(std::uint32_t, const std::string&) {
     // The foe does not care. For now.
-
 }
 
 std::pair<std::uint16_t, std::uint16_t> Foe::position() {

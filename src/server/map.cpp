@@ -18,12 +18,14 @@ Map::Map(
     m_ioContext(ioContext),
     m_idGenerator(0)
 {
-    std::size_t index(0);
+}
 
+void Map::spawn() {
     for (const auto& foe: m_map.foes()) {
         auto mapFoe(std::make_shared<Foe>(foe));
         m_foes.insert(mapFoe);
         addObserver(mapFoe);
+        mapFoe->setMap(weak_from_this());
     }
 }
 

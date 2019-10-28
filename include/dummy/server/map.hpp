@@ -32,6 +32,7 @@ public:
     using Foes = std::set<std::shared_ptr<Dummy::Server::Foe>>;
     using Observers = std::map<std::uint32_t, std::weak_ptr<MapObserver>>;
     Map(Instance&, const Remote::Map&, boost::asio::io_context&);
+    void spawn();
     void addObserver(std::shared_ptr<MapObserver>);
     void removeObserver(std::uint32_t);
     void addPlayer(std::shared_ptr<Player>);
