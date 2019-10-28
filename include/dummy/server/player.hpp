@@ -51,6 +51,7 @@ public:
 
     void notifyOn(MapUpdatesVector&) override;
     void notifyPosition(MapUpdatesVector&) override;
+    void receiveMessage(std::uint32_t, const std::string&) override;
     std::pair<std::uint16_t, std::uint16_t> position() override;
 
 private:

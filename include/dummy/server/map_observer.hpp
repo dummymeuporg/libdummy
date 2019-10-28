@@ -35,6 +35,7 @@ public:
 
     virtual void notifyOn(MapUpdatesVector&) = 0;
     virtual void notifyPosition(MapUpdatesVector&) = 0;
+    virtual void receiveMessage(std::uint32_t author, const std::string&) = 0;
     virtual std::pair<std::uint16_t, std::uint16_t> position() = 0;
 protected:
     std::optional<std::uint32_t> m_id;

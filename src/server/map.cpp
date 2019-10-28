@@ -69,8 +69,11 @@ Map::isBlocking(std::uint16_t x, std::uint16_t y, std::uint8_t floor) const {
 }
 
 void Map::dispatchMessage(std::uint32_t author, const std::string& message) {
-    for (auto& [name, player]: m_players) {
-        player->gameSession().receiveMessage(author, message);
+    for (auto& [id, observer]: m_observers) {
+        auto observerPt = observer.lock();
+        if (nullptr != observerPt) {
+            observerPt->receiveMessage(author, message);
+        }
     }
 }
 

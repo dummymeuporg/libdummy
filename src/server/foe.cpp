@@ -4,6 +4,7 @@
 #include <dummy/protocol/map_update/living_on.hpp>
 
 #include <dummy/server/foe.hpp>
+#include <dummy/server/map.hpp>
 #include <dummy/server/map_state.hpp>
 
 
@@ -41,6 +42,11 @@ void Foe::notifyPosition(MapUpdatesVector& mapUpdates) {
             m_position.second,
             Dummy::Core::Character::Direction::DOWN // XXX: For now.
         ));
+}
+
+void Foe::receiveMessage(std::uint32_t, const std::string&) {
+    // The foe does not care. For now.
+
 }
 
 std::pair<std::uint16_t, std::uint16_t> Foe::position() {

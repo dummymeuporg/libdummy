@@ -72,5 +72,9 @@ std::pair<std::uint16_t, std::uint16_t> Player::position() {
     return serverPosition();
 }
 
+void Player::receiveMessage(std::uint32_t author, const std::string& message) {
+    m_gameSession.receiveMessage(author, message);
+}
+
 } // namespace Server
 } // namespace Dummy
