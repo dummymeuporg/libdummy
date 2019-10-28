@@ -12,6 +12,7 @@ class Update;
 class CharacterFloor;
 class LivingOn;
 class LivingOff;
+class NamedLivingOn;
 class CharacterPosition;
 } // namespace MapUpdate
 } // namespace Protocol
@@ -40,6 +41,9 @@ private:
 
     std::shared_ptr<const Dummy::Protocol::MapUpdate::LivingOn>
     readLivingOn(Dummy::Protocol::IncomingPacket&);
+
+    std::shared_ptr<const Dummy::Protocol::MapUpdate::NamedLivingOn>
+    readNamedLivingOn(Dummy::Protocol::IncomingPacket&);
 
     std::shared_ptr<const Dummy::Protocol::MapUpdate::CharacterPosition>
     readCharacterPosition(Dummy::Protocol::IncomingPacket&);

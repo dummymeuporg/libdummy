@@ -54,6 +54,9 @@ void Ping::readFrom(Dummy::Protocol::IncomingPacket& packet) {
             /* Read character on */
             addUpdate(readLivingOn(packet));
             break;
+        case Dummy::Protocol::Bridge::NAMED_LIVING_ON:
+            addUpdate(readNamedLivingOn(packet));
+            break;
         case Dummy::Protocol::Bridge::CHARACTER_POSITION:
             /* Read character position */
             addUpdate(readCharacterPosition(packet));
@@ -63,6 +66,20 @@ void Ping::readFrom(Dummy::Protocol::IncomingPacket& packet) {
             break;
         }
     }
+}
+
+std::shared_ptr<const Dummy::Protocol::MapUpdate::NamedLivingOn>
+Ping::readNamedLivingOn(Dummy::Protocol::IncomingPacket& packet) {
+    std::uint32_t id;
+    std::uint16_t x, y;
+    std::uint8_t floor;
+    std::string skin, name;
+    Dummy::Core::Character::Direction direction;
+    packet >> id >> x >> y >> floor >> name >> skin
+        >> reinterpret_cast<std::uint8_t&>(direction);
+    return std::make_shared<const Dummy::Protocol::MapUpdate::NamedLivingOn>(
+        id, x, y, floor, name, skin, direction
+    );
 }
 
 std::shared_ptr<const Dummy::Protocol::MapUpdate::LivingOff>
