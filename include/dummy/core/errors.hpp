@@ -1,3 +1,5 @@
+#pragma once
+
 #include <exception>
 #include <string>
 
@@ -9,13 +11,6 @@ class Error : public std::exception {
 
 };
 
-class WrongMagicNumber : public Error {
-public:
-    virtual const char* what() const noexcept override {
-        return "the magic number is invalid.";
-    }
-
-};
 
 class LuaLoadFileError : public Error {
 public:

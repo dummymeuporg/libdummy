@@ -41,7 +41,7 @@ protected:
     int luaOnTouchEvent(::lua_State*) override;
     int luaMessage(::lua_State*) override;
     int luaTeleport(::lua_State*) override;
-    int luaAddLuaFoe(::lua_State*) override;
+    int luaAddFoe(::lua_State*) override;
 
 
     void loadMapFile(std::ifstream&);

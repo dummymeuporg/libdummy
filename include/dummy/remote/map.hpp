@@ -21,7 +21,7 @@ protected:
     int luaOnTouchEvent(::lua_State*) override;
     int luaMessage(::lua_State*) override;
     int luaTeleport(::lua_State*) override;
-    int luaAddLuaFoe(::lua_State*) override;
+    int luaAddFoe(::lua_State*) override;
 private:
     const Dummy::Server::Project& m_project;
     std::vector<Dummy::Core::BlockingLayer> m_floors;
