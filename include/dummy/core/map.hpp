@@ -104,6 +104,7 @@ protected:
     virtual int luaMessage(::lua_State*) = 0;
     virtual int luaTeleport(::lua_State*) = 0;
     int luaAddFoe(::lua_State*);
+    virtual int luaAddLuaFoe(::lua_State*) = 0;
 
 protected:
     std::string m_name;

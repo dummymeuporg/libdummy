@@ -55,5 +55,10 @@ int Map::luaTeleport(::lua_State*) {
     return 1;
 }
 
+int Map::luaAddLuaFoe(::lua_State *) {
+    // XXX: What do we do?
+    return 1;
+}
+
 } // namespace Remote
 } // namespace Dummy

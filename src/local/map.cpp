@@ -3,6 +3,7 @@
 #include <iostream>
 #include <utility>
 
+#include <dummy/core/errors.hpp>
 #include <dummy/core/graphic_layer.hpp>
 
 #include <dummy/local/event.hpp>
@@ -178,6 +179,18 @@ int Map::luaTeleport(::lua_State* luaState) {
         return 1;
     }
     return 0;
+}
+
+int Map::luaAddLuaFoe(::lua_State* luaState) {
+    std::string luaFilename = lua_tostring(luaState, 1);
+    fs::path fullpath(m_project.projectPath() / "foes");
+    fullpath /= luaFilename;
+    auto err = luaL_loadfile(luaState, fullpath.string().c_str());
+    std::cerr << "Loading " << fullpath.string() << std::endl;
+    if (0 != err) {
+        throw Dummy::Core::LuaLoadFileError(lua_tostring(luaState, -1));
+    }
+    return 1;
 }
 
 void Map::setEventObserver(EventObserver* eventObserver) {
