@@ -28,7 +28,7 @@ void PacketSerializer::visitMapUpdate(const LivingOn& update) {
     m_packet << Bridge::LIVING_ON
         << update.id()
         << update.x() << update.y() << update.floor()
-        << update.name() << update.chipset()
+        << update.chipset()
         << static_cast<std::uint8_t>(update.direction());
 }
 
@@ -41,8 +41,8 @@ void PacketSerializer::visitMapUpdate(const NamedLivingOn& update) {
 }
 
 void PacketSerializer::visitMapUpdate(const CharacterPosition& update) {
-    m_packet << Bridge::CHARACTER_POSITION
-        << update.x() << update.y() << update.name()
+    m_packet << Bridge::CHARACTER_POSITION <<
+        update.id() << update.x() << update.y()
         << static_cast<std::uint8_t>(update.direction());
 }
 

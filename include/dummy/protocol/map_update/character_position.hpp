@@ -31,10 +31,6 @@ public:
         return m_y;
     }
 
-    const std::string& name() const {
-        return m_name;
-    }
-
     Dummy::Core::Character::Direction direction() const {
         return m_direction;
     }
@@ -46,7 +42,6 @@ public:
 protected:
     std::uint32_t m_id;
     std::uint16_t m_x, m_y;
-    std::string m_name;
     Dummy::Core::Character::Direction m_direction;
 };
 

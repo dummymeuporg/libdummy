@@ -36,10 +36,10 @@ public:
     }
 private:
     std::shared_ptr<const Dummy::Protocol::MapUpdate::LivingOff>
-    readCharacterOff(Dummy::Protocol::IncomingPacket&);
+    readLivingOff(Dummy::Protocol::IncomingPacket&);
 
     std::shared_ptr<const Dummy::Protocol::MapUpdate::LivingOn>
-    readCharacterOn(Dummy::Protocol::IncomingPacket&);
+    readLivingOn(Dummy::Protocol::IncomingPacket&);
 
     std::shared_ptr<const Dummy::Protocol::MapUpdate::CharacterPosition>
     readCharacterPosition(Dummy::Protocol::IncomingPacket&);

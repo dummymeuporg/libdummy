@@ -48,11 +48,11 @@ void Ping::readFrom(Dummy::Protocol::IncomingPacket& packet) {
         switch(code) {
         case Dummy::Protocol::Bridge::LIVING_OFF:
             /* Read character off */
-            addUpdate(readCharacterOff(packet));
+            addUpdate(readLivingOff(packet));
             break;
         case Dummy::Protocol::Bridge::LIVING_ON:
             /* Read character on */
-            addUpdate(readCharacterOn(packet));
+            addUpdate(readLivingOn(packet));
             break;
         case Dummy::Protocol::Bridge::CHARACTER_POSITION:
             /* Read character position */
@@ -66,7 +66,7 @@ void Ping::readFrom(Dummy::Protocol::IncomingPacket& packet) {
 }
 
 std::shared_ptr<const Dummy::Protocol::MapUpdate::LivingOff>
-Ping::readCharacterOff(Dummy::Protocol::IncomingPacket& packet) {
+Ping::readLivingOff(Dummy::Protocol::IncomingPacket& packet) {
     std::uint32_t id;
     packet >> id;
     return std::make_shared<Dummy::Protocol::MapUpdate::LivingOff>(
@@ -75,7 +75,7 @@ Ping::readCharacterOff(Dummy::Protocol::IncomingPacket& packet) {
 }
 
 std::shared_ptr<const Dummy::Protocol::MapUpdate::LivingOn>
-Ping::readCharacterOn(Dummy::Protocol::IncomingPacket& packet) {
+Ping::readLivingOn(Dummy::Protocol::IncomingPacket& packet) {
     std::uint32_t id;
     std::uint16_t x, y;
     std::uint8_t floor;
