@@ -49,7 +49,7 @@ PlayingState::createMapUpdates(
 {
 
     for (const auto& [id, observer]: map->observers()) {
-
+        std::cerr << "Observer " << id << std::endl;
         auto observerPtr = observer.lock();
 
         if (nullptr == observerPtr) {
@@ -249,6 +249,7 @@ void PlayingState::visitCommand(
     const auto& mapNames(gameServer.project().maps());
     auto& mainInstance(gameServer.mainInstance());
 
+
     if (mapNames.find(mapName) == std::end(mapNames)) {
         // XXX: Throw an exception?
         std::cerr << "Cannot find map name." << std::endl;
@@ -277,6 +278,8 @@ void PlayingState::visitCommand(
         std::cerr << "Could not access the player.";
         m_gameSession.close();
     }
+
+    leavePreviousMap(player);
 
     auto instance(player->instance().lock());
     if (nullptr == instance) {
@@ -320,6 +323,16 @@ void PlayingState::visitCommand(
     m_gameSession.changeState(
         std::make_shared<LoadingState>(m_gameSession, std::move(request))
     );
+}
+
+void PlayingState::leavePreviousMap(std::shared_ptr<Player> player) {
+    auto previousMap = player->map().lock();
+    if (nullptr == previousMap) {
+        return;
+    }
+
+    previousMap->removeObserver(player->id());
+
 }
 
 } // namespace GameSessionState

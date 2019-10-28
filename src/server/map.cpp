@@ -47,7 +47,7 @@ void Map::addObserver(std::shared_ptr<MapObserver> mapObserver) {
     // XXX: Should not be problematic. For now.
     while(m_observers.find(++m_idGenerator) != std::end(m_observers));
 
-    mapObserver->setID(++m_idGenerator);
+    mapObserver->setID(m_idGenerator);
     m_observers[m_idGenerator] = mapObserver;
 }
 

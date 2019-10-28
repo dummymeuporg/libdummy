@@ -52,8 +52,10 @@ void LoadingState::visitCommand(
         m_teleportRequest.position() == teleportMap.destination())
     {
         std::cerr << "Teleport request valid." << std::endl;
-        std::weak_ptr<Map> previousServerMap = player->map();
         std::weak_ptr<Map> newServerMap;
+
+        // Remove the player from its former map, if needed.
+
 
         auto playerInstance(player->instance().lock());
 

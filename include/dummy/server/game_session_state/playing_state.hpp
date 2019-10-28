@@ -53,6 +53,8 @@ private:
         const std::string&
     );
 
+    void leavePreviousMap(std::shared_ptr<Player>);
+
      MapState m_mapState;
 };
 

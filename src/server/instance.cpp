@@ -32,6 +32,7 @@ std::weak_ptr<Map> Instance::map(const std::string& name) {
         }
 
         // Spawn the map.
+        std::cerr << "Spawning map " << name << std::endl;
         m_maps[name] = std::make_shared<Map>(
             *this, *project.maps().at(name), m_ioContext
         );
