@@ -9,7 +9,8 @@ namespace Protocol {
 
 class NamedLiving : public Living {
 public:
-    NamedLiving(std::uint16_t,
+    NamedLiving(std::uint32_t,
+                std::uint16_t,
                 std::uint16_t,
                 std::uint8_t,
                 const std::string&,

@@ -23,11 +23,6 @@ Map::Map(
     for (const auto& foe: m_map.foes()) {
         auto mapFoe(std::make_shared<Foe>(foe));
         m_foes.insert(mapFoe);
-        /*
-        std::stringstream ss;
-        ss << "NPC " << index++;
-        //m_foes[ss.str()] = Foe(foe, ss.str());
-        */
         addObserver(mapFoe);
     }
 }
