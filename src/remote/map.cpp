@@ -55,8 +55,14 @@ int Map::luaTeleport(::lua_State*) {
     return 1;
 }
 
-int Map::luaAddLuaFoe(::lua_State *) {
+int Map::luaAddFoe(::lua_State* luaState) {
     // XXX: What do we do?
+    std::string luaFilename = lua_tostring(luaState, 1);
+    fs::path fullpath(m_project.projectPath() / "foes");
+    fullpath /= luaFilename;
+
+    m_foes.push_back(Dummy::Core::Foe(fullpath.string()));
+
     return 1;
 }
 

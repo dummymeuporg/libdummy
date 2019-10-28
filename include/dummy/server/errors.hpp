@@ -130,5 +130,21 @@ public:
     }
 };
 
+class LuaError : public Error {
+
+};
+
+class LuaFileNotFound : public LuaError {
+
+};
+
+class LuaNotATable : public LuaError {
+
+};
+
+class LuaNotAnInteger : public LuaError {
+
+};
+
 } // namespace Server
 } // namespace Dummy

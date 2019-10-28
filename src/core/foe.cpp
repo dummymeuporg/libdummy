@@ -3,6 +3,9 @@
 namespace Dummy {
 namespace Core {
 
+Foe::Foe(const std::string& luaFilename) : m_luaFilename(luaFilename) {}
+
+/*
 Foe::Foe(
     const std::string& chipset,
     std::uint16_t x,
@@ -18,6 +21,7 @@ Foe::Foe(
 ) : m_chipset(chipset), m_position(position), m_floor(floor)
 {
 }
+*/
 
 } // namespace Core
 } // namespace Dummy

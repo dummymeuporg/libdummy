@@ -98,42 +98,11 @@ void Map::loadLuaFile(const std::string& luaFile) {
         &dispatch<&Map::luaAddFoe>
     );
 
-    lua_register(
-        m_eventsState,
-        "AddLuaFoe",
-        &dispatch<&Map::luaAddLuaFoe>
-    );
-
     int ret = luaL_dofile(m_eventsState, luaFile.c_str());
     if (ret != 0) {
-        throw Dummy::Core::LuaFileNotFound();
+        std::string errorMessage(lua_tostring(m_eventsState, -1));
+        throw Dummy::Core::LuaLoadFileError(errorMessage);
     }
-}
-
-int Map::luaAddFoe(::lua_State* luaState) {
-    std::uint16_t x, y;
-    std::uint8_t floor;
-    int isNum;
-    std::string chipset = lua_tostring(luaState, 1);
-
-    x = static_cast<std::uint16_t>(lua_tointegerx(luaState, 2, &isNum));
-    if (0 == isNum) {
-        // XXX: Throw an exception
-    }
-
-    y = static_cast<std::uint16_t>(lua_tointegerx(luaState, 3, &isNum));
-    if (0 == isNum) {
-        // XXX: Throw an exception
-    }
-
-    floor = static_cast<std::uint8_t>(lua_tointegerx(luaState, 4, &isNum));
-    if (0 == isNum) {
-        // XXX: Throw an exception
-    }
-
-    m_foes.push_back(Foe(chipset, x, y, floor));
-
-    return 1;
 }
 
 } // namespace Core

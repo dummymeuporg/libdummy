@@ -181,15 +181,13 @@ int Map::luaTeleport(::lua_State* luaState) {
     return 0;
 }
 
-int Map::luaAddLuaFoe(::lua_State* luaState) {
+int Map::luaAddFoe(::lua_State* luaState) {
     std::string luaFilename = lua_tostring(luaState, 1);
     fs::path fullpath(m_project.projectPath() / "foes");
     fullpath /= luaFilename;
-    auto err = luaL_loadfile(luaState, fullpath.string().c_str());
-    std::cerr << "Loading " << fullpath.string() << std::endl;
-    if (0 != err) {
-        throw Dummy::Core::LuaLoadFileError(lua_tostring(luaState, -1));
-    }
+
+    m_foes.push_back(Dummy::Core::Foe(fullpath.string()));
+
     return 1;
 }
 
