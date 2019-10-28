@@ -11,22 +11,22 @@ namespace Protocol {
 
 class Living {
 public:
-    Living(std::uint16_t,
+    Living(std::uint32_t,
            std::uint16_t,
-           const std::string&,
+           std::uint16_t,
+           std::uint8_t,
            const std::string&,
            Dummy::Core::Character::Direction);
 
+    std::uint32_t id() const {
+        return m_id;
+    }
     std::uint16_t x() const {
         return m_x;
     }
 
     std::uint16_t y() const {
         return m_y;
-    }
-
-    const std::string& name() const {
-        return m_name;
     }
 
     const std::string& chipset() const {
@@ -39,13 +39,13 @@ public:
 
     void setPosition(std::uint16_t, std::uint16_t);
     void setDirection(Dummy::Core::Character::Direction);
-    void setName(const std::string&);
     void setChipset(const std::string&);
 
 protected:
+    std::uint32_t m_id;
     std::uint16_t m_x;
     std::uint16_t m_y;
-    std::string m_name;
+    std::uint8_t m_floor;
     std::string m_chipset;
     Dummy::Core::Character::Direction m_direction;
 };

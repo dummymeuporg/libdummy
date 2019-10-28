@@ -49,9 +49,11 @@ private:
 
     void sendMessageToMap(
         std::shared_ptr<Map>,
-        const std::string&,
+        std::uint32_t,
         const std::string&
     );
+
+    void leavePreviousMap(std::shared_ptr<Player>);
 
      MapState m_mapState;
 };

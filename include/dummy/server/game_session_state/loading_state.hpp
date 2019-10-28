@@ -47,6 +47,8 @@ private:
         const std::string& newInstanceName
     );
 
+    void leavePreviousMap(std::shared_ptr<Player>);
+
 private:
     Dummy::Protocol::TeleportRequest m_teleportRequest;
 };

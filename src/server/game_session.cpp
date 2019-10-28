@@ -94,7 +94,7 @@ GameSession::getResponse() {
 }
 
 void GameSession::receiveMessage(
-    const std::string& author,
+    std::uint32_t author,
     const std::string& content
 ) {
     auto message(std::make_unique<Dummy::Server::Response::Message>());

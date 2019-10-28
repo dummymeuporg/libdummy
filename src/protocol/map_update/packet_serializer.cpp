@@ -2,8 +2,9 @@
 #include <dummy/protocol/map_update/packet_serializer.hpp>
 #include <dummy/protocol/map_update/update.hpp>
 #include <dummy/protocol/map_update/character_floor.hpp>
-#include <dummy/protocol/map_update/character_on.hpp>
-#include <dummy/protocol/map_update/character_off.hpp>
+#include <dummy/protocol/map_update/named_living_on.hpp>
+#include <dummy/protocol/map_update/living_on.hpp>
+#include <dummy/protocol/map_update/living_off.hpp>
 #include <dummy/protocol/map_update/character_position.hpp>
 #include <dummy/protocol/outgoing_packet.hpp>
 
@@ -19,20 +20,29 @@ void PacketSerializer::visit(const Update& update) {
     update.accept(*this);
 }
 
-void PacketSerializer::visitMapUpdate(const CharacterOff& update) {
-    m_packet << Bridge::CHARACTER_OFF << update.name();
+void PacketSerializer::visitMapUpdate(const LivingOff& update) {
+    m_packet << Bridge::LIVING_OFF << update.id();
 }
 
-void PacketSerializer::visitMapUpdate(const CharacterOn& update) {
-    m_packet << Bridge::CHARACTER_ON
+void PacketSerializer::visitMapUpdate(const LivingOn& update) {
+    m_packet << Bridge::LIVING_ON
+        << update.id()
+        << update.x() << update.y() << update.floor()
+        << update.chipset()
+        << static_cast<std::uint8_t>(update.direction());
+}
+
+void PacketSerializer::visitMapUpdate(const NamedLivingOn& update) {
+    m_packet << Bridge::NAMED_LIVING_ON
+        << update.id()
         << update.x() << update.y() << update.floor()
         << update.name() << update.chipset()
         << static_cast<std::uint8_t>(update.direction());
 }
 
 void PacketSerializer::visitMapUpdate(const CharacterPosition& update) {
-    m_packet << Bridge::CHARACTER_POSITION
-        << update.x() << update.y() << update.name()
+    m_packet << Bridge::CHARACTER_POSITION <<
+        update.id() << update.x() << update.y()
         << static_cast<std::uint8_t>(update.direction());
 }
 

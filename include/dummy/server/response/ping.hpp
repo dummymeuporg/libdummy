@@ -10,8 +10,9 @@ namespace Protocol {
 namespace MapUpdate {
 class Update;
 class CharacterFloor;
-class CharacterOn;
-class CharacterOff;
+class LivingOn;
+class LivingOff;
+class NamedLivingOn;
 class CharacterPosition;
 } // namespace MapUpdate
 } // namespace Protocol
@@ -35,11 +36,14 @@ public:
         return m_mapUpdates;
     }
 private:
-    std::shared_ptr<const Dummy::Protocol::MapUpdate::CharacterOff>
-    readCharacterOff(Dummy::Protocol::IncomingPacket&);
+    std::shared_ptr<const Dummy::Protocol::MapUpdate::LivingOff>
+    readLivingOff(Dummy::Protocol::IncomingPacket&);
 
-    std::shared_ptr<const Dummy::Protocol::MapUpdate::CharacterOn>
-    readCharacterOn(Dummy::Protocol::IncomingPacket&);
+    std::shared_ptr<const Dummy::Protocol::MapUpdate::LivingOn>
+    readLivingOn(Dummy::Protocol::IncomingPacket&);
+
+    std::shared_ptr<const Dummy::Protocol::MapUpdate::NamedLivingOn>
+    readNamedLivingOn(Dummy::Protocol::IncomingPacket&);
 
     std::shared_ptr<const Dummy::Protocol::MapUpdate::CharacterPosition>
     readCharacterPosition(Dummy::Protocol::IncomingPacket&);
