@@ -4,6 +4,8 @@
 #include <string>
 #include <utility>
 
+#include <boost/asio.hpp>
+
 #include <dummy/server/map_observer.hpp>
 
 namespace Dummy {
@@ -17,7 +19,7 @@ namespace Server {
 
 class Foe : public MapObserver {
 public:
-    Foe(const Core::Foe&);
+    Foe(const Core::Foe&, boost::asio::io_context&);
 
     const std::string& chipset() const {
         return m_chipset;
@@ -42,6 +44,7 @@ public:
 
 
 private:
+    boost::asio::io_context& m_ioContext;
     std::string m_name;
     std::string m_chipset;
     std::pair<std::uint16_t, std::uint16_t> m_position;

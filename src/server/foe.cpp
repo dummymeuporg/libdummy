@@ -11,8 +11,9 @@
 namespace Dummy {
 namespace Server {
 
-Foe::Foe(const Dummy::Core::Foe& foe)
-    : m_chipset(foe.chipset()),
+Foe::Foe(const Dummy::Core::Foe& foe, boost::asio::io_context& ioContext)
+    : m_ioContext(ioContext),
+      m_chipset(foe.chipset()),
       m_position{foe.position().first*2, foe.position().second*2},
       m_floor(foe.floor())
 {}
