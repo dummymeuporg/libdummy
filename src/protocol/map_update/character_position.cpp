@@ -24,11 +24,13 @@ void CharacterPosition::accept(MapUpdateVisitor& visitor) const {
 
 void
 CharacterPosition::serializeTo(Dummy::Protocol::OutgoingPacket& packet) const {
-    packet << m_id << m_x << m_y;
+    packet << m_id << m_x << m_y << static_cast<std::uint8_t>(m_direction);
 }
 
 void CharacterPosition::readFrom(Dummy::Protocol::IncomingPacket& packet) {
-    packet >> m_id >> m_x >> m_y;
+    std::uint8_t direction;
+    packet >> m_id >> m_x >> m_y >> direction;
+    m_direction = static_cast<Dummy::Core::Character::Direction>(direction);
 }
 
 } // namespace MapUpdate
