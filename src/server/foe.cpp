@@ -32,7 +32,15 @@ void Foe::notifyOn(MapUpdatesVector& mapUpdates) {
 }
 
 void Foe::notifyPosition(MapUpdatesVector& mapUpdates) {
-
+    mapUpdates.push_back(
+        std::make_unique<
+            Dummy::Protocol::MapUpdate::CharacterPosition
+        >(
+            m_id.value(),
+            m_position.first,
+            m_position.second,
+            Dummy::Core::Character::Direction::DOWN // XXX: For now.
+        ));
 }
 
 std::pair<std::uint16_t, std::uint16_t> Foe::position() {
