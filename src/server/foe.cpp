@@ -43,7 +43,7 @@ void Foe::notifyPosition(MapUpdatesVector& mapUpdates) {
         ));
 }
 
-void Foe::receiveMessage(std::uint32_t, const std::string&) {
+void Foe::receiveMessage(std::uint32_t, const std::string& message) {
     // The foe does not care. For now.
 }
 

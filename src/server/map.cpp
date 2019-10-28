@@ -22,7 +22,7 @@ Map::Map(
 
 void Map::spawn() {
     for (const auto& foe: m_map.foes()) {
-        auto mapFoe(std::make_shared<Foe>(foe));
+        auto mapFoe(std::make_shared<Foe>(foe, m_ioContext));
         m_foes.insert(mapFoe);
         addObserver(mapFoe);
         mapFoe->setMap(weak_from_this());
