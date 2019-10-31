@@ -1,7 +1,7 @@
 #include <dummy/core/map.hpp>
 
 #include <dummy/server/abstract_game_server.hpp>
-#include <dummy/server/foe.hpp>
+#include <dummy/server/foe/foe.hpp>
 #include <dummy/server/player.hpp>
 #include <dummy/server/map.hpp>
 #include <dummy/server/map_observer.hpp>
@@ -22,7 +22,7 @@ Map::Map(
 
 void Map::spawn() {
     for (const auto& foe: m_map.foes()) {
-        auto mapFoe(std::make_shared<Foe>(foe, m_ioContext));
+        auto mapFoe(std::make_shared<Foe::Foe>(foe, m_ioContext));
         m_foes.insert(mapFoe);
         addObserver(mapFoe);
         mapFoe->setMap(weak_from_this());

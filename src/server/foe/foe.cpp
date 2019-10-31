@@ -4,13 +4,14 @@
 
 #include <dummy/protocol/map_update/living_on.hpp>
 
-#include <dummy/server/foe.hpp>
+#include <dummy/server/foe/foe.hpp>
 #include <dummy/server/map.hpp>
 #include <dummy/server/map_state.hpp>
 
 
 namespace Dummy {
 namespace Server {
+namespace Foe {
 
 Foe::Foe(const Dummy::Core::Foe& foe, boost::asio::io_context& ioContext)
     : m_ioContext(ioContext), m_luaState(::luaL_newstate())
@@ -167,5 +168,6 @@ int Foe::luaSay(::lua_State* luaState) {
     return 1;
 }
 
+} // namespace Foe
 } // namespace Server
 } // namespace Dummy

@@ -7,7 +7,7 @@
 
 #include <boost/asio.hpp>
 
-#include <dummy/server/foe.hpp>
+#include <dummy/server/foe/foe.hpp>
 
 namespace Dummy {
 
@@ -29,7 +29,7 @@ class Player;
 class Map : public std::enable_shared_from_this<Map> {
 public:
     using PlayersList = std::map<std::string, std::shared_ptr<Player>>;
-    using Foes = std::set<std::shared_ptr<Dummy::Server::Foe>>;
+    using Foes = std::set<std::shared_ptr<Dummy::Server::Foe::Foe>>;
     using Observers = std::map<std::uint32_t, std::weak_ptr<MapObserver>>;
     Map(Instance&, const Remote::Map&, boost::asio::io_context&);
     void spawn();

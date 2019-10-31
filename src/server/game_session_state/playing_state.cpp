@@ -13,7 +13,7 @@
 #include <dummy/server/response/set_position.hpp>
 #include <dummy/server/response/teleport_map.hpp>
 
-#include <dummy/server/foe.hpp>
+#include <dummy/server/foe/foe.hpp>
 #include <dummy/server/player.hpp>
 #include <dummy/server/abstract_game_server.hpp>
 #include <dummy/server/game_session.hpp>
