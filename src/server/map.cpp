@@ -26,6 +26,7 @@ void Map::spawn() {
         m_foes.insert(mapFoe);
         addObserver(mapFoe);
         mapFoe->setMap(weak_from_this());
+        mapFoe->start();
     }
 }
 

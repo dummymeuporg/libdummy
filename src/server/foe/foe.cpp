@@ -1,3 +1,5 @@
+#include <boost/date_time/posix_time/posix_time.hpp>
+
 #include <dummy/core/character.hpp>
 #include <dummy/core/map.hpp>
 #include <dummy/core/foe.hpp>
@@ -14,10 +16,16 @@ namespace Server {
 namespace Foe {
 
 Foe::Foe(const Dummy::Core::Foe& foe, boost::asio::io_context& ioContext)
-    : m_ioContext(ioContext), m_luaState(::luaL_newstate())
+    : m_ioContext(ioContext),
+      m_tickTimer(std::make_shared<boost::asio::steady_timer>(m_ioContext)),
+      m_luaState(::luaL_newstate())
 {
     *static_cast<Foe**>(lua_getextraspace(m_luaState)) = this;
     loadLuaFile(foe.luaFilename());
+}
+
+void Foe::start() {
+    tick();
 }
 
 void Foe::registerLuaCallbacks() {
@@ -98,6 +106,18 @@ void Foe::loadLuaFile(const std::string& filename) {
 
     registerLuaCallbacks();
 
+}
+
+void Foe::tick() {
+    auto self(shared_from_this());
+    std::cerr << "Tick!" << std::endl;
+
+    m_tickTimer->expires_after(std::chrono::milliseconds(333));
+
+    m_tickTimer->async_wait([this, self](const boost::system::error_code&) {
+        m_tickTimer = std::make_shared<boost::asio::steady_timer>(m_ioContext);
+        tick();
+    });
 }
 
 void Foe::notifyOn(MapUpdatesVector& mapUpdates) {

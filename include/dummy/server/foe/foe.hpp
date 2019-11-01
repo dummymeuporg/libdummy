@@ -53,7 +53,8 @@ public:
     void notifyPosition(MapUpdatesVector&) override;
     void receiveMessage(std::uint32_t, const std::string&) override;
     std::pair<std::uint16_t, std::uint16_t> position() override;
-
+    void start();
+    void tick();
 
 private:
     void loadLuaFile(const std::string&);
@@ -61,6 +62,8 @@ private:
     void loadLuaFileOnStack();
 
     boost::asio::io_context& m_ioContext;
+    std::shared_ptr<boost::asio::steady_timer> m_tickTimer;
+
     std::string m_luaFilename;
     ::lua_State* m_luaState;
     int m_luaFileRef;
