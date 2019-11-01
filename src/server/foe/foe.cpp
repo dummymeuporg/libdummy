@@ -51,6 +51,7 @@ void Foe::loadLuaFile(const std::string& filename) {
 
     m_luaFilename = filename;
 
+    luaL_openlibs(m_luaState);
     loadLuaFileOnStack();
 
     int isNum(0);
@@ -111,6 +112,8 @@ void Foe::loadLuaFile(const std::string& filename) {
 void Foe::tick() {
     auto self(shared_from_this());
     std::cerr << "Tick!" << std::endl;
+
+    luaTick();
 
     m_tickTimer->expires_after(std::chrono::milliseconds(333));
 
@@ -174,7 +177,7 @@ void Foe::luaTick() {
 
     lua_getfield(m_luaState, -1, "tick");
 
-    auto err = lua_pcall(m_luaState, 2, 0, 0);
+    auto err = lua_pcall(m_luaState, 0, 0, 0);
     if (0 != err) {
         std::string errorMessage = lua_tostring(m_luaState, -1);
         std::cerr << "Error: " << errorMessage << std::endl;
