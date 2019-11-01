@@ -55,6 +55,7 @@ public:
     std::pair<std::uint16_t, std::uint16_t> position() override;
     void start();
     void tick();
+    void luaTick();
 
 private:
     void loadLuaFile(const std::string&);

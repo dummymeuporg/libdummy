@@ -167,6 +167,20 @@ void Foe::receiveMessage(std::uint32_t, const std::string& message) {
 
 }
 
+void Foe::luaTick() {
+    lua_rawgeti(m_luaState, LUA_REGISTRYINDEX, m_luaFileRef);
+
+    lua_pcall(m_luaState, 0, 1, 0);
+
+    lua_getfield(m_luaState, -1, "tick");
+
+    auto err = lua_pcall(m_luaState, 2, 0, 0);
+    if (0 != err) {
+        std::string errorMessage = lua_tostring(m_luaState, -1);
+        std::cerr << "Error: " << errorMessage << std::endl;
+    }
+}
+
 std::pair<std::uint16_t, std::uint16_t> Foe::position() {
     return m_position;
 }
