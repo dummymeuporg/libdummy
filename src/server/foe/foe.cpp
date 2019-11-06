@@ -39,7 +39,9 @@ void Foe::registerLuaCallbacks() {
 void Foe::loadLuaFileOnStack() {
     auto ret = luaL_loadfile(m_luaState, m_luaFilename.c_str());
     if (0 != ret) {
-        throw LuaFileNotFound();
+        std::string errorMessage = lua_tostring(m_luaState, -1);
+        std::cerr << "Error: " << errorMessage << std::endl;
+        throw LuaLoadFileError();
     }
 
     // Keep track of the lua file.
@@ -106,7 +108,13 @@ void Foe::loadLuaFile(const std::string& filename) {
     lua_pop(m_luaState, 1); // Get rid of the value
 
     registerLuaCallbacks();
+    setLocalPosition();
 
+}
+
+void Foe::setLocalPosition() {
+    m_localPosition.first = m_position.first * 8;
+    m_localPosition.second = m_position.second * 8;
 }
 
 void Foe::tick() {
@@ -177,11 +185,83 @@ void Foe::luaTick() {
 
     lua_getfield(m_luaState, -1, "tick");
 
-    auto err = lua_pcall(m_luaState, 0, 0, 0);
+    auto err = lua_pcall(m_luaState, 0, 1, 0);
     if (0 != err) {
         std::string errorMessage = lua_tostring(m_luaState, -1);
         std::cerr << "Error: " << errorMessage << std::endl;
+    } else {
+        auto result = lua_tonumber(m_luaState, -1);
+        std::cerr << "Result = " << result << std::endl;
+        auto intResult = static_cast<unsigned int>(result);
+        auto action = static_cast<FoeAction>(intResult);
+        std::cerr << "Got action: " << action << std::endl;
+        interpretAction(action);
     }
+}
+
+void Foe::interpretAction(FoeAction action) {
+    switch (action) {
+    case FoeAction::moveUp:
+    case FoeAction::moveUpRight:
+    case FoeAction::moveRight:
+    case FoeAction::moveDownRight:
+    case FoeAction::moveDown:
+    case FoeAction::moveDownLeft:
+    case FoeAction::moveLeft:
+    case FoeAction::moveUpLeft:
+        moveOnMap(action);
+        break;
+    }
+}
+
+std::pair<int, int> Foe::getMovement(FoeAction action) {
+    switch (action) {
+    case FoeAction::moveUp:
+        return {0, -1};
+    case FoeAction::moveUpRight:
+        return {1, -1};
+    case FoeAction::moveRight:
+        return {1, 0};
+    case FoeAction::moveDownRight:
+        return {1, 1};
+    case FoeAction::moveDown:
+        return {0, 1};
+    case FoeAction::moveDownLeft:
+        return {-1, 1};
+    case FoeAction::moveLeft:
+        return {-1, 0};
+    case FoeAction::moveUpLeft:
+        return {-1, 1};
+    }
+}
+
+std::pair<std::int16_t, std::int16_t> Foe::computeDistance(
+    const std::pair<int, int>& movement
+) {
+    double divisor =
+        movement.first != 0 && movement.second != 0 ? SQRT_2 : 1.0;
+    auto velocity = 0.5; // XXX: For now
+    std::int16_t xDistance(static_cast<unsigned>(
+        ((333.0/8.0) * movement.first * velocity) / divisor
+    ));
+    std::int16_t yDistance(static_cast<unsigned>(
+        ((333.0/8.0) * movement.second * velocity) / divisor
+    ));
+    return {xDistance, yDistance};
+}
+
+void Foe::moveOnMap(FoeAction action) {
+    auto movement(getMovement(action));
+    auto distance(computeDistance(movement));
+
+    // XXX: For now, do not check collisions...
+    m_localPosition.first += distance.first;
+    m_localPosition.second += distance.second;
+
+    // Update server coordinates if necessary.
+    m_position.first = m_localPosition.first / 8;
+    m_position.second = m_localPosition.second / 8;
+
 }
 
 std::pair<std::uint16_t, std::uint16_t> Foe::position() {

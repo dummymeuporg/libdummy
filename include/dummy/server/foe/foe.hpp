@@ -27,6 +27,19 @@ namespace Server {
 
 namespace Foe {
 
+enum FoeAction {
+    moveUp = 0,
+    moveUpRight,
+    moveRight,
+    moveDownRight,
+    moveDown,
+    moveDownLeft,
+    moveLeft,
+    moveUpLeft
+};
+
+static const double SQRT_2 = 1.414213562373;
+
 class Foe : public MapObserver {
 public:
     Foe(const Core::Foe&, boost::asio::io_context&);
@@ -62,6 +75,16 @@ private:
     void registerLuaCallbacks();
     void loadLuaFileOnStack();
 
+    void moveOnMap(FoeAction);
+    void interpretAction(FoeAction);
+    void setLocalPosition();
+
+    std::pair<std::int16_t, std::int16_t> computeDistance(
+         const std::pair<int, int>&
+    );
+
+    static std::pair<int, int> getMovement(FoeAction);
+
     boost::asio::io_context& m_ioContext;
     std::shared_ptr<boost::asio::steady_timer> m_tickTimer;
 
@@ -70,6 +93,7 @@ private:
     int m_luaFileRef;
     std::string m_chipset;
     std::pair<std::uint16_t, std::uint16_t> m_position;
+    std::pair<std::uint16_t, std::uint16_t> m_localPosition;
     std::uint8_t m_floor;
 };
 
