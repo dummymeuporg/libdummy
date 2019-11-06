@@ -259,8 +259,22 @@ void Foe::moveOnMap(FoeAction action) {
     m_localPosition.second += distance.second;
 
     // Update server coordinates if necessary.
-    m_position.first = m_localPosition.first / 8;
-    m_position.second = m_localPosition.second / 8;
+    auto map = m_map.lock();
+
+    std::pair<std::uint16_t, std::uint16_t> newPosition{
+        m_localPosition.first / 8,
+        m_localPosition.second / 8
+    };
+
+    /*
+    if (nullptr != map && !map->isBlocking(
+                newPosition.first,
+                newPosition.second,
+                m_floor)
+    ) {
+    */
+        m_position = newPosition;
+    //}
 
 }
 

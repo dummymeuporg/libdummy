@@ -17,6 +17,9 @@ public:
     Map(const Dummy::Server::Project&, const std::string&);
 
     void load() override;
+    const std::vector<Dummy::Core::BlockingLayer>& floors() const {
+        return m_floors;
+    }
 protected:
     int luaOnTouchEvent(::lua_State*) override;
     int luaMessage(::lua_State*) override;

@@ -71,6 +71,7 @@ public:
     void luaTick();
 
 private:
+    // Methods:
     void loadLuaFile(const std::string&);
     void registerLuaCallbacks();
     void loadLuaFileOnStack();
@@ -84,7 +85,7 @@ private:
     );
 
     static std::pair<int, int> getMovement(FoeAction);
-
+    // Properties:
     boost::asio::io_context& m_ioContext;
     std::shared_ptr<boost::asio::steady_timer> m_tickTimer;
 
