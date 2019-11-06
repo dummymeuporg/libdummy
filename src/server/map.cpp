@@ -1,7 +1,7 @@
 #include <dummy/core/map.hpp>
 
 #include <dummy/server/abstract_game_server.hpp>
-#include <dummy/server/foe.hpp>
+#include <dummy/server/foe/foe.hpp>
 #include <dummy/server/player.hpp>
 #include <dummy/server/map.hpp>
 #include <dummy/server/map_observer.hpp>
@@ -22,10 +22,11 @@ Map::Map(
 
 void Map::spawn() {
     for (const auto& foe: m_map.foes()) {
-        auto mapFoe(std::make_shared<Foe>(foe, m_ioContext));
+        auto mapFoe(std::make_shared<Foe::Foe>(foe, m_ioContext));
         m_foes.insert(mapFoe);
         addObserver(mapFoe);
         mapFoe->setMap(weak_from_this());
+        mapFoe->start();
     }
 }
 
@@ -66,8 +67,7 @@ void Map::removeObserver(std::uint32_t id) {
 bool
 Map::isBlocking(std::uint16_t x, std::uint16_t y, std::uint8_t floor) const {
     // XXX: refactor this.
-    //return m_map.isBlocking(x, y);
-    return false;
+    return m_map.floors().at(floor).isBlocking(x, y);
 }
 
 void Map::dispatchMessage(std::uint32_t author, const std::string& message) {

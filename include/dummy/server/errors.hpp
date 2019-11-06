@@ -134,7 +134,7 @@ class LuaError : public Error {
 
 };
 
-class LuaFileNotFound : public LuaError {
+class LuaLoadFileError : public LuaError {
 
 };
 
