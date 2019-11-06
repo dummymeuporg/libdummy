@@ -92,6 +92,7 @@ private:
     std::string m_luaFilename;
     ::lua_State* m_luaState;
     int m_luaFileRef;
+    int m_luaTableRef;
     std::string m_chipset;
     std::pair<std::uint16_t, std::uint16_t> m_position;
     std::pair<std::uint16_t, std::uint16_t> m_localPosition;

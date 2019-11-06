@@ -66,6 +66,11 @@ void Foe::loadLuaFile(const std::string& filename) {
         throw LuaNotATable();
     }
 
+    m_luaTableRef = luaL_ref(m_luaState, LUA_REGISTRYINDEX);
+
+    // Push back the table on the stack.
+    lua_rawgeti(m_luaState, LUA_REGISTRYINDEX, m_luaTableRef);
+
     // Read chipset.
     lua_pushstring(m_luaState, "chipset");
     lua_gettable(m_luaState, -2);
@@ -157,11 +162,9 @@ void Foe::notifyPosition(MapUpdatesVector& mapUpdates) {
 }
 
 void Foe::receiveMessage(std::uint32_t, const std::string& message) {
-    // The foe does not care. For now.
-    lua_rawgeti(m_luaState, LUA_REGISTRYINDEX, m_luaFileRef);
-
     // Get the table
-    lua_pcall(m_luaState, 0, 1, 0);
+    lua_rawgeti(m_luaState, LUA_REGISTRYINDEX, m_luaTableRef);
+
 
     //lua_pcall(m_luaState, 0, 1, 0); // Get the module instance.
     lua_getfield(m_luaState, -1, "onMessage");
@@ -179,9 +182,10 @@ void Foe::receiveMessage(std::uint32_t, const std::string& message) {
 }
 
 void Foe::luaTick() {
-    lua_rawgeti(m_luaState, LUA_REGISTRYINDEX, m_luaFileRef);
+    // Get the table
+    lua_rawgeti(m_luaState, LUA_REGISTRYINDEX, m_luaTableRef);
 
-    lua_pcall(m_luaState, 0, 1, 0);
+    //lua_pcall(m_luaState, 0, 1, 0);
 
     lua_getfield(m_luaState, -1, "tick");
 
