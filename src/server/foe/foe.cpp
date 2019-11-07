@@ -195,10 +195,8 @@ void Foe::luaTick() {
         std::cerr << "Error: " << errorMessage << std::endl;
     } else {
         auto result = lua_tonumber(m_luaState, -1);
-        std::cerr << "Result = " << result << std::endl;
         auto intResult = static_cast<unsigned int>(result);
         auto action = static_cast<FoeAction>(intResult);
-        std::cerr << "Got action: " << action << std::endl;
         interpretAction(action);
     }
 }
