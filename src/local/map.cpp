@@ -114,6 +114,36 @@ void Map::readMapFloor(
     m_floors.push_back(std::move(floor));
 }
 
+int Map::luaOnKeypressEvent(::lua_State* luaState) {
+    int isNum;
+    std::uint16_t x, y;
+    std::uint8_t floor;
+    x = static_cast<std::uint16_t>(lua_tointegerx(luaState, 1, &isNum));
+    if (0 == isNum) {
+        // XXX: Throw an exception
+    }
+
+    y = static_cast<std::uint16_t>(lua_tointegerx(luaState, 2, &isNum));
+    if (0 == isNum) {
+        // XXX: Throw an exception
+    }
+
+    floor = static_cast<std::uint8_t>(lua_tointegerx(luaState, 3, &isNum));
+    if (0 == isNum) {
+        // XXX: Throw an exception
+    }
+
+    std::string luaCallback = lua_tostring(luaState, 4);
+    auto index = y * m_width + x;
+    auto& currentFloor(m_floors[floor]);
+    currentFloor.keypressEvents().emplace(index, std::make_shared<Event>(
+        m_eventsState,
+        *this,
+        luaCallback
+    ));
+    return 1;
+}
+
 int Map::luaOnTouchEvent(::lua_State* luaState) {
     int isNum;
     std::uint16_t x, y;

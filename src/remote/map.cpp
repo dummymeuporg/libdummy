@@ -55,6 +55,11 @@ int Map::luaTeleport(::lua_State*) {
     return 1;
 }
 
+int Map::luaOnKeypressEvent(::lua_State*) {
+    // XXX: What do we do?
+    return 1;
+}
+
 int Map::luaAddFoe(::lua_State* luaState) {
     // XXX: What do we do?
     std::string luaFilename = lua_tostring(luaState, 1);

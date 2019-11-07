@@ -22,6 +22,7 @@ public:
     }
 protected:
     int luaOnTouchEvent(::lua_State*) override;
+    int luaOnKeypressEvent(::lua_State*) override;
     int luaMessage(::lua_State*) override;
     int luaTeleport(::lua_State*) override;
     int luaAddFoe(::lua_State*) override;

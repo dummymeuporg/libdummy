@@ -82,6 +82,12 @@ void Map::loadLuaFile(const std::string& luaFile) {
 
     lua_register(
         m_eventsState,
+        "OnKeypressEvent",
+        &dispatch<&Map::luaOnKeypressEvent>
+    );
+
+    lua_register(
+        m_eventsState,
         "Message",
         &dispatch<&Map::luaMessage>
     );
