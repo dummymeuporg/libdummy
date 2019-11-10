@@ -102,6 +102,7 @@ protected:
 
     // XXX: export this elsewhere?
     virtual int luaOnTouchEvent(::lua_State*) = 0;
+    virtual int luaOnKeypressEvent(::lua_State*) = 0;
     virtual int luaMessage(::lua_State*) = 0;
     virtual int luaTeleport(::lua_State*) = 0;
     //int luaAddFoe(::lua_State*);

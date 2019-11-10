@@ -54,6 +54,7 @@ public:
     bool isBlocking(std::uint16_t x, std::uint16_t y) const {
         return m_blockingLayer.isBlocking(x, y);
     }
+
     Events& touchEvents() {
         return m_touchEvents;
     }
@@ -61,11 +62,22 @@ public:
     const Events& touchEvents() const {
         return m_touchEvents;
     }
+
+    Events& keypressEvents() {
+        return m_keypressEvents;
+    }
+
+    const Events& keypressEvents() const {
+        return m_keypressEvents;
+    }
+
+
 protected:
     const Map& m_map;
     Dummy::Core::BlockingLayer m_blockingLayer;
     GraphicLayers m_graphicLayers;
     Events m_touchEvents;
+    Events m_keypressEvents;
 };
 
 } // namespace Local
