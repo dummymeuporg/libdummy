@@ -8,7 +8,7 @@ namespace CharacterClass {
 
 class Spadassin : public CharacterClass {
 public:
-    Spadassin();
+    Spadassin(Character&);
 };
 
 } // namespace CharacterClass

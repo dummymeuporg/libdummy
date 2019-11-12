@@ -3,15 +3,21 @@
 #include <algorithm>
 #include <cstdint>
 #include <fstream>
+#include <memory>
 #include <string>
 #include <tuple>
+
+
+#include <dummy/core/character_class/character_class.hpp>
 
 #include <dummy/protocol/incoming_packet.hpp>
 #include <dummy/protocol/outgoing_packet.hpp>
 
+
 namespace Dummy {
 
 namespace Core {
+
 
 class Character {
 public:
@@ -71,6 +77,10 @@ public:
         return m_class;
     }
 
+    const CharacterClass::CharacterClass& getCharacterClass() const {
+        return *m_characterClass;
+    }
+
     friend std::ifstream&
     operator>>(std::ifstream& ifs, Character& chr) {
         chr._readFromStream(ifs);
@@ -103,10 +113,14 @@ public:
     Character& setInstance(const std::string&);
     Character& setClass(Class);
 private:
+    /* Methods. */
     void _writeToStream(std::ofstream&) const;
     void _readFromStream(std::ifstream&);
     void _writeToPacket(Protocol::OutgoingPacket&) const;
     void _readFromPacket(Protocol::IncomingPacket&);
+    void instantiateCharacterClass();
+
+    /* Attributes. */
     std::string m_name;
     std::string m_skin;
     std::string m_mapLocation;
@@ -115,6 +129,7 @@ private:
     std::uint8_t m_floor;
     std::string m_instance;
     Class m_class;
+    std::shared_ptr<CharacterClass::CharacterClass> m_characterClass;
 };
 
 } // namespace Core

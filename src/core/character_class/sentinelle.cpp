@@ -4,7 +4,7 @@ namespace Dummy {
 namespace Core {
 namespace CharacterClass {
 
-Sentinelle::Sentinelle() : CharacterClass(500)
+Sentinelle::Sentinelle(Character& character) : CharacterClass(character, 500)
 {}
 
 } // namespace CharacterClass

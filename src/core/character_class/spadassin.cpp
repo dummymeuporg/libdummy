@@ -4,7 +4,7 @@ namespace Dummy {
 namespace Core {
 namespace CharacterClass {
 
-Spadassin::Spadassin() : CharacterClass(333)
+Spadassin::Spadassin(Character& character) : CharacterClass(character, 333)
 {}
 
 } // namespace CharacterClass

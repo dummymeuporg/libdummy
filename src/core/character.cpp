@@ -2,12 +2,19 @@
 #include <dummy/core/errors.hpp>
 #include <dummy/core/map.hpp>
 
+#include <dummy/core/character_class/character_class.hpp>
+#include <dummy/core/character_class/grognard.hpp>
+#include <dummy/core/character_class/sentinelle.hpp>
+#include <dummy/core/character_class/spadassin.hpp>
+
+
 
 namespace Dummy {
 
 namespace Core {
 
-Character::Character() : m_direction(Direction::DOWN)
+Character::Character()
+    : m_direction(Direction::DOWN), m_characterClass(nullptr)
 {
 
 }
@@ -147,6 +154,24 @@ void Character::_readFromStream(std::ifstream& ifs) {
     // read character class
     ifs.read(reinterpret_cast<char*>(&m_class), sizeof(Class));
 
+    instantiateCharacterClass();
+
+}
+
+void Character::instantiateCharacterClass() {
+    switch(m_class) {
+    case Class::GROGNARD:
+        m_characterClass = std::make_shared<CharacterClass::Grognard>(*this);
+        break;
+    case Class::SPADASSIN:
+        m_characterClass = std::make_shared<CharacterClass::Spadassin>(*this);
+        break;
+    case Class::SENTINELLE:
+        m_characterClass = std::make_shared<CharacterClass::Sentinelle>(*this);
+        break;
+    default:
+        break;
+    }
 }
 
 void Character::_writeToStream(std::ofstream& ofs) const {

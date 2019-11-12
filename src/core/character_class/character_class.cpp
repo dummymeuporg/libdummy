@@ -4,8 +4,8 @@ namespace Dummy {
 namespace Core {
 namespace CharacterClass {
 
-CharacterClass::CharacterClass(int attackCooldown)
-    : m_attackCooldown(attackCooldown)
+CharacterClass::CharacterClass(Character& character, int attackCooldown)
+    : m_character(character), m_attackCooldown(attackCooldown)
 {}
 
 } // namespace CharacterClass

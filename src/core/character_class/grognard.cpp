@@ -1,10 +1,12 @@
 #include <dummy/core/character_class/grognard.hpp>
+#include <dummy/core/character.hpp>
+
 
 namespace Dummy {
 namespace Core {
 namespace CharacterClass {
 
-Grognard::Grognard() : CharacterClass(700)
+Grognard::Grognard(Character& character) : CharacterClass(character, 700)
 {}
 
 } // namespace CharacterClass
