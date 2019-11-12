@@ -8,7 +8,7 @@ namespace CharacterClass {
 
 class Sentinelle : public CharacterClass {
 public:
-
+    Sentinelle();
 };
 
 } // namespace CharacterClass

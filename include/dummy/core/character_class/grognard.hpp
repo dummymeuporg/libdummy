@@ -8,7 +8,7 @@ namespace CharacterClass {
 
 class Grognard : public CharacterClass {
 public:
-
+    Grognard();
 };
 
 } // namespace CharacterClass

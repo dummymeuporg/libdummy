@@ -6,9 +6,9 @@ namespace Dummy {
 namespace Core {
 namespace CharacterClass {
 
-class Sentry : public CharacterClass {
+class Spadassin : public CharacterClass {
 public:
-
+    Spadassin();
 };
 
 } // namespace CharacterClass
