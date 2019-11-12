@@ -107,6 +107,7 @@ void Map::loadLuaFile(const std::string& luaFile) {
     int ret = luaL_dofile(m_eventsState, luaFile.c_str());
     if (ret != 0) {
         std::string errorMessage(lua_tostring(m_eventsState, -1));
+        std::cerr << errorMessage << std::endl;
         throw Dummy::Core::LuaLoadFileError(errorMessage);
     }
 }
