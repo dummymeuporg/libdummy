@@ -7,8 +7,9 @@ namespace Server {
 namespace Command {
 
 CreateCharacter::CreateCharacter(const std::string& name,
-                                 const std::string& skin)
-    : m_name(name), m_skin(skin)
+                                 const std::string& skin,
+                                 Dummy::Core::Character::Class characterClass)
+    : m_name(name), m_skin(skin), m_class(characterClass)
 {
 }
 

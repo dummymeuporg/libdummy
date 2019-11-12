@@ -63,6 +63,11 @@ Character& Character::setInstance(const std::string& instance) {
     return *this;
 }
 
+Character& Character::setClass(Class characterClass) {
+    m_class = characterClass;
+    return *this;
+}
+
 std::string Character::filteredName(const std::string& name) {
     std::string filteredName("");
     bool isPreviousAlpha = false;
@@ -139,6 +144,9 @@ void Character::_readFromStream(std::ifstream& ifs) {
     ifs.read(str.data(), size);
     m_instance = std::move(str);
 
+    // read character class
+    ifs.read(reinterpret_cast<char*>(&m_class), sizeof(Class));
+
 }
 
 void Character::_writeToStream(std::ofstream& ofs) const {
@@ -189,17 +197,27 @@ void Character::_writeToStream(std::ofstream& ofs) const {
         static_cast<std::streamsize>(m_instance.size())
     );
 
+    // Write class
+    ofs.write(
+        reinterpret_cast<const char*>(&m_class),
+        sizeof(Class)
+    );
+
 
 }
 
 void Character::_writeToPacket(Protocol::OutgoingPacket& pkt) const {
     pkt << m_name << m_skin << m_position.first << m_position.second
-        << m_mapLocation << m_floor << m_instance;
+        << m_mapLocation << m_floor << m_instance
+        << static_cast<std::uint8_t>(m_class);
 }
 
 void Character::_readFromPacket(Protocol::IncomingPacket& pkt) {
+    std::uint8_t u8CharacterClass;
     pkt >> m_name >> m_skin >> m_position.first >> m_position.second
-        >> m_mapLocation >> m_floor >> m_instance;
+        >> m_mapLocation >> m_floor >> m_instance
+        >> u8CharacterClass;
+    m_class = static_cast<Class>(u8CharacterClass);
 }
 
 } // namespace Core

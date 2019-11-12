@@ -90,7 +90,8 @@ void ManageCharactersState::visitCommand(
                 svr.createCharacter(
                     m_gameSession.account(),
                     createCharacter.name(),
-                    createCharacter.skin()
+                    createCharacter.skin(),
+                    createCharacter.characterClass()
                 )
             );
 

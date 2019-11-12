@@ -141,9 +141,11 @@ void AbstractGameServer::saveCharacter(
 }
 
 Dummy::Core::Character
-AbstractGameServer::createCharacter(const Account& account,
-                                    const std::string& characterName,
-                                    const std::string& skin) const
+AbstractGameServer::createCharacter(
+    const Account& account,
+    const std::string& characterName,
+    const std::string& skin,
+    Dummy::Core::Character::Class characterClass) const
 {
     Dummy::Core::Character chr;
 
@@ -162,6 +164,8 @@ AbstractGameServer::createCharacter(const Account& account,
     if (!skinExists(chr.skin())) {
         throw InvalidSkin();
     }
+
+    chr.setClass(characterClass);
 
     // From now, we consider the character being valid.
     const Dummy::Core::StartingPoint& startingPoint(m_project.startingPoint());

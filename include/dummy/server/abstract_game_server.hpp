@@ -65,7 +65,8 @@ public:
     ::Dummy::Core::Character createCharacter(
         const Account&,
         const std::string& characterName,
-        const std::string& skin
+        const std::string& skin,
+        Dummy::Core::Character::Class
     ) const;
 
     void

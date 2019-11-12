@@ -24,6 +24,13 @@ public:
         LEFT = 3
     };
 
+    enum class Class : std::uint8_t {
+        NONE = 0,
+        GROGNARD = 1,
+        SENTINELLE = 2,
+        SPADASSIN = 3
+    };
+
     Character();
 
     static std::string filteredName(const std::string&);
@@ -60,6 +67,10 @@ public:
         return m_instance;
     }
 
+    Class characterClass() const {
+        return m_class;
+    }
+
     friend std::ifstream&
     operator>>(std::ifstream& ifs, Character& chr) {
         chr._readFromStream(ifs);
@@ -90,6 +101,7 @@ public:
     Character& setMapLocation(const std::string&);
     Character& setFloor(std::uint8_t);
     Character& setInstance(const std::string&);
+    Character& setClass(Class);
 private:
     void _writeToStream(std::ofstream&) const;
     void _readFromStream(std::ifstream&);
@@ -102,6 +114,7 @@ private:
     Position m_position;
     std::uint8_t m_floor;
     std::string m_instance;
+    Class m_class;
 };
 
 } // namespace Core
