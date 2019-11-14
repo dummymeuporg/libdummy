@@ -8,10 +8,12 @@ Living::Living(std::uint32_t id,
                std::uint16_t x,
                std::uint16_t y,
                std::uint8_t floor,
+               std::uint8_t velocity,
                const std::string& chipset,
                Dummy::Core::Character::Direction direction)
     : m_id(id), m_x(x), m_y(y), m_floor(floor),
-      m_chipset(chipset), m_direction(direction)
+      m_velocity(velocity), m_chipset(chipset),
+      m_direction(direction)
 {
 }
 

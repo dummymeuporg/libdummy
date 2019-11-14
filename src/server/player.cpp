@@ -49,6 +49,7 @@ void Player::notifyOn(MapUpdatesVector& mapUpdates) {
             serverPosition().first,
             serverPosition().second,
             character()->floor(),
+            character()->velocity(),
             character()->name(),
             character()->skin(),
             character()->direction()

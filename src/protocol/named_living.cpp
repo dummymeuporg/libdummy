@@ -7,10 +7,11 @@ NamedLiving::NamedLiving(std::uint32_t id,
                          std::uint16_t x,
                          std::uint16_t y,
                          std::uint8_t floor,
+                         std::uint8_t velocity,
                          const std::string& name,
                          const std::string& chipset,
                          Dummy::Core::Character::Direction direction)
-    : Living(id, x, y, floor, chipset, direction), m_name(name)
+    : Living(id, x, y, floor, velocity, chipset, direction), m_name(name)
 {}
 
 void NamedLiving::setName(const std::string& name) {

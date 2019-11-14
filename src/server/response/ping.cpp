@@ -79,12 +79,13 @@ Ping::readNamedLivingOn(Dummy::Protocol::IncomingPacket& packet) {
     std::uint32_t id;
     std::uint16_t x, y;
     std::uint8_t floor;
+    std::uint8_t velocity;
     std::string skin, name;
     Dummy::Core::Character::Direction direction;
-    packet >> id >> x >> y >> floor >> name >> skin
+    packet >> id >> x >> y >> floor >> velocity >> name >> skin
         >> reinterpret_cast<std::uint8_t&>(direction);
     return std::make_shared<const Dummy::Protocol::MapUpdate::NamedLivingOn>(
-        id, x, y, floor, name, skin, direction
+        id, x, y, floor, velocity, name, skin, direction
     );
 }
 
@@ -102,12 +103,13 @@ Ping::readLivingOn(Dummy::Protocol::IncomingPacket& packet) {
     std::uint32_t id;
     std::uint16_t x, y;
     std::uint8_t floor;
+    std::uint8_t velocity;
     std::string skin;
     Dummy::Core::Character::Direction direction;
-    packet >> id >> x >> y >> floor >> skin
+    packet >> id >> x >> y >> floor >> velocity >> skin
         >> reinterpret_cast<std::uint8_t&>(direction);
     return std::make_shared<const Dummy::Protocol::MapUpdate::LivingOn>(
-        id, x, y, floor, skin, direction
+        id, x, y, floor, velocity, skin, direction
     );
 }
 

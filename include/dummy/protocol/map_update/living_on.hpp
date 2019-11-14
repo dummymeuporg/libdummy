@@ -17,6 +17,7 @@ public:
              std::uint16_t x,
              std::uint16_t y,
              std::uint8_t floor,
+             std::uint8_t velocity,
              const std::string&,
              Dummy::Core::Character::Direction);
 
@@ -34,12 +35,17 @@ public:
         return m_floor;
     }
 
+    std::uint8_t velocity() const {
+        return m_velocity;
+    }
+
 
     virtual void serializeTo(Dummy::Protocol::OutgoingPacket&) const override;
     virtual void readFrom(Dummy::Protocol::IncomingPacket&) override;
 protected:
     std::string m_chipset;
     std::uint8_t m_floor;
+    std::uint8_t m_velocity;
 };
 
 } // name MapUpdate

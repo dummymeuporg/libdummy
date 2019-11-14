@@ -14,7 +14,9 @@ namespace Dummy {
 namespace Core {
 
 Character::Character()
-    : m_direction(Direction::DOWN), m_characterClass(nullptr)
+    : m_direction(Direction::DOWN),
+      m_velocity(100),
+      m_characterClass(nullptr)
 {
 
 }

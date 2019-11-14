@@ -13,11 +13,13 @@ LivingOn::LivingOn(std::uint32_t id,
                    std::uint16_t x,
                    std::uint16_t y,
                    std::uint8_t floor,
+                   std::uint8_t velocity,
                    const std::string& chipset,
                    Dummy::Core::Character::Direction direction)
     : CharacterPosition(id, x, y, direction),
       m_chipset(chipset),
-      m_floor(floor)
+      m_floor(floor),
+      m_velocity(velocity)
 {
 }
 
@@ -27,12 +29,12 @@ void LivingOn::accept(MapUpdateVisitor& visitor) const {
 
 void
 LivingOn::serializeTo(Dummy::Protocol::OutgoingPacket& packet) const {
-    packet << m_id << m_x << m_y << m_floor << m_chipset
+    packet << m_id << m_x << m_y << m_floor << m_velocity << m_chipset
         << static_cast<std::uint8_t>(m_direction);
 }
 
 void LivingOn::readFrom(Dummy::Protocol::IncomingPacket& packet) {
-    packet >> m_id >> m_x >> m_y >> m_floor >> m_chipset
+    packet >> m_id >> m_x >> m_y >> m_floor >> m_velocity >> m_chipset
         >> reinterpret_cast<std::uint8_t&>(m_direction);
 }
 

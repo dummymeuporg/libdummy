@@ -15,6 +15,7 @@ public:
            std::uint16_t,
            std::uint16_t,
            std::uint8_t,
+           std::uint8_t,
            const std::string&,
            Dummy::Core::Character::Direction);
 
@@ -27,6 +28,14 @@ public:
 
     std::uint16_t y() const {
         return m_y;
+    }
+
+    std::uint8_t floor() const {
+        return m_floor;
+    }
+
+    std::uint8_t velocity() const {
+        return m_velocity;
     }
 
     const std::string& chipset() const {
@@ -46,6 +55,7 @@ protected:
     std::uint16_t m_x;
     std::uint16_t m_y;
     std::uint8_t m_floor;
+    std::uint8_t m_velocity;
     std::string m_chipset;
     Dummy::Core::Character::Direction m_direction;
 };

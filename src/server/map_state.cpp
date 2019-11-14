@@ -43,6 +43,7 @@ void MapState::visitMapUpdate(
             update.x(),
             update.y(),
             update.floor(),
+                update.velocity(),
             update.chipset(),
             update.direction()
         );
@@ -58,6 +59,7 @@ void MapState::visitMapUpdate(
             update.x(),
             update.y(),
             update.floor(),
+            update.velocity(),
             update.name(),
             update.chipset(),
             update.direction()

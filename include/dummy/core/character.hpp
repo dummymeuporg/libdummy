@@ -69,6 +69,10 @@ public:
         return m_floor;
     }
 
+    inline std::uint8_t velocity() const {
+        return m_velocity;
+    }
+
     const std::string& instance() const {
         return m_instance;
     }
@@ -127,6 +131,7 @@ private:
     Direction m_direction;
     Position m_position;
     std::uint8_t m_floor;
+    std::uint8_t m_velocity;
     std::string m_instance;
     Class m_class;
     std::shared_ptr<CharacterClass::CharacterClass> m_characterClass;

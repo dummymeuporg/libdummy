@@ -97,6 +97,7 @@ private:
     std::pair<std::uint16_t, std::uint16_t> m_position;
     std::pair<std::uint16_t, std::uint16_t> m_localPosition;
     std::uint8_t m_floor;
+    std::uint8_t m_velocity;
 };
 
 typedef int (Foe::*mem_func)(::lua_State* L);

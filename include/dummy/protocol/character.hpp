@@ -12,6 +12,7 @@ public:
               std::uint16_t,
               std::uint16_t,
               std::uint8_t,
+              std::uint8_t,
               const std::string&,
               const std::string&,
               Dummy::Core::Character::Direction direction);

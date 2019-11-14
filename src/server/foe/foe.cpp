@@ -18,7 +18,9 @@ namespace Foe {
 Foe::Foe(const Dummy::Core::Foe& foe, boost::asio::io_context& ioContext)
     : m_ioContext(ioContext),
       m_tickTimer(std::make_shared<boost::asio::steady_timer>(m_ioContext)),
-      m_luaState(::luaL_newstate())
+      m_luaState(::luaL_newstate()),
+      m_floor(0),
+      m_velocity(0)
 {
     *static_cast<Foe**>(lua_getextraspace(m_luaState)) = this;
     loadLuaFile(foe.luaFilename());
@@ -112,6 +114,17 @@ void Foe::loadLuaFile(const std::string& filename) {
     }
     lua_pop(m_luaState, 1); // Get rid of the value
 
+    // Read velocity
+    lua_pushstring(m_luaState, "velocity");
+    lua_gettable(m_luaState, -2);
+    m_velocity = static_cast<std::uint8_t>(
+        lua_tointegerx(m_luaState, -1, &isNum)
+    );
+    if (0 == isNum) {
+        throw LuaNotAnInteger();
+    }
+    lua_pop(m_luaState, 1); // Get rid of the value
+
     registerLuaCallbacks();
     setLocalPosition();
 
@@ -143,6 +156,7 @@ void Foe::notifyOn(MapUpdatesVector& mapUpdates) {
             m_position.first,
             m_position.second,
             m_floor,
+            m_velocity,
             m_chipset,
             Dummy::Core::Character::Direction::DOWN
         )
@@ -242,7 +256,7 @@ std::pair<std::int16_t, std::int16_t> Foe::computeDistance(
 ) {
     double divisor =
         movement.first != 0 && movement.second != 0 ? SQRT_2 : 1.0;
-    auto velocity = 0.5; // XXX: For now
+    auto velocity = m_velocity / 100.0;
     std::int16_t xDistance(static_cast<unsigned>(
         ((333.0/8.0) * movement.first * velocity) / divisor
     ));
