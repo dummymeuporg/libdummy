@@ -28,6 +28,12 @@ class SelectCharacter;
 class SetPosition;
 class TeleportMap;
 
+namespace Spell {
+    class GrognardAttack;
+    class SentinelleAttack;
+    class SpadassinAttack;
+}
+
 class CommandVisitor {
 public:
 
@@ -65,6 +71,18 @@ public:
 
     virtual void visitCommand(const TeleportMap&) {
         throw CommandNotHandled();
+    }
+
+    virtual void visitCommand(const Spell::GrognardAttack&) {
+        throw CommandVisitor();
+    }
+
+    virtual void visitCommand(const Spell::SentinelleAttack&) {
+        throw CommandVisitor();
+    }
+
+    virtual void visitCommand(const Spell::SpadassinAttack&) {
+        throw CommandVisitor();
     }
 };
 

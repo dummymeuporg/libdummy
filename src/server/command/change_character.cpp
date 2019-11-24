@@ -9,6 +9,8 @@ void ChangeCharacter::accept(CommandVisitor& visitor) const {
     visitor.visitCommand(*this);
 }
 
+
+
 } // namespace Command
 } // namespace Server
 } // namespace Dummy
