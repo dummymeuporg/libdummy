@@ -236,6 +236,41 @@ void PlayingState::sendMessageToMap(
 }
 
 void PlayingState::visitCommand(
+    const Dummy::Server::Command::Spell::GrognardAttack& attack
+)
+{
+    auto player = m_gameSession.player().lock();
+    if (nullptr == player) {
+        // XXX: throw an exception?
+        std::cerr << "Error while acquiering player." << std::endl;
+    }
+}
+
+void PlayingState::visitCommand(
+    const Dummy::Server::Command::Spell::SpadassinAttack& attack
+)
+{
+    auto player = m_gameSession.player().lock();
+    if (nullptr == player) {
+        // XXX: throw an exception?
+        std::cerr << "Error while acquiering player." << std::endl;
+    }
+
+    //player->character()->characterClass()
+}
+
+void PlayingState::visitCommand(
+    const Dummy::Server::Command::Spell::SentinelleAttack& attack
+)
+{
+    auto player = m_gameSession.player().lock();
+    if (nullptr == player) {
+        // XXX: throw an exception?
+        std::cerr << "Error while acquiering player." << std::endl;
+    }
+}
+
+void PlayingState::visitCommand(
     const Dummy::Server::Command::TeleportMap& teleportMap
 ) {
     std::cerr << "Server: teleport to " << teleportMap.mapName()

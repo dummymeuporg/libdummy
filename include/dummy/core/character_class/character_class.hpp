@@ -11,6 +11,7 @@ public:
     int attackCooldown() const {
         return m_attackCooldown;
     }
+
 protected:
     Character& m_character;
     int m_attackCooldown;

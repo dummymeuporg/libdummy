@@ -15,6 +15,13 @@ namespace Command {
 class Command;
 class Ping;
 class SetPosition;
+
+namespace Spell {
+class GrognardAttack;
+class SpadassinAttack;
+class SentinelleAttack;
+}
+
 }
 
 namespace Response {
@@ -40,6 +47,10 @@ public:
     void visitCommand(const Command::Message&) override;
     void visitCommand(const Command::ChangeCharacter&) override;
     void visitCommand(const Command::TeleportMap&) override;
+
+    void visitCommand(const Command::Spell::GrognardAttack&) override;
+    void visitCommand(const Command::Spell::SentinelleAttack&) override;
+    void visitCommand(const Command::Spell::SpadassinAttack&) override;
 private:
     void createMapUpdates(
         std::shared_ptr<Player>,
