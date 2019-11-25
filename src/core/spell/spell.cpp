@@ -1,13 +1,10 @@
-#pragma once
+#include <dummy/core/spell/spell.hpp>
 
 namespace Dummy {
 namespace Core {
 namespace Spell {
 
-class Spell {
-public:
-    Spell();
-};
+Spell::Spell() {}
 
 } // namespace Spell
 } // namespace Core

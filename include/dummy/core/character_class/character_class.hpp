@@ -2,7 +2,13 @@
 
 namespace Dummy {
 namespace Core {
+
 class Character;
+
+namespace Spell {
+class Spell;
+};
+
 namespace CharacterClass {
 
 class CharacterClass {
@@ -11,6 +17,8 @@ public:
     int attackCooldown() const {
         return m_attackCooldown;
     }
+
+    virtual const Spell::Spell& attackSpell() const = 0;
 
 protected:
     Character& m_character;
