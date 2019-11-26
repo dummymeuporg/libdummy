@@ -11,6 +11,12 @@ SpadassinAttack::SpadassinAttack(std::uint8_t direction)
     : m_direction(direction)
 {}
 
+
+void SpadassinAttack::accept(CommandVisitor& visitor) const
+{
+    visitor.visitCommand(*this);
+}
+
 } // namespace Spell
 } // namespace Command
 } // namespace Server

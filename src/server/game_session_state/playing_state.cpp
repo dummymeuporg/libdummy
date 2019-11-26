@@ -244,6 +244,8 @@ void PlayingState::visitCommand(
         // XXX: throw an exception?
         std::cerr << "Error while acquiering player." << std::endl;
     }
+
+    std::cerr << "Received GrognardAttack." << std::endl;
 }
 
 void PlayingState::visitCommand(
@@ -257,6 +259,8 @@ void PlayingState::visitCommand(
     }
 
     //player->character()->characterClass()
+
+    std::cerr << "Received SpadassinAttack." << std::endl;
 }
 
 void PlayingState::visitCommand(
@@ -268,6 +272,8 @@ void PlayingState::visitCommand(
         // XXX: throw an exception?
         std::cerr << "Error while acquiering player." << std::endl;
     }
+
+    std::cerr << "Received SentinelleAttack." << std::endl;
 }
 
 void PlayingState::visitCommand(

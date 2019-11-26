@@ -11,9 +11,7 @@ GrognardAttack::GrognardAttack(std::uint8_t direction)
     : m_direction(direction)
 {}
 
-void
-GrognardAttack::accept(::Dummy::Server::Command::CommandVisitor& visitor)
-const
+void GrognardAttack::accept(CommandVisitor& visitor) const
 {
     visitor.visitCommand(*this);
 }

@@ -11,7 +11,7 @@ namespace Spell {
 class SentinelleAttack : public Spell {
 public:
     SentinelleAttack();
-    void accept(SpellVisitor& visitor) override {
+    void accept(SpellVisitor& visitor) const override {
         visitor.visitSpell(*this);
     }
 };

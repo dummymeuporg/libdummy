@@ -12,7 +12,7 @@ namespace Spell {
 class GrognardAttack : public Spell {
 public:
     GrognardAttack();
-    void accept(SpellVisitor& visitor) override {
+    void accept(SpellVisitor& visitor) const override {
         visitor.visitSpell(*this);
     }
 };

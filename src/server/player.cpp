@@ -77,5 +77,12 @@ void Player::receiveMessage(std::uint32_t author, const std::string& message) {
     m_gameSession.receiveMessage(author, message);
 }
 
+void Player::receiveAttackNotification(
+    std::uint32_t author,
+    std::uint8_t direction
+) {
+    //m_gameSession.receiveAttackNotification(author, direction);
+}
+
 } // namespace Server
 } // namespace Dummy

@@ -137,7 +137,7 @@ void Foe::setLocalPosition() {
 
 void Foe::tick() {
     auto self(shared_from_this());
-    std::cerr << "Tick!" << std::endl;
+    //std::cerr << "Tick!" << std::endl;
 
     luaTick();
 
@@ -313,6 +313,13 @@ int Foe::luaSay(::lua_State* luaState) {
 
 
     return 1;
+}
+
+void Foe::receiveAttackNotification(
+    std::uint32_t author,
+    std::uint8_t direction
+) {
+    // Call lua callback maybe?
 }
 
 } // namespace Foe

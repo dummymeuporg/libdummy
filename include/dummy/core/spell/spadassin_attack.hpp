@@ -12,7 +12,7 @@ namespace Spell {
 class SpadassinAttack : public Spell {
 public:
     SpadassinAttack();
-    void accept(SpellVisitor& visitor) override {
+    void accept(SpellVisitor& visitor) const override {
         visitor.visitSpell(*this);
     }
 };

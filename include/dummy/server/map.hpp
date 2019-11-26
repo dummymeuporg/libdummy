@@ -37,10 +37,25 @@ public:
     void removeObserver(std::uint32_t);
     void addPlayer(std::shared_ptr<Player>);
     void removePlayer(std::shared_ptr<Player>);
+
     void dispatchMessage(
         const std::uint32_t author,
         const std::string& message
     );
+
+    void dispatchGrognardAttack(
+        const std::uint32_t author,
+        const std::uint8_t direction
+    );
+    void dispatchSentinelleAttack(
+        const std::uint32_t author,
+        const std::uint8_t direction
+    );
+    void dispatchSpadassinAttack(
+        const std::uint32_t author,
+        const std::uint8_t direction
+    );
+
     bool isBlocking(std::uint16_t, std::uint16_t, std::uint8_t) const;
     const PlayersList& players() const {
         return m_players;

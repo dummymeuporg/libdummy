@@ -79,5 +79,41 @@ void Map::dispatchMessage(std::uint32_t author, const std::string& message) {
     }
 }
 
+void Map::dispatchGrognardAttack(
+    const std::uint32_t author,
+    const std::uint8_t direction
+) {
+    for (auto& [id, observer]: m_observers) {
+        auto observerPt = observer.lock();
+        if (nullptr != observerPt && author != observerPt->id()) {
+            observerPt->receiveAttackNotification(author, direction);
+        }
+    }
+}
+
+void Map::dispatchSentinelleAttack(
+    const std::uint32_t author,
+    const std::uint8_t direction
+) {
+    for (auto& [id, observer]: m_observers) {
+        auto observerPt = observer.lock();
+        if (nullptr != observerPt && author != observerPt->id()) {
+            observerPt->receiveAttackNotification(author, direction);
+        }
+    }
+}
+
+void Map::dispatchSpadassinAttack(
+    const std::uint32_t author,
+    const std::uint8_t direction
+) {
+    for (auto& [id, observer]: m_observers) {
+        auto observerPt = observer.lock();
+        if (nullptr != observerPt && author != observerPt->id()) {
+            observerPt->receiveAttackNotification(author, direction);
+        }
+    }
+}
+
 } // namespace Server
 } // namespace Dummy

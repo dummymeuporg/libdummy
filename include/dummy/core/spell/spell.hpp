@@ -19,7 +19,7 @@ class SpellVisitor;
 class Spell {
 public:
     Spell();
-    virtual void accept(SpellVisitor&) = 0;
+    virtual void accept(SpellVisitor&) const = 0;
 };
 
 } // namespace Spell

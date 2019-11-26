@@ -25,33 +25,60 @@ class SelectCharacter;
 class SetPosition;
 class TeleportMap;
 
+namespace Spell {
+class GrognardAttack;
+class SpadassinAttack;
+class SentinelleAttack;
+} // namespace Spell
+
 class ResponseVisitor {
 public:
+
     virtual void visitResponse(const ChangeCharacter&) {
         throw ResponseNotHandled();
     }
+
     virtual void visitResponse(const ConnectResponse&) {
         throw ResponseNotHandled();
     }
+
     virtual void visitResponse(const CharactersListResponse&) {
         throw ResponseNotHandled();
     }
+
     virtual void visitResponse(const CreateCharacter&) {
         throw ResponseNotHandled();
     }
+
     virtual void visitResponse(const Message&) {
         throw ResponseNotHandled();
     }
+
     virtual void visitResponse(const SelectCharacter&) {
         throw ResponseNotHandled();
     }
+
     virtual void visitResponse(const TeleportMap&) {
         throw ResponseNotHandled();
     }
+
     virtual void visitResponse(const Ping&) {
         throw ResponseNotHandled();
     }
+
     virtual void visitResponse(const SetPosition&) {
+        throw ResponseNotHandled();
+    }
+
+    virtual void visitResponse(const Spell::GrognardAttack&) {
+        throw ResponseNotHandled();
+    }
+
+    virtual void visitResponse(const Spell::SentinelleAttack&) {
+        throw ResponseNotHandled();
+    }
+
+    virtual void visitResponse(const Spell::SpadassinAttack&) {
         throw ResponseNotHandled();
     }
 };
