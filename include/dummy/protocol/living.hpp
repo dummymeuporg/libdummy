@@ -3,7 +3,7 @@
 #include <cstdint>
 #include <string>
 
-#include <dummy/core/character.hpp>
+#include "dummy/core/character.hpp"
 
 namespace Dummy {
 

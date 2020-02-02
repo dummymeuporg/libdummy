@@ -1,4 +1,4 @@
-#include <dummy/protocol/character.hpp>
+#include "dummy/protocol/character.hpp"
 
 namespace Dummy {
 

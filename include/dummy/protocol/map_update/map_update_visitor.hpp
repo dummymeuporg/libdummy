@@ -1,6 +1,6 @@
 #pragma once
 
-#include <dummy/protocol/errors.hpp>
+#include "dummy/protocol/errors.hpp"
 
 namespace Dummy {
 namespace Protocol {

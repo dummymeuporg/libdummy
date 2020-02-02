@@ -2,10 +2,10 @@
 
 #include <memory>
 
-#include <dummy/core/account.hpp>
-#include <dummy/core/character.hpp>
-#include <dummy/server/game_session.hpp>
-#include <dummy/server/map_observer.hpp>
+#include "dummy/core/account.hpp"
+#include "dummy/core/character.hpp"
+#include "dummy/server/game_session.hpp"
+#include "dummy/server/map_observer.hpp"
 
 namespace Dummy {
 namespace Server {

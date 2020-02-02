@@ -1,7 +1,7 @@
-#include <dummy/protocol/incoming_packet.hpp>
-#include <dummy/protocol/outgoing_packet.hpp>
-#include <dummy/protocol/map_update/map_update_visitor.hpp>
-#include <dummy/protocol/map_update/named_living_on.hpp>
+#include "dummy/protocol/incoming_packet.hpp"
+#include "dummy/protocol/outgoing_packet.hpp"
+#include "dummy/protocol/map_update/map_update_visitor.hpp"
+#include "dummy/protocol/map_update/named_living_on.hpp"
 
 namespace Dummy {
 

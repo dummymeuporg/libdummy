@@ -7,7 +7,7 @@
 
 #include <boost/asio.hpp>
 
-#include <dummy/server/foe/foe.hpp>
+#include "dummy/server/foe/foe.hpp"
 
 namespace Dummy {
 

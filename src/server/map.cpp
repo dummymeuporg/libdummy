@@ -1,10 +1,10 @@
-#include <dummy/core/map.hpp>
+#include "dummy/core/map.hpp"
 
-#include <dummy/server/abstract_game_server.hpp>
-#include <dummy/server/foe/foe.hpp>
-#include <dummy/server/player.hpp>
-#include <dummy/server/map.hpp>
-#include <dummy/server/map_observer.hpp>
+#include "dummy/server/abstract_game_server.hpp"
+#include "dummy/server/foe/foe.hpp"
+#include "dummy/server/player.hpp"
+#include "dummy/server/map.hpp"
+#include "dummy/server/map_observer.hpp"
 
 namespace Dummy {
 namespace Server {

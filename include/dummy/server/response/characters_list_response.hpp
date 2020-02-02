@@ -2,8 +2,8 @@
 
 #include <memory>
 
-#include <dummy/core/character.hpp>
-#include <dummy/server/response/response.hpp>
+#include "dummy/core/character.hpp"
+#include "dummy/server/response/response.hpp"
 
 namespace Dummy {
 namespace Server {

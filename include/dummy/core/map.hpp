@@ -11,8 +11,8 @@ extern "C" {
 #include <lauxlib.h>
 }
 
-#include <dummy/core/foe.hpp>
-#include <dummy/core/errors.hpp>
+#include "dummy/core/foe.hpp"
+#include "dummy/core/errors.hpp"
 
 namespace Dummy
 {

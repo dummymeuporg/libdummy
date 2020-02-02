@@ -2,8 +2,8 @@
 
 #include <boost/test/included/unit_test.hpp>
 
-#include <dummy/protocol/outgoing_packet.hpp>
-#include <dummy/utils.hpp>
+#include "dummy/protocol/outgoing_packet.hpp"
+#include "dummy/utils.hpp"
 
 BOOST_AUTO_TEST_CASE(build_packet)
 {

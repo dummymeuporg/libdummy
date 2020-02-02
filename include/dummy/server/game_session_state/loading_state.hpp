@@ -1,7 +1,7 @@
 #pragma once
 
-#include <dummy/protocol/teleport_request.hpp>
-#include <dummy/server/game_session_state/state.hpp>
+#include "dummy/protocol/teleport_request.hpp"
+#include "dummy/server/game_session_state/state.hpp"
 
 namespace Dummy {
 namespace Server {

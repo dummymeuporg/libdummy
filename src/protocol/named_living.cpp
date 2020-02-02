@@ -1,4 +1,4 @@
-#include <dummy/protocol/named_living.hpp>
+#include "dummy/protocol/named_living.hpp"
 
 namespace Dummy {
 namespace Protocol {

@@ -1,10 +1,10 @@
-#include <dummy/protocol/named_living.hpp>
-#include <dummy/protocol/map_update/update.hpp>
-#include <dummy/protocol/map_update/living_on.hpp>
-#include <dummy/protocol/map_update/named_living_on.hpp>
-#include <dummy/protocol/map_update/living_off.hpp>
-#include <dummy/protocol/map_update/character_position.hpp>
-#include <dummy/server/map_state.hpp>
+#include "dummy/protocol/named_living.hpp"
+#include "dummy/protocol/map_update/update.hpp"
+#include "dummy/protocol/map_update/living_on.hpp"
+#include "dummy/protocol/map_update/named_living_on.hpp"
+#include "dummy/protocol/map_update/living_off.hpp"
+#include "dummy/protocol/map_update/character_position.hpp"
+#include "dummy/server/map_state.hpp"
 
 namespace Dummy {
 namespace Server {

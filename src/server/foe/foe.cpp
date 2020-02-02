@@ -1,14 +1,14 @@
 #include <boost/date_time/posix_time/posix_time.hpp>
 
-#include <dummy/core/character.hpp>
-#include <dummy/core/map.hpp>
-#include <dummy/core/foe.hpp>
+#include "dummy/core/character.hpp"
+#include "dummy/core/map.hpp"
+#include "dummy/core/foe.hpp"
 
-#include <dummy/protocol/map_update/living_on.hpp>
+#include "dummy/protocol/map_update/living_on.hpp"
 
-#include <dummy/server/foe/foe.hpp>
-#include <dummy/server/map.hpp>
-#include <dummy/server/map_state.hpp>
+#include "dummy/server/foe/foe.hpp"
+#include "dummy/server/map.hpp"
+#include "dummy/server/map_state.hpp"
 
 
 namespace Dummy {

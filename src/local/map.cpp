@@ -3,13 +3,13 @@
 #include <iostream>
 #include <utility>
 
-#include <dummy/core/errors.hpp>
-#include <dummy/core/graphic_layer.hpp>
+#include "dummy/core/errors.hpp"
+#include "dummy/core/graphic_layer.hpp"
 
-#include <dummy/local/event.hpp>
-#include <dummy/local/event_observer.hpp>
-#include <dummy/local/map.hpp>
-#include <dummy/local/project.hpp>
+#include "dummy/local/event.hpp"
+#include "dummy/local/event_observer.hpp"
+#include "dummy/local/map.hpp"
+#include "dummy/local/project.hpp"
 
 namespace fs = std::filesystem;
 

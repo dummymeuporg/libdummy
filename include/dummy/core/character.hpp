@@ -6,8 +6,8 @@
 #include <string>
 #include <tuple>
 
-#include <dummy/protocol/incoming_packet.hpp>
-#include <dummy/protocol/outgoing_packet.hpp>
+#include "dummy/protocol/incoming_packet.hpp"
+#include "dummy/protocol/outgoing_packet.hpp"
 
 namespace Dummy {
 

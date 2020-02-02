@@ -1,7 +1,7 @@
-#include <dummy/protocol/map_update/named_living_on.hpp>
+#include "dummy/protocol/map_update/named_living_on.hpp"
 
-#include <dummy/server/player.hpp>
-#include <dummy/server/map.hpp>
+#include "dummy/server/player.hpp"
+#include "dummy/server/map.hpp"
 
 
 namespace Dummy {

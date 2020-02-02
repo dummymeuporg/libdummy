@@ -2,7 +2,7 @@
 
 #include <boost/test/included/unit_test.hpp>
 
-#include <dummy/core/character.hpp>
+#include "dummy/core/character.hpp"
 
 using namespace boost::unit_test;
 

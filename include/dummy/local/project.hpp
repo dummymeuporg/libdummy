@@ -8,7 +8,7 @@
 #include <boost/property_tree/ptree.hpp>
 #include <boost/property_tree/xml_parser.hpp>
 
-#include <dummy/core/map.hpp>
+#include "dummy/core/map.hpp"
 
 namespace fs = std::filesystem;
 namespace pt = boost::property_tree;

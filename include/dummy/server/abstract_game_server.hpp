@@ -7,11 +7,11 @@
 
 #include <boost/asio.hpp>
 
-#include <dummy/core/character.hpp>
-#include <dummy/core/project.hpp>
+#include "dummy/core/character.hpp"
+#include "dummy/core/project.hpp"
 
-#include <dummy/server/instance.hpp>
-#include <dummy/server/project.hpp>
+#include "dummy/server/instance.hpp"
+#include "dummy/server/project.hpp"
 
 namespace fs = std::filesystem;
 

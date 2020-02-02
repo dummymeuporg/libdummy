@@ -1,6 +1,6 @@
-#include <dummy/server/abstract_game_server.hpp>
-#include <dummy/server/instance.hpp>
-#include <dummy/server/map.hpp>
+#include "dummy/server/abstract_game_server.hpp"
+#include "dummy/server/instance.hpp"
+#include "dummy/server/map.hpp"
 
 namespace Dummy {
 namespace Server {

@@ -6,7 +6,7 @@
 #include <iostream>
 #include <vector>
 
-#include <dummy/protocol/errors.hpp>
+#include "dummy/protocol/errors.hpp"
 
 namespace Dummy {
 

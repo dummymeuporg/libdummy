@@ -6,7 +6,7 @@
 
 #include <boost/asio.hpp>
 
-#include <dummy/server/map_observer.hpp>
+#include "dummy/server/map_observer.hpp"
 
 extern "C" {
 #include <lua.h>

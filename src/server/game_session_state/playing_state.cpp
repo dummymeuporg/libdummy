@@ -1,28 +1,28 @@
-#include <dummy/protocol/map_update/update.hpp>
-#include <dummy/protocol/map_update/character_position.hpp>
-#include <dummy/protocol/map_update/living_off.hpp>
-#include <dummy/protocol/map_update/named_living_on.hpp>
+#include "dummy/protocol/map_update/update.hpp"
+#include "dummy/protocol/map_update/character_position.hpp"
+#include "dummy/protocol/map_update/living_off.hpp"
+#include "dummy/protocol/map_update/named_living_on.hpp"
 
-#include <dummy/server/command/command.hpp>
-#include <dummy/server/command/ping.hpp>
-#include <dummy/server/command/message.hpp>
-#include <dummy/server/command/set_position.hpp>
+#include "dummy/server/command/command.hpp"
+#include "dummy/server/command/ping.hpp"
+#include "dummy/server/command/message.hpp"
+#include "dummy/server/command/set_position.hpp"
 
-#include <dummy/server/response/change_character.hpp>
-#include <dummy/server/response/ping.hpp>
-#include <dummy/server/response/set_position.hpp>
-#include <dummy/server/response/teleport_map.hpp>
+#include "dummy/server/response/change_character.hpp"
+#include "dummy/server/response/ping.hpp"
+#include "dummy/server/response/set_position.hpp"
+#include "dummy/server/response/teleport_map.hpp"
 
-#include <dummy/server/foe/foe.hpp>
-#include <dummy/server/player.hpp>
-#include <dummy/server/abstract_game_server.hpp>
-#include <dummy/server/game_session.hpp>
-#include <dummy/server/instance.hpp>
-#include <dummy/server/map.hpp>
+#include "dummy/server/foe/foe.hpp"
+#include "dummy/server/player.hpp"
+#include "dummy/server/abstract_game_server.hpp"
+#include "dummy/server/game_session.hpp"
+#include "dummy/server/instance.hpp"
+#include "dummy/server/map.hpp"
 
-#include <dummy/server/game_session_state/loading_state.hpp>
-#include <dummy/server/game_session_state/playing_state.hpp>
-#include <dummy/server/game_session_state/manage_characters_state.hpp>
+#include "dummy/server/game_session_state/loading_state.hpp"
+#include "dummy/server/game_session_state/playing_state.hpp"
+#include "dummy/server/game_session_state/manage_characters_state.hpp"
 
 namespace Dummy {
 namespace Server {

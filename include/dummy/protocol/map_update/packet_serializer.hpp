@@ -1,6 +1,6 @@
 #pragma once
 
-#include <dummy/protocol/map_update/map_update_visitor.hpp>
+#include "dummy/protocol/map_update/map_update_visitor.hpp"
 
 namespace Dummy {
 namespace Protocol {

@@ -2,8 +2,8 @@
 
 #include <cstdint>
 #include <string>
-#include <dummy/protocol/map_update/character_position.hpp>
-#include <dummy/core/character.hpp>
+#include "dummy/protocol/map_update/character_position.hpp"
+#include "dummy/core/character.hpp"
 
 namespace Dummy {
 

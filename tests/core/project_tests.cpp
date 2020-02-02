@@ -5,7 +5,7 @@
 
 #include <boost/test/included/unit_test.hpp>
 
-#include <dummy/core/project.hpp>
+#include "dummy/core/project.hpp"
 
 using namespace boost::unit_test;
 

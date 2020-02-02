@@ -1,4 +1,4 @@
-#include <dummy/protocol/incoming_packet.hpp>
+#include "dummy/protocol/incoming_packet.hpp"
 
 namespace Dummy {
 
