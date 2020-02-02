@@ -6,7 +6,7 @@ namespace Response {
 
 Response::Response() {}
 
-void Response::setStatus(std::uint8_t status)
+void Response::setStatus(uint8_t status)
 {
     m_status = status;
 }

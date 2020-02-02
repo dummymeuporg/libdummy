@@ -3,10 +3,8 @@
 namespace Dummy {
 namespace Core {
 
-StartingPoint::StartingPoint(
-    const std::string& mapName,
-    const std::pair<std::uint16_t, std::uint16_t>& position, std::uint8_t floor,
-    const std::string& instance)
+StartingPoint::StartingPoint(const std::string& mapName, tilecoords position,
+                             uint8_t floor, const std::string& instance)
     : m_mapName(mapName)
     , m_position(position)
     , m_floor(floor)

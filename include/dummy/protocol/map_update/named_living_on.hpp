@@ -12,8 +12,8 @@ namespace MapUpdate {
 class NamedLivingOn : public CharacterPosition
 {
 public:
-    NamedLivingOn(std::uint32_t id, std::uint16_t x, std::uint16_t y,
-                  std::uint8_t floor, const std::string&, const std::string&,
+    NamedLivingOn(uint32_t id, tilecoords xy,
+                  uint8_t floor, const std::string&, const std::string&,
                   Dummy::Core::Character::Direction);
 
     virtual void accept(MapUpdateVisitor&) const override;
@@ -24,7 +24,7 @@ public:
 
     Dummy::Core::Character::Direction direction() const { return m_direction; }
 
-    std::uint8_t floor() const { return m_floor; }
+    uint8_t floor() const { return m_floor; }
 
     virtual void serializeTo(Dummy::Protocol::OutgoingPacket&) const override;
     virtual void readFrom(Dummy::Protocol::IncomingPacket&) override;
@@ -32,7 +32,7 @@ public:
 protected:
     std::string m_name;
     std::string m_chipset;
-    std::uint8_t m_floor;
+    uint8_t m_floor;
 };
 
 } // namespace MapUpdate

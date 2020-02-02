@@ -3,21 +3,19 @@
 namespace Dummy {
 namespace Protocol {
 
-Living::Living(std::uint32_t id, std::uint16_t x, std::uint16_t y,
-               std::uint8_t floor, const std::string& chipset,
+Living::Living(uint32_t id, tilecoords xy, uint8_t floor,
+               const std::string& chipset,
                Dummy::Core::Character::Direction direction)
     : m_id(id)
-    , m_x(x)
-    , m_y(y)
+    , m_xy(xy)
     , m_floor(floor)
     , m_chipset(chipset)
     , m_direction(direction)
 {}
 
-void Living::setPosition(std::uint16_t x, std::uint16_t y)
+void Living::setPosition(tilecoords xy)
 {
-    m_x = x;
-    m_y = y;
+    m_xy = xy;
 }
 
 void Living::setDirection(Dummy::Core::Character::Direction direction)

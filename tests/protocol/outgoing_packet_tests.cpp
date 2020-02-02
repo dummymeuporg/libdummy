@@ -8,11 +8,11 @@
 BOOST_AUTO_TEST_CASE(build_packet)
 {
     Dummy::Protocol::OutgoingPacket pkt;
-    std::uint16_t number = 3;
+    uint16_t number = 3;
 
     pkt << number << std::string("hello");
     BOOST_TEST(pkt.dataSize() == 
-        sizeof(std::uint16_t) + sizeof(std::uint32_t) + 5 /* "hello" */);
+        sizeof(uint16_t) + sizeof(uint32_t) + 5 /* "hello" */);
     BOOST_TEST(
         memcmp(
             pkt.buffer(),

@@ -38,16 +38,14 @@ public:
     Foe(const Core::Foe&, boost::asio::io_context&);
 
     const std::string& chipset() const { return m_chipset; }
-    std::uint16_t x() const { return m_position.first; }
-    std::uint16_t y() const { return m_position.second; }
-    std::uint8_t floor() const { return m_floor; }
+    uint8_t floor() const { return m_floor; }
 
     int luaSay(::lua_State*);
 
     void notifyOn(MapUpdatesVector&) override;
     void notifyPosition(MapUpdatesVector&) override;
-    void receiveMessage(std::uint32_t, const std::string&) override;
-    std::pair<std::uint16_t, std::uint16_t> position() override;
+    void receiveMessage(uint32_t, const std::string&) override;
+    tilecoords position() override;
     void start();
     void tick();
     void luaTick();
@@ -62,8 +60,7 @@ private:
     void interpretAction(FoeAction);
     void setLocalPosition();
 
-    std::pair<std::int16_t, std::int16_t>
-    computeDistance(const std::pair<int, int>&);
+    std::pair<int16_t, int16_t> computeDistance(const std::pair<int, int>&);
 
     static std::pair<int, int> getMovement(FoeAction);
     // Properties:
@@ -75,9 +72,9 @@ private:
     int m_luaFileRef;
     int m_luaTableRef;
     std::string m_chipset;
-    std::pair<std::uint16_t, std::uint16_t> m_position;
-    std::pair<std::uint16_t, std::uint16_t> m_localPosition;
-    std::uint8_t m_floor;
+    tilecoords m_position;
+    tilecoords m_localPosition;
+    uint8_t m_floor;
 };
 
 typedef int (Foe::*mem_func)(::lua_State* L);

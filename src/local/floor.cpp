@@ -10,7 +10,7 @@ Floor::Floor(const Map& map)
     , m_blockingLayer(m_map.width(), m_map.height())
 {}
 
-void Floor::addGraphicLayer(std::int8_t position,
+void Floor::addGraphicLayer(int8_t position,
                             Dummy::Core::GraphicLayer&& layer)
 {
     m_graphicLayers[position] = std::move(layer);
@@ -21,12 +21,12 @@ void Floor::setBlockingLayer(Dummy::Core::BlockingLayer&& blockingLayer)
     m_blockingLayer = std::move(blockingLayer);
 }
 
-std::uint16_t Floor::width() const
+uint16_t Floor::width() const
 {
     return m_map.width();
 }
 
-std::uint16_t Floor::height() const
+uint16_t Floor::height() const
 {
     return m_map.height();
 }

@@ -8,7 +8,7 @@ namespace Dummy {
 namespace Protocol {
 namespace MapUpdate {
 
-LivingOff::LivingOff(const std::uint32_t id)
+LivingOff::LivingOff(const uint32_t id)
     : m_id(id)
 {}
 

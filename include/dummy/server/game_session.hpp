@@ -66,7 +66,7 @@ public:
 
     void setAccount(std::shared_ptr<Account> account);
     void setPlayer(std::shared_ptr<Player> player);
-    void receiveMessage(const std::uint32_t, const std::string&);
+    void receiveMessage(const uint32_t, const std::string&);
     CharactersMap getCharactersList() const;
 
 

@@ -6,7 +6,6 @@ namespace Dummy {
 namespace Server {
 namespace Response {
 
-using Position = std::pair<std::uint16_t, std::uint16_t>;
 class ChangeCharacter : public Response
 {
 public:
@@ -16,16 +15,13 @@ public:
     void serializeTo(Dummy::Protocol::OutgoingPacket&) const override;
     void readFrom(Dummy::Protocol::IncomingPacket&) override;
     const std::string& mapLocation() const { return m_mapLocation; }
-    const std::pair<std::uint16_t, std::uint16_t>& position() const
-    {
-        return m_position;
-    }
+    tilecoords position() const { return m_position; }
     void setMapLocation(const std::string&);
-    void setPosition(const Position&);
+    void setPosition(tilecoords);
 
 private:
     std::string m_mapLocation;
-    Position m_position;
+    tilecoords m_position;
 };
 
 } // namespace Response

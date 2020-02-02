@@ -12,16 +12,16 @@ namespace Protocol {
 class IncomingPacket
 {
 public:
-    IncomingPacket(const std::uint8_t*, std::size_t);
-    IncomingPacket(const std::vector<std::uint8_t>&);
+    IncomingPacket(const uint8_t*, std::size_t);
+    IncomingPacket(const std::vector<uint8_t>&);
     IncomingPacket& operator>>(std::string&);
 
-    IncomingPacket& operator>>(std::uint8_t&);
-    IncomingPacket& operator>>(std::uint16_t&);
-    IncomingPacket& operator>>(std::uint32_t&);
+    IncomingPacket& operator>>(uint8_t&);
+    IncomingPacket& operator>>(uint16_t&);
+    IncomingPacket& operator>>(uint32_t&);
 
     template <std::size_t SIZE>
-    IncomingPacket& operator>>(std::array<std::uint8_t, SIZE>& arr)
+    IncomingPacket& operator>>(std::array<uint8_t, SIZE>& arr)
     {
         std::copy(m_data + m_cursor, m_data + m_cursor + SIZE, arr.data());
         m_cursor += SIZE;
@@ -39,7 +39,7 @@ private:
         m_cursor += sizeof(T);
         return *this;
     }
-    const std::uint8_t* m_data;
+    const uint8_t* m_data;
     std::size_t m_cursor;
     std::size_t m_size;
 };

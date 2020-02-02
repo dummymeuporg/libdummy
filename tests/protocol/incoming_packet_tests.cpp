@@ -9,7 +9,7 @@
 
 BOOST_AUTO_TEST_CASE(parse_packet)
 {
-    const std::uint8_t buffer[] =
+    const uint8_t buffer[] =
         "\x05\x00\x00\x00"  // size of "hello"
         "hello"             // the actual "hello" string
         "\x09\x00\x00\x00"  // size of "foobarbaz"
@@ -25,7 +25,7 @@ BOOST_AUTO_TEST_CASE(parse_packet)
     uint8_t byte;
     uint16_t word;
     uint32_t dword;
-    std::array<std::uint8_t, 16> array;
+    std::array<uint8_t, 16> array;
     boost::uuids::uuid uuid;
     boost::uuids::string_generator gen;
 

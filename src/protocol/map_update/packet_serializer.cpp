@@ -28,23 +28,22 @@ void PacketSerializer::visitMapUpdate(const LivingOff& update)
 
 void PacketSerializer::visitMapUpdate(const LivingOn& update)
 {
-    m_packet << Bridge::LIVING_ON << update.id() << update.x() << update.y()
-             << update.floor() << update.chipset()
-             << static_cast<std::uint8_t>(update.direction());
+    m_packet << Bridge::LIVING_ON << update.id() << update.pos().first
+             << update.pos().second << update.floor() << update.chipset()
+             << static_cast<uint8_t>(update.direction());
 }
 
 void PacketSerializer::visitMapUpdate(const NamedLivingOn& update)
 {
-    m_packet << Bridge::NAMED_LIVING_ON << update.id() << update.x()
-             << update.y() << update.floor() << update.name()
-             << update.chipset()
-             << static_cast<std::uint8_t>(update.direction());
+    m_packet << Bridge::NAMED_LIVING_ON << update.id() << update.pos().first
+             << update.pos().second << update.floor() << update.name()
+             << update.chipset() << static_cast<uint8_t>(update.direction());
 }
 
 void PacketSerializer::visitMapUpdate(const CharacterPosition& update)
 {
-    m_packet << Bridge::CHARACTER_POSITION << update.id() << update.x()
-             << update.y() << static_cast<std::uint8_t>(update.direction());
+    m_packet << Bridge::CHARACTER_POSITION << update.id() << update.pos().first
+             << update.pos().second << static_cast<uint8_t>(update.direction());
 }
 
 void PacketSerializer::visitMapUpdate(const CharacterFloor& update)

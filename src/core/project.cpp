@@ -44,8 +44,8 @@ void Project::load()
 void Project::_setStartingPoint(pt::ptree node)
 {
     std::string x, y, map, floorString;
-    std::pair<std::uint16_t, std::uint16_t> position;
-    std::uint16_t floor;
+    tilecoords position;
+    uint16_t floor;
 
     for (const auto& child : node.get_child("<xmlattr>")) {
         if (child.first == "x") {
@@ -89,7 +89,7 @@ void Project::_setStartingPoint(pt::ptree node)
 
     // From here, everything is correct.
     m_startingPoint = std::make_optional<StartingPoint>(
-        map, position, static_cast<std::uint8_t>(floor));
+        map, position, static_cast<uint8_t>(floor));
 }
 
 void Project::_browseNode(pt::ptree node)

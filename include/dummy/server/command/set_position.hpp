@@ -1,6 +1,7 @@
 #pragma once
 
 #include "dummy/server/command/command.hpp"
+#include "dummy/utils/dummy_types.hpp"
 
 namespace Dummy {
 namespace Server {
@@ -9,15 +10,13 @@ namespace Command {
 class SetPosition : public Command
 {
 public:
-    SetPosition(std::uint16_t, std::uint16_t);
+    SetPosition(tilecoords);
     void accept(CommandVisitor&) const override;
 
-    std::uint16_t x() const { return m_x; }
-
-    std::uint16_t y() const { return m_y; }
+    tilecoords pos() const { return m_xy; }
 
 private:
-    std::uint16_t m_x, m_y;
+    tilecoords m_xy;
 };
 
 } // namespace Command

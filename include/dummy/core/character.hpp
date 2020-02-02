@@ -5,6 +5,7 @@
 
 #include "dummy/protocol/incoming_packet.hpp"
 #include "dummy/protocol/outgoing_packet.hpp"
+#include "dummy/utils/dummy_types.hpp"
 
 namespace Dummy {
 namespace Core {
@@ -13,8 +14,7 @@ class Character
 {
 public:
     static const uint32_t MAGIC_WORD = 0xdeadface;
-    using Position                   = std::pair<std::uint16_t, std::uint16_t>;
-    enum class Direction : std::uint8_t
+    enum class Direction : uint8_t
     {
         UP    = 0,
         RIGHT = 1,
@@ -30,13 +30,13 @@ public:
     inline const std::string& skin() const { return m_skin; }
     inline const std::string& mapLocation() const { return m_mapLocation; }
     inline const Direction& direction() const { return m_direction; }
-    inline const Position& position() const
+    inline const tilecoords& position() const
     {
         std::cerr << "position():" << m_position.first << ", "
                   << m_position.second << std::endl;
         return m_position;
     }
-    inline std::uint8_t floor() const { return m_floor; }
+    inline uint8_t floor() const { return m_floor; }
     const std::string& instance() const { return m_instance; }
 
     friend std::ifstream& operator>>(std::ifstream& ifs, Character& chr)
@@ -67,9 +67,9 @@ public:
 
     Character& setName(const std::string&);
     Character& setSkin(const std::string&);
-    Character& setPosition(const Position&);
+    Character& setPosition(const tilecoords&);
     Character& setMapLocation(const std::string&);
-    Character& setFloor(std::uint8_t);
+    Character& setFloor(uint8_t);
     Character& setInstance(const std::string&);
 
 private:
@@ -81,8 +81,8 @@ private:
     std::string m_skin;
     std::string m_mapLocation;
     Direction m_direction;
-    Position m_position;
-    std::uint8_t m_floor;
+    tilecoords m_position;
+    uint8_t m_floor;
     std::string m_instance;
 };
 

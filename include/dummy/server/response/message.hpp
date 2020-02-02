@@ -16,14 +16,14 @@ public:
     void serializeTo(Dummy::Protocol::OutgoingPacket&) const override;
     void readFrom(Dummy::Protocol::IncomingPacket&) override;
 
-    std::uint32_t author() const { return m_author; }
+    uint32_t author() const { return m_author; }
     const std::string& content() const { return m_content; }
 
-    void setAuthor(std::uint32_t);
+    void setAuthor(uint32_t);
     void setContent(const std::string&);
 
 private:
-    std::uint32_t m_author;
+    uint32_t m_author;
     std::string m_content;
 };
 

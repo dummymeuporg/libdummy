@@ -28,7 +28,7 @@ void Message::readFrom(Dummy::Protocol::IncomingPacket& pkt)
     pkt >> m_status >> m_author >> m_content;
 }
 
-void Message::setAuthor(std::uint32_t id)
+void Message::setAuthor(uint32_t id)
 {
     m_author = id;
 }

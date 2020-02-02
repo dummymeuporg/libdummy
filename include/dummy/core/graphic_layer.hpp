@@ -2,21 +2,22 @@
 
 #include <cstdint>
 #include <vector>
+#include "dummy/utils/dummy_types.hpp"
 
 namespace Dummy {
 namespace Core {
 
-class GraphicLayer : public std::vector<std::pair<std::int8_t, std::int8_t>>
+class GraphicLayer : public std::vector<tileaspect>
 {
 public:
-    GraphicLayer(std::uint16_t = 1, std::uint16_t = 1);
+    GraphicLayer(uint16_t w = 1, uint16_t h = 1);
 
-    std::uint16_t width() const { return m_width; }
-    std::uint16_t height() const { return m_height; }
+    uint16_t width() const { return m_width; }
+    uint16_t height() const { return m_height; }
 
 private:
-    std::uint16_t m_width;
-    std::uint16_t m_height;
+    uint16_t m_width;
+    uint16_t m_height;
 };
 
 } // namespace Core

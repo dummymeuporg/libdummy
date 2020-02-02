@@ -10,16 +10,16 @@ Foe::Foe(const std::string& luaFilename)
 /*
 Foe::Foe(
     const std::string& chipset,
-    std::uint16_t x,
-    std::uint16_t y,
-    std::uint8_t floor
+    uint16_t x,
+    uint16_t y,
+    uint8_t floor
 ) : m_chipset(chipset), m_position{x, y}, m_floor(floor)
 {}
 
 Foe::Foe(
     const std::string& chipset,
-    const std::pair<std::uint16_t, std::uint16_t>& position,
-    std::uint8_t floor
+    const std::pair<uint16_t, uint16_t>& position,
+    uint8_t floor
 ) : m_chipset(chipset), m_position(position), m_floor(floor)
 {
 }

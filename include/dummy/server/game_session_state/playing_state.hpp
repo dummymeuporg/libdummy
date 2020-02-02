@@ -44,7 +44,7 @@ private:
     void createMapUpdates(std::shared_ptr<Player>, std::shared_ptr<Map>,
                           MapUpdatesVector&);
 
-    void sendMessageToMap(std::shared_ptr<Map>, std::uint32_t,
+    void sendMessageToMap(std::shared_ptr<Map>, uint32_t,
                           const std::string&);
 
     void leavePreviousMap(std::shared_ptr<Player>);

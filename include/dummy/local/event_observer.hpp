@@ -9,8 +9,8 @@ class EventObserver
 {
 public:
     virtual void onMessage(const std::string&) = 0;
-    virtual void onTeleport(const std::string&, std::uint16_t, std::uint16_t,
-                            std::uint8_t)      = 0;
+    virtual void onTeleport(const std::string&, uint16_t, uint16_t,
+                            uint8_t)      = 0;
 };
 
 } // namespace Local

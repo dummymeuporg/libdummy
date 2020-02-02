@@ -13,16 +13,15 @@ namespace Local {
 
 class Map;
 
-using Coords        = std::pair<std::uint8_t, std::uint8_t>;
-using GraphicLayers = std::map<std::int8_t, Dummy::Core::GraphicLayer>;
-using Events        = std::map<std::uint16_t, std::shared_ptr<Event>>;
+using GraphicLayers = std::map<int8_t, Dummy::Core::GraphicLayer>;
+using Events        = std::map<uint16_t, std::shared_ptr<Event>>;
 
 class Floor
 {
 public:
     Floor(const Map&);
-    void addGraphicLayer(std::int8_t, Dummy::Core::GraphicLayer&&);
-    const Dummy::Core::GraphicLayer& graphicLayer(std::int8_t position) const
+    void addGraphicLayer(int8_t, Dummy::Core::GraphicLayer&&);
+    const Dummy::Core::GraphicLayer& graphicLayer(int8_t position) const
     {
         return m_graphicLayers.at(position);
     }
@@ -37,16 +36,16 @@ public:
         return m_blockingLayer;
     }
 
-    std::uint16_t width() const;
-    std::uint16_t height() const;
+    uint16_t width() const;
+    uint16_t height() const;
 
     const Map& map() const { return m_map; }
 
     void setBlockingLayer(Dummy::Core::BlockingLayer&&);
 
-    bool isBlocking(std::uint16_t x, std::uint16_t y) const
+    bool isBlocking(tilecoords xy) const
     {
-        return m_blockingLayer.isBlocking(x, y);
+        return m_blockingLayer.isBlocking(xy);
     }
 
     Events& touchEvents() { return m_touchEvents; }

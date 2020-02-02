@@ -1,10 +1,11 @@
 #pragma once
 
-#include <cstdint>
 #include <memory>
 #include <optional>
 #include <string>
 #include <vector>
+
+#include "dummy/utils/dummy_types.hpp"
 
 namespace Dummy {
 namespace Protocol {
@@ -25,20 +26,20 @@ class MapObserver : public std::enable_shared_from_this<MapObserver>
 {
 public:
     MapObserver();
-    MapObserver(std::uint32_t);
-    MapObserver(std::uint32_t, std::weak_ptr<Map>);
+    MapObserver(uint32_t);
+    MapObserver(uint32_t, std::weak_ptr<Map>);
     void setMap(std::weak_ptr<Map>);
-    void setID(std::uint32_t);
+    void setID(uint32_t);
     void resetID();
-    std::uint32_t id() const { return m_id.value(); }
+    uint32_t id() const { return m_id.value(); }
 
-    virtual void notifyOn(MapUpdatesVector&)                              = 0;
-    virtual void notifyPosition(MapUpdatesVector&)                        = 0;
-    virtual void receiveMessage(std::uint32_t author, const std::string&) = 0;
-    virtual std::pair<std::uint16_t, std::uint16_t> position()            = 0;
+    virtual void notifyOn(MapUpdatesVector&)                         = 0;
+    virtual void notifyPosition(MapUpdatesVector&)                   = 0;
+    virtual void receiveMessage(uint32_t author, const std::string&) = 0;
+    virtual tilecoords position()                                    = 0;
 
 protected:
-    std::optional<std::uint32_t> m_id;
+    std::optional<uint32_t> m_id;
     std::weak_ptr<Map> m_map;
 };
 

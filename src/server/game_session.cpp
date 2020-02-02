@@ -95,7 +95,7 @@ GameSession::getResponse()
     return nullptr; // no response
 }
 
-void GameSession::receiveMessage(std::uint32_t author,
+void GameSession::receiveMessage(uint32_t author,
                                  const std::string& content)
 {
     auto message(std::make_unique<Dummy::Server::Response::Message>());

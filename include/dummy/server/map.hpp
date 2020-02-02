@@ -25,16 +25,16 @@ class Map : public std::enable_shared_from_this<Map>
 public:
     using PlayersList = std::map<std::string, std::shared_ptr<Player>>;
     using Foes        = std::set<std::shared_ptr<Dummy::Server::Foe::Foe>>;
-    using Observers   = std::map<std::uint32_t, std::weak_ptr<MapObserver>>;
+    using Observers   = std::map<uint32_t, std::weak_ptr<MapObserver>>;
     Map(Instance&, const Remote::Map&, boost::asio::io_context&);
     void spawn();
     void addObserver(std::shared_ptr<MapObserver>);
-    void removeObserver(std::uint32_t);
+    void removeObserver(uint32_t);
     void addPlayer(std::shared_ptr<Player>);
     void removePlayer(std::shared_ptr<Player>);
-    void dispatchMessage(const std::uint32_t author,
+    void dispatchMessage(const uint32_t author,
                          const std::string& message);
-    bool isBlocking(std::uint16_t, std::uint16_t, std::uint8_t) const;
+    bool isBlocking(uint16_t, uint16_t, uint8_t) const;
     const PlayersList& players() const { return m_players; }
     const Foes& foes() const { return m_foes; }
 
@@ -47,7 +47,7 @@ private:
     PlayersList m_players;
     Foes m_foes;
     Observers m_observers;
-    std::uint32_t m_idGenerator;
+    uint32_t m_idGenerator;
 };
 
 } // namespace Server

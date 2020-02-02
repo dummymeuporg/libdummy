@@ -82,7 +82,7 @@ void Foe::loadLuaFile(const std::string& filename)
     lua_pushstring(m_luaState, "x");
     lua_gettable(m_luaState, -2);
     m_position.first =
-        static_cast<std::uint16_t>(lua_tointegerx(m_luaState, -1, &isNum));
+        static_cast<uint16_t>(lua_tointegerx(m_luaState, -1, &isNum));
     if (0 == isNum) {
         throw LuaNotAnInteger();
     }
@@ -93,7 +93,7 @@ void Foe::loadLuaFile(const std::string& filename)
     lua_pushstring(m_luaState, "y");
     lua_gettable(m_luaState, -2);
     m_position.second =
-        static_cast<std::uint16_t>(lua_tointegerx(m_luaState, -1, &isNum));
+        static_cast<uint16_t>(lua_tointegerx(m_luaState, -1, &isNum));
     if (0 == isNum) {
         throw LuaNotAnInteger();
     }
@@ -103,7 +103,7 @@ void Foe::loadLuaFile(const std::string& filename)
     // Read floor
     lua_pushstring(m_luaState, "map_floor");
     lua_gettable(m_luaState, -2);
-    m_floor = static_cast<std::uint8_t>(lua_tointegerx(m_luaState, -1, &isNum));
+    m_floor = static_cast<uint8_t>(lua_tointegerx(m_luaState, -1, &isNum));
     if (0 == isNum) {
         throw LuaNotAnInteger();
     }
@@ -137,7 +137,7 @@ void Foe::tick()
 void Foe::notifyOn(MapUpdatesVector& mapUpdates)
 {
     mapUpdates.push_back(std::make_unique<Dummy::Protocol::MapUpdate::LivingOn>(
-        m_id.value(), m_position.first, m_position.second, m_floor, m_chipset,
+        m_id.value(), m_position, m_floor, m_chipset,
         Dummy::Core::Character::Direction::DOWN));
 }
 
@@ -145,12 +145,12 @@ void Foe::notifyPosition(MapUpdatesVector& mapUpdates)
 {
     mapUpdates.push_back(
         std::make_unique<Dummy::Protocol::MapUpdate::CharacterPosition>(
-            m_id.value(), m_position.first, m_position.second,
+            m_id.value(), m_position,
             Dummy::Core::Character::Direction::DOWN // XXX: For now.
             ));
 }
 
-void Foe::receiveMessage(std::uint32_t, const std::string& message)
+void Foe::receiveMessage(uint32_t, const std::string& message)
 {
     // Get the table
     lua_rawgeti(m_luaState, LUA_REGISTRYINDEX, m_luaTableRef);
@@ -229,14 +229,14 @@ std::pair<int, int> Foe::getMovement(FoeAction action)
     }
 }
 
-std::pair<std::int16_t, std::int16_t>
+std::pair<int16_t, int16_t>
 Foe::computeDistance(const std::pair<int, int>& movement)
 {
     double divisor = movement.first != 0 && movement.second != 0 ? SQRT_2 : 1.0;
     auto velocity  = 0.5; // XXX: For now
-    std::int16_t xDistance(static_cast<unsigned>(
+    int16_t xDistance(static_cast<unsigned>(
         ((333.0 / 8.0) * movement.first * velocity) / divisor));
-    std::int16_t yDistance(static_cast<unsigned>(
+    int16_t yDistance(static_cast<unsigned>(
         ((333.0 / 8.0) * movement.second * velocity) / divisor));
     return {xDistance, yDistance};
 }
@@ -253,8 +253,8 @@ void Foe::moveOnMap(FoeAction action)
     // Update server coordinates if necessary.
     auto map = m_map.lock();
 
-    std::pair<std::uint16_t, std::uint16_t> newPosition {
-        m_localPosition.first / 8, m_localPosition.second / 8};
+    tilecoords newPosition {m_localPosition.first / 8,
+                            m_localPosition.second / 8};
 
     /*
     if (nullptr != map && !map->isBlocking(
@@ -267,7 +267,7 @@ void Foe::moveOnMap(FoeAction action)
     //}
 }
 
-std::pair<std::uint16_t, std::uint16_t> Foe::position()
+tilecoords Foe::position()
 {
     return m_position;
 }

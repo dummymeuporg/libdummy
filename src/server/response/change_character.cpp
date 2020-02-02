@@ -35,7 +35,7 @@ void ChangeCharacter::setMapLocation(const std::string& mapLocation)
     m_mapLocation = mapLocation;
 }
 
-void ChangeCharacter::setPosition(const Position& position)
+void ChangeCharacter::setPosition(tilecoords position)
 {
     m_position = position;
 }

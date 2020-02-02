@@ -31,7 +31,7 @@ void Ping::addUpdate(
 
 void Ping::serializeTo(Dummy::Protocol::OutgoingPacket& packet) const
 {
-    std::uint16_t count = static_cast<std::uint16_t>(m_mapUpdates.size());
+    uint16_t count = static_cast<uint16_t>(m_mapUpdates.size());
     Dummy::Protocol::MapUpdate::PacketSerializer serializer(packet);
     packet << count;
     for (const auto& mapUpdate : m_mapUpdates) {
@@ -41,10 +41,10 @@ void Ping::serializeTo(Dummy::Protocol::OutgoingPacket& packet) const
 
 void Ping::readFrom(Dummy::Protocol::IncomingPacket& packet)
 {
-    std::uint16_t countUpdates;
+    uint16_t countUpdates;
     packet >> countUpdates;
     for (const auto i : boost::irange(countUpdates)) {
-        std::uint16_t code;
+        uint16_t code;
         packet >> code;
         switch (code) {
         case Dummy::Protocol::Bridge::LIVING_OFF:
@@ -74,21 +74,21 @@ void Ping::readFrom(Dummy::Protocol::IncomingPacket& packet)
 std::shared_ptr<const Dummy::Protocol::MapUpdate::NamedLivingOn>
 Ping::readNamedLivingOn(Dummy::Protocol::IncomingPacket& packet)
 {
-    std::uint32_t id;
-    std::uint16_t x, y;
-    std::uint8_t floor;
+    uint32_t id;
+    tilecoords xy;
+    uint8_t floor;
     std::string skin, name;
     Dummy::Core::Character::Direction direction;
-    packet >> id >> x >> y >> floor >> name >> skin
-        >> reinterpret_cast<std::uint8_t&>(direction);
+    packet >> id >> xy.first >> xy.second >> floor >> name >> skin
+        >> reinterpret_cast<uint8_t&>(direction);
     return std::make_shared<const Dummy::Protocol::MapUpdate::NamedLivingOn>(
-        id, x, y, floor, name, skin, direction);
+        id, xy, floor, name, skin, direction);
 }
 
 std::shared_ptr<const Dummy::Protocol::MapUpdate::LivingOff>
 Ping::readLivingOff(Dummy::Protocol::IncomingPacket& packet)
 {
-    std::uint32_t id;
+    uint32_t id;
     packet >> id;
     return std::make_shared<Dummy::Protocol::MapUpdate::LivingOff>(id);
 }
@@ -96,33 +96,34 @@ Ping::readLivingOff(Dummy::Protocol::IncomingPacket& packet)
 std::shared_ptr<const Dummy::Protocol::MapUpdate::LivingOn>
 Ping::readLivingOn(Dummy::Protocol::IncomingPacket& packet)
 {
-    std::uint32_t id;
-    std::uint16_t x, y;
-    std::uint8_t floor;
+    uint32_t id;
+    tilecoords xy;
+    uint8_t floor;
     std::string skin;
     Dummy::Core::Character::Direction direction;
-    packet >> id >> x >> y >> floor >> skin
-        >> reinterpret_cast<std::uint8_t&>(direction);
+    packet >> id >> xy.first >> xy.second >> floor >> skin
+        >> reinterpret_cast<uint8_t&>(direction);
     return std::make_shared<const Dummy::Protocol::MapUpdate::LivingOn>(
-        id, x, y, floor, skin, direction);
+        id, xy, floor, skin, direction);
 }
 
 std::shared_ptr<const Dummy::Protocol::MapUpdate::CharacterPosition>
 Ping::readCharacterPosition(Dummy::Protocol::IncomingPacket& packet)
 {
-    std::uint32_t id;
-    std::uint16_t x, y;
+    uint32_t id;
+    tilecoords xy;
     Dummy::Core::Character::Direction direction;
-    packet >> id >> x >> y >> reinterpret_cast<std::uint8_t&>(direction);
+    packet >> id >> xy.first >> xy.second
+        >> reinterpret_cast<uint8_t&>(direction);
     return std::make_shared<Dummy::Protocol::MapUpdate::CharacterPosition>(
-        id, x, y, direction);
+        id, xy, direction);
 }
 
 std::shared_ptr<const Dummy::Protocol::MapUpdate::CharacterFloor>
 Ping::readCharacterFloor(Dummy::Protocol::IncomingPacket& packet)
 {
     std::string name;
-    std::uint8_t floor;
+    uint8_t floor;
     packet >> name >> floor;
     return std::make_shared<Dummy::Protocol::MapUpdate::CharacterFloor>(name,
                                                                         floor);

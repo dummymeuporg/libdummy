@@ -142,7 +142,7 @@ AbstractGameServer::createCharacter(const Account& account,
 
     // From now, we consider the character being valid.
     const Dummy::Core::StartingPoint& startingPoint(m_project.startingPoint());
-    std::pair<std::uint16_t, std::uint16_t> position(startingPoint.position());
+    tilecoords position(startingPoint.position());
     position.first *= 2;
     position.second *= 2;
     chr.setPosition(position);

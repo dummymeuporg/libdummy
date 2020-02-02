@@ -51,7 +51,7 @@ void Map::addObserver(std::shared_ptr<MapObserver> mapObserver)
     m_observers[m_idGenerator] = mapObserver;
 }
 
-void Map::removeObserver(std::uint32_t id)
+void Map::removeObserver(uint32_t id)
 {
     if (m_observers.find(id) != std::end(m_observers)) {
         auto observer = m_observers[id].lock();
@@ -62,13 +62,13 @@ void Map::removeObserver(std::uint32_t id)
     }
 }
 
-bool Map::isBlocking(std::uint16_t x, std::uint16_t y, std::uint8_t floor) const
+bool Map::isBlocking(uint16_t x, uint16_t y, uint8_t floor) const
 {
     // XXX: refactor this.
-    return m_map.floors().at(floor).isBlocking(x, y);
+    return m_map.floors().at(floor).isBlocking({x, y});
 }
 
-void Map::dispatchMessage(std::uint32_t author, const std::string& message)
+void Map::dispatchMessage(uint32_t author, const std::string& message)
 {
     for (auto& [id, observer] : m_observers) {
         auto observerPt = observer.lock();

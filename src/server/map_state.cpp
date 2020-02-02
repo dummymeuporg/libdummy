@@ -25,7 +25,7 @@ void MapState::visitMapUpdate(
     }
 
     auto& living = m_livings[update.id()];
-    living->setPosition(update.x(), update.y());
+    living->setPosition(update.pos());
 }
 
 void MapState::visitMapUpdate(
@@ -42,8 +42,8 @@ void MapState::visitMapUpdate(
 {
     std::unique_ptr<Dummy::Protocol::Living> living =
         std::make_unique<Dummy::Protocol::Living>(
-            update.id(), update.x(), update.y(), update.floor(),
-            update.chipset(), update.direction());
+            update.id(), update.pos(), update.floor(), update.chipset(),
+            update.direction());
     m_livings[update.id()] = std::move(living);
 }
 
@@ -52,7 +52,7 @@ void MapState::visitMapUpdate(
 {
     std::unique_ptr<Dummy::Protocol::NamedLiving> living =
         std::make_unique<Dummy::Protocol::NamedLiving>(
-            update.id(), update.x(), update.y(), update.floor(), update.name(),
+            update.id(), update.pos(), update.floor(), update.name(),
             update.chipset(), update.direction());
     m_livings[update.id()] = std::move(living);
 }

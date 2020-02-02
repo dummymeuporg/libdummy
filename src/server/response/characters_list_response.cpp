@@ -23,7 +23,7 @@ void CharactersListResponse::addCharacter(
 void CharactersListResponse::serializeTo(
     Dummy::Protocol::OutgoingPacket& pkt) const
 {
-    pkt << static_cast<std::uint16_t>(m_charactersList.size());
+    pkt << static_cast<uint16_t>(m_charactersList.size());
     for (auto chr : m_charactersList) {
         pkt << *chr;
     }
@@ -33,7 +33,7 @@ void CharactersListResponse::readFrom(Dummy::Protocol::IncomingPacket& pkt)
 {
     pkt >> m_status;
     // XXX: extract characters
-    std::uint16_t charactersCount;
+    uint16_t charactersCount;
     pkt >> charactersCount;
     for (const auto i : boost::irange(charactersCount)) {
         boost::ignore_unused(i);

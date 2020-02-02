@@ -7,11 +7,9 @@ namespace Protocol {
 namespace MapUpdate {
 
 CharacterPosition::CharacterPosition(
-    std::uint32_t id, std::uint16_t x, std::uint16_t y,
-    Dummy::Core::Character::Direction direction)
+    uint32_t id, tilecoords xy, Dummy::Core::Character::Direction direction)
     : m_id(id)
-    , m_x(x)
-    , m_y(y)
+    , m_xy(xy)
     , m_direction(direction)
 {}
 
@@ -23,13 +21,14 @@ void CharacterPosition::accept(MapUpdateVisitor& visitor) const
 void CharacterPosition::serializeTo(
     Dummy::Protocol::OutgoingPacket& packet) const
 {
-    packet << m_id << m_x << m_y << static_cast<std::uint8_t>(m_direction);
+    packet << m_id << m_xy.first << m_xy.second
+           << static_cast<uint8_t>(m_direction);
 }
 
 void CharacterPosition::readFrom(Dummy::Protocol::IncomingPacket& packet)
 {
-    std::uint8_t direction;
-    packet >> m_id >> m_x >> m_y >> direction;
+    uint8_t direction;
+    packet >> m_id >> m_xy.first >> m_xy.second >> direction;
     m_direction = static_cast<Dummy::Core::Character::Direction>(direction);
 }
 

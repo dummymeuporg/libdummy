@@ -8,7 +8,7 @@ namespace Dummy {
 namespace Protocol {
 namespace MapUpdate {
 
-CharacterFloor::CharacterFloor(const std::string& name, std::uint8_t floor)
+CharacterFloor::CharacterFloor(const std::string& name, uint8_t floor)
     : m_name(name)
     , m_floor(floor)
 {}

@@ -15,7 +15,7 @@ class Floor;
 class Project;
 
 using Floors = std::vector<Floor>;
-using Events = std::map<std::uint16_t, std::shared_ptr<Event>>;
+using Events = std::map<uint16_t, std::shared_ptr<Event>>;
 
 class Map : public Dummy::Core::Map
 {

@@ -34,7 +34,7 @@ class MapState : public Dummy::Protocol::MapUpdate::MapUpdateVisitor
 {
 public:
     using LivingsMap =
-        std::map<std::uint32_t, std::shared_ptr<Dummy::Protocol::Living>>;
+        std::map<uint32_t, std::shared_ptr<Dummy::Protocol::Living>>;
     MapState();
     void update(const Dummy::Protocol::MapUpdate::Update&);
 
@@ -47,7 +47,7 @@ public:
 
     const LivingsMap& livings() const { return m_livings; }
 
-    const Dummy::Protocol::Living& living(std::uint32_t id) const
+    const Dummy::Protocol::Living& living(uint32_t id) const
     {
         return *m_livings.at(id);
     }

@@ -25,25 +25,21 @@ public:
 
     const std::string& name() const { return m_character->name(); }
 
-    const std::pair<std::uint16_t, std::uint16_t> serverPosition() const
-    {
-        return m_character->position();
-    }
+    tilecoords serverPosition() const { return m_character->position(); }
 
     std::weak_ptr<Map> map() const { return m_map; }
 
     std::weak_ptr<Instance> instance() const { return m_instance; }
 
     void setMap(std::weak_ptr<Map>);
-    void setPosition(const std::pair<std::uint16_t, std::uint16_t>&);
-    void setPosition(std::uint16_t, std::uint16_t);
+    void setPosition(tilecoords);
     void setInstance(std::weak_ptr<Instance>);
     void leaveCurrentMap();
 
     void notifyOn(MapUpdatesVector&) override;
     void notifyPosition(MapUpdatesVector&) override;
-    void receiveMessage(std::uint32_t, const std::string&) override;
-    std::pair<std::uint16_t, std::uint16_t> position() override;
+    void receiveMessage(uint32_t, const std::string&) override;
+    tilecoords position() override;
 
 private:
     GameSession& m_gameSession;

@@ -64,8 +64,7 @@ void PlayingState::createMapUpdates(std::shared_ptr<Player> player,
         } else {
             // Update the living status if necessary
             const auto& living(m_mapState.living(observerPtr->id()));
-            if (living.x() != observerPtr->position().first
-                || living.y() != observerPtr->position().second) {
+            if (living.pos() != observerPtr->position()) {
                 std::cerr << id << " moved." << std::endl;
                 observerPtr->notifyPosition(mapUpdates);
             }
@@ -99,7 +98,7 @@ void PlayingState::visitCommand(
     // XXX: update the player position
     auto player = m_gameSession.player().lock();
     if (player) {
-        player->setPosition(setPosition.x(), setPosition.y());
+        player->setPosition(setPosition.pos());
         response->setStatus(0);
     } else {
         // XXX: Error
@@ -199,8 +198,7 @@ void PlayingState::visitCommand(const Dummy::Server::Command::ChangeCharacter&)
     m_gameSession.addResponse(std::move(response));
 }
 
-void PlayingState::sendMessageToMap(std::shared_ptr<Map> map,
-                                    std::uint32_t author,
+void PlayingState::sendMessageToMap(std::shared_ptr<Map> map, uint32_t author,
                                     const std::string& message)
 {
     boost::asio::post(m_gameSession.ioContext(),

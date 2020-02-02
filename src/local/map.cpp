@@ -50,10 +50,10 @@ void Map::loadMapFile(std::ifstream& ifs)
 {
     Dummy::Core::Map::loadBaseInfo(ifs);
     std::cerr << "Map::loadMapFile" << std::endl;
-    std::uint32_t strSize;
+    uint32_t strSize;
 
     /* Read chipset. */
-    ifs.read(reinterpret_cast<char*>(&strSize), sizeof(std::uint32_t));
+    ifs.read(reinterpret_cast<char*>(&strSize), sizeof(uint32_t));
     if (0 != strSize) {
         m_chipset.resize(strSize);
         ifs.read(m_chipset.data(), strSize);
@@ -64,7 +64,7 @@ void Map::loadMapFile(std::ifstream& ifs)
     std::cerr << "Chipset: " << m_chipset << std::endl;
 
     /* Read music */
-    ifs.read(reinterpret_cast<char*>(&strSize), sizeof(std::uint32_t));
+    ifs.read(reinterpret_cast<char*>(&strSize), sizeof(uint32_t));
     if (0 != strSize) {
         m_music.resize(strSize);
         ifs.read(m_music.data(), strSize);
@@ -77,23 +77,20 @@ void Map::readMapFloor(std::ifstream& ifsMapFile, std::ifstream& ifsBlkFile)
 {
     Floor floor(*this);
     std::size_t elements = m_width * m_height;
-    std::uint8_t layersCount;
+    uint8_t layersCount;
 
     // Read layers count
-    ifsMapFile.read(reinterpret_cast<char*>(&layersCount),
-                    sizeof(std::uint8_t));
+    ifsMapFile.read(reinterpret_cast<char*>(&layersCount), sizeof(uint8_t));
 
-    for (std::uint8_t i = 0; i < layersCount; i++) {
+    for (uint8_t i = 0; i < layersCount; i++) {
         // Read the layer position
-        std::int8_t position;
-        ifsMapFile.read(reinterpret_cast<char*>(&position),
-                        sizeof(std::uint8_t));
+        int8_t position;
+        ifsMapFile.read(reinterpret_cast<char*>(&position), sizeof(uint8_t));
         Dummy::Core::GraphicLayer graphicLayer(m_width, m_height);
         // read the whole layer
         ifsMapFile.read(
             reinterpret_cast<char*>(graphicLayer.data()),
-            static_cast<std::streamsize>(
-                elements * sizeof(std::pair<std::int8_t, std::int8_t>)));
+            static_cast<std::streamsize>(elements * sizeof(tileaspect)));
         floor.addGraphicLayer(position, std::move(graphicLayer));
     }
     // Read the blocking layer
@@ -107,19 +104,19 @@ void Map::readMapFloor(std::ifstream& ifsMapFile, std::ifstream& ifsBlkFile)
 int Map::luaOnKeypressEvent(::lua_State* luaState)
 {
     int isNum;
-    std::uint16_t x, y;
-    std::uint8_t floor;
-    x = static_cast<std::uint16_t>(lua_tointegerx(luaState, 1, &isNum));
+    uint16_t x, y;
+    uint8_t floor;
+    x = static_cast<uint16_t>(lua_tointegerx(luaState, 1, &isNum));
     if (0 == isNum) {
         // XXX: Throw an exception
     }
 
-    y = static_cast<std::uint16_t>(lua_tointegerx(luaState, 2, &isNum));
+    y = static_cast<uint16_t>(lua_tointegerx(luaState, 2, &isNum));
     if (0 == isNum) {
         // XXX: Throw an exception
     }
 
-    floor = static_cast<std::uint8_t>(lua_tointegerx(luaState, 3, &isNum));
+    floor = static_cast<uint8_t>(lua_tointegerx(luaState, 3, &isNum));
     if (0 == isNum) {
         // XXX: Throw an exception
     }
@@ -135,19 +132,19 @@ int Map::luaOnKeypressEvent(::lua_State* luaState)
 int Map::luaOnTouchEvent(::lua_State* luaState)
 {
     int isNum;
-    std::uint16_t x, y;
-    std::uint8_t floor;
-    x = static_cast<std::uint16_t>(lua_tointegerx(luaState, 1, &isNum));
+    uint16_t x, y;
+    uint8_t floor;
+    x = static_cast<uint16_t>(lua_tointegerx(luaState, 1, &isNum));
     if (0 == isNum) {
         // XXX: Throw an exception
     }
 
-    y = static_cast<std::uint16_t>(lua_tointegerx(luaState, 2, &isNum));
+    y = static_cast<uint16_t>(lua_tointegerx(luaState, 2, &isNum));
     if (0 == isNum) {
         // XXX: Throw an exception
     }
 
-    floor = static_cast<std::uint8_t>(lua_tointegerx(luaState, 3, &isNum));
+    floor = static_cast<uint8_t>(lua_tointegerx(luaState, 3, &isNum));
     if (0 == isNum) {
         // XXX: Throw an exception
     }
@@ -173,22 +170,22 @@ int Map::luaMessage(::lua_State* luaState)
 int Map::luaTeleport(::lua_State* luaState)
 {
     if (m_eventObserver != nullptr) {
-        std::uint16_t x, y;
-        std::uint8_t floor;
+        uint16_t x, y;
+        uint8_t floor;
         int isNum;
         std::string mapDestination = lua_tostring(luaState, 1);
 
-        x = static_cast<std::uint16_t>(lua_tointegerx(luaState, 2, &isNum));
+        x = static_cast<uint16_t>(lua_tointegerx(luaState, 2, &isNum));
         if (0 == isNum) {
             // XXX: Throw an exception
         }
 
-        y = static_cast<std::uint16_t>(lua_tointegerx(luaState, 3, &isNum));
+        y = static_cast<uint16_t>(lua_tointegerx(luaState, 3, &isNum));
         if (0 == isNum) {
             // XXX: Throw an exception
         }
 
-        floor = static_cast<std::uint8_t>(lua_tointegerx(luaState, 4, &isNum));
+        floor = static_cast<uint8_t>(lua_tointegerx(luaState, 4, &isNum));
         if (0 == isNum) {
             // XXX: Throw an exception
         }

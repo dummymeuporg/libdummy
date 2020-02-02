@@ -11,9 +11,8 @@ namespace Protocol {
 class Character : public Living
 {
 public:
-    Character(std::uint32_t, std::uint16_t, std::uint16_t, std::uint8_t,
-              const std::string&, const std::string&,
-              Dummy::Core::Character::Direction direction);
+    Character(uint32_t, tilecoords, uint8_t, const std::string&,
+              const std::string&, Dummy::Core::Character::Direction direction);
 };
 
 } // namespace Protocol

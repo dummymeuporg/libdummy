@@ -6,9 +6,8 @@ namespace Dummy {
 namespace Server {
 namespace Command {
 
-SetPosition::SetPosition(std::uint16_t x, std::uint16_t y)
-    : m_x(x)
-    , m_y(y)
+SetPosition::SetPosition(tilecoords xy)
+    : m_xy(xy)
 {}
 
 void SetPosition::accept(CommandVisitor& visitor) const
