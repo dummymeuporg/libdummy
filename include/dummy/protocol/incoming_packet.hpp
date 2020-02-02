@@ -2,8 +2,6 @@
 
 #include <array>
 #include <cstdint>
-#include <iostream>
-#include <string>
 #include <vector>
 
 #include "dummy/protocol/errors.hpp"

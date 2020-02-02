@@ -1,15 +1,14 @@
 #pragma once
 
-#include "dummy/core/blocking_layer.hpp"
-#include "dummy/core/graphic_layer.hpp"
-#include "dummy/local/event.hpp"
-
 #include <cstdint>
 #include <map>
 #include <memory>
 
-namespace Dummy {
+#include "dummy/core/blocking_layer.hpp"
+#include "dummy/core/graphic_layer.hpp"
+#include "dummy/local/event.hpp"
 
+namespace Dummy {
 namespace Local {
 
 class Map;

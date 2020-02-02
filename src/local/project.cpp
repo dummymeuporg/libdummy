@@ -1,11 +1,4 @@
-#include <iostream>
-#include <queue>
-#include <sstream>
-
 #include "dummy/local/project.hpp"
-
-namespace fs = std::filesystem;
-namespace pt = boost::property_tree;
 
 namespace Dummy {
 namespace Local {

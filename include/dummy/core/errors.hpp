@@ -9,7 +9,6 @@ namespace Core {
 class Error : public std::exception
 {};
 
-
 class LuaLoadFileError : public Error
 {
 public:

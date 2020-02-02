@@ -1,7 +1,6 @@
-#include <iostream>
-
 #include "dummy/local/event.hpp"
-#include "dummy/local/floor.hpp"
+
+#include <iostream>
 
 namespace Dummy {
 namespace Local {

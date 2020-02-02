@@ -1,8 +1,6 @@
 #pragma once
 
 #include <map>
-#include <memory>
-#include <string>
 
 #include "dummy/core/project.hpp"
 #include "dummy/remote/map.hpp"

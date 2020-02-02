@@ -1,4 +1,5 @@
 #include "dummy/server/command/teleport_map.hpp"
+
 #include "dummy/server/command/command_visitor.hpp"
 #include "dummy/server/response/response.hpp"
 

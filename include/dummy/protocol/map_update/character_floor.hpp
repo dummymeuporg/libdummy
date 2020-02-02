@@ -1,7 +1,8 @@
 #pragma once
 
-#include "dummy/protocol/map_update/update.hpp"
 #include <string>
+
+#include "dummy/protocol/map_update/update.hpp"
 
 namespace Dummy {
 namespace Protocol {

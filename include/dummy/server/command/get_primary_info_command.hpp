@@ -1,7 +1,5 @@
 #pragma once
 
-#include <string>
-
 #include "dummy/server/command/command.hpp"
 
 namespace Dummy {

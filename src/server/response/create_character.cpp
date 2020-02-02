@@ -1,4 +1,5 @@
 #include "dummy/server/response/create_character.hpp"
+
 #include "dummy/core/character.hpp"
 #include "dummy/protocol/incoming_packet.hpp"
 #include "dummy/protocol/outgoing_packet.hpp"

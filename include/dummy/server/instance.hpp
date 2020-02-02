@@ -4,11 +4,11 @@
 
 #include <boost/asio.hpp>
 
-#include "dummy/server/map.hpp"
-
 namespace Dummy {
 namespace Server {
 class AbstractGameServer;
+class Map;
+class Player;
 
 class Instance : public std::enable_shared_from_this<Instance>
 {

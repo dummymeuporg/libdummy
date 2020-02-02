@@ -1,9 +1,9 @@
 #pragma once
 
 #include <memory>
+#include <string>
 
 #include <boost/uuid/uuid.hpp>
-#include <boost/uuid/uuid_generators.hpp>
 
 namespace Dummy {
 namespace Core {
@@ -22,5 +22,4 @@ private:
 };
 
 } // namespace Core
-
 } // namespace Dummy

@@ -1,6 +1,6 @@
-#include <algorithm>
-
 #include "dummy/protocol/outgoing_packet.hpp"
+
+#include <algorithm>
 
 namespace Dummy {
 namespace Protocol {

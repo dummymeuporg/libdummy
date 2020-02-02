@@ -1,20 +1,13 @@
 #pragma once
 
-#include <cstdint>
-#include <string>
-#include <utility>
-
 #include <boost/asio.hpp>
-
-#include "dummy/server/map_observer.hpp"
 
 extern "C"
 {
-#include <lauxlib.h>
-#include <lua.h>
 #include <lualib.h>
 }
 
+#include "dummy/server/map_observer.hpp"
 
 namespace Dummy {
 namespace Core {

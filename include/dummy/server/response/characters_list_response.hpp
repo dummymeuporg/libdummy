@@ -1,7 +1,5 @@
 #pragma once
 
-#include <memory>
-
 #include "dummy/core/character.hpp"
 #include "dummy/server/response/response.hpp"
 

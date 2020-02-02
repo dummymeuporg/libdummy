@@ -1,4 +1,5 @@
 #include "dummy/server/game_session_state/loading_state.hpp"
+
 #include "dummy/server/abstract_game_server.hpp"
 #include "dummy/server/command/command.hpp"
 #include "dummy/server/command/teleport_map.hpp"

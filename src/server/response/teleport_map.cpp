@@ -1,4 +1,5 @@
 #include "dummy/server/response/teleport_map.hpp"
+
 #include "dummy/protocol/incoming_packet.hpp"
 #include "dummy/protocol/outgoing_packet.hpp"
 #include "dummy/server/response/response_visitor.hpp"

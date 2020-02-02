@@ -1,13 +1,13 @@
+#include "dummy/server/game_session_state/initial_state.hpp"
+
 #include <iostream>
 
 #include "dummy/server/abstract_game_server.hpp"
 #include "dummy/server/command/command.hpp"
 #include "dummy/server/command/connect_command.hpp"
 #include "dummy/server/game_session.hpp"
-#include "dummy/server/game_session_state/initial_state.hpp"
 #include "dummy/server/game_session_state/send_characters_state.hpp"
 #include "dummy/server/response/connect_response.hpp"
-#include "dummy/server/response/response.hpp"
 
 namespace Dummy {
 namespace Server {

@@ -1,7 +1,8 @@
 #pragma once
 
-#include "dummy/protocol/living.hpp"
 #include <cstdint>
+
+#include "dummy/protocol/living.hpp"
 
 namespace Dummy {
 namespace Protocol {

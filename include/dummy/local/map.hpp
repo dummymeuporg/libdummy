@@ -1,7 +1,10 @@
 #pragma once
 
+#include <map>
+#include <memory>
+
 #include "dummy/core/map.hpp"
-#include "dummy/local/floor.hpp"
+#include "dummy/local/event.hpp"
 
 namespace Dummy {
 namespace Local {

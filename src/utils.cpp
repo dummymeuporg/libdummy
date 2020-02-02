@@ -1,10 +1,11 @@
+#include "dummy/utils.hpp"
+
 #include <iomanip>
 #include <iostream>
 #include <sstream>
 
 #include <boost/endian/conversion.hpp>
 
-#include "dummy/utils.hpp"
 
 std::string displayHash(const std::array<unsigned int, 5>& hash)
 {

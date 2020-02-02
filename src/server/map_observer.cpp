@@ -1,5 +1,4 @@
 #include "dummy/server/map_observer.hpp"
-#include "dummy/server/map.hpp"
 
 namespace Dummy {
 namespace Server {

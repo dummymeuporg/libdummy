@@ -1,4 +1,5 @@
 #include "dummy/server/command/change_character.hpp"
+
 #include "dummy/server/command/command_visitor.hpp"
 
 namespace Dummy {

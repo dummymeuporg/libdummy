@@ -3,6 +3,8 @@
 #include "dummy/core/errors.hpp"
 #include "dummy/core/map.hpp"
 
+#include <fstream>
+
 namespace Dummy {
 namespace Core {
 

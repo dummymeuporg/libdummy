@@ -1,23 +1,9 @@
-#include <filesystem>
-#include <fstream>
-#include <iostream>
-
-#include <boost/range/iterator_range.hpp>
-
-#include "dummy/core/character.hpp"
-
-#include "dummy/server/abstract_game_server.hpp"
-#include "dummy/server/account.hpp"
-#include "dummy/server/errors.hpp"
-
-#include "dummy/server/game_session.hpp"
-#include "dummy/server/game_session_state/manage_characters_state.hpp"
 #include "dummy/server/game_session_state/send_characters_state.hpp"
 
 #include "dummy/server/command/command.hpp"
+#include "dummy/server/game_session.hpp"
+#include "dummy/server/game_session_state/manage_characters_state.hpp"
 #include "dummy/server/response/characters_list_response.hpp"
-
-namespace fs = std::filesystem;
 
 namespace Dummy {
 namespace Server {

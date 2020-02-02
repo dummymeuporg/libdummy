@@ -14,14 +14,11 @@ public:
                   const std::string& = "main");
 
     const std::string& mapName() const { return m_mapName; }
-
     const std::pair<std::uint16_t, std::uint16_t>& position() const
     {
         return m_position;
     }
-
     std::uint8_t floor() const { return m_floor; }
-
     const std::string& instance() const { return m_instance; }
 
 private:

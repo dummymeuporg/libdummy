@@ -5,6 +5,10 @@
 #include "dummy/server/command/command_visitor.hpp"
 
 namespace Dummy {
+namespace Core {
+class Character;
+}
+
 namespace Server {
 
 namespace Command {

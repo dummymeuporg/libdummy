@@ -1,12 +1,10 @@
-#include <filesystem>
-#include <iostream>
-
-#include "dummy/remote/map.hpp"
 #include "dummy/server/abstract_game_server.hpp"
+
+#include <fstream>
+
 #include "dummy/server/account.hpp"
 #include "dummy/server/errors.hpp"
 #include "dummy/server/game_session.hpp"
-#include "dummy/server/game_session_communicator.hpp"
 
 namespace fs = std::filesystem;
 

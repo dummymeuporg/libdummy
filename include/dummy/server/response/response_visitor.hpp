@@ -1,7 +1,5 @@
 #pragma once
 
-#include <exception>
-
 #include "dummy/server/errors.hpp"
 
 namespace Dummy {

@@ -1,10 +1,8 @@
 #pragma once
 
-#include <map>
+#include <string>
+#include <vector>
 
-#include "dummy/protocol/living.hpp"
-#include "dummy/server/command/teleport_map.hpp"
-#include "dummy/server/game_session.hpp"
 #include "dummy/server/game_session_state/state.hpp"
 #include "dummy/server/map_state.hpp"
 
@@ -22,6 +20,7 @@ class Response;
 }
 
 class Map;
+class Player;
 
 namespace GameSessionState {
 

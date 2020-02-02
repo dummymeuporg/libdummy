@@ -1,10 +1,13 @@
 #pragma once
 
+#include <map>
+#include <string>
+
 #include "dummy/server/game_session_state/state.hpp"
 
 namespace Dummy {
-namespace Server {
 
+namespace Server {
 namespace Command {
 class Command;
 }

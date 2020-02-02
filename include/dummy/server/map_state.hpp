@@ -2,7 +2,6 @@
 
 #include <map>
 #include <memory>
-#include <string>
 
 #include "dummy/protocol/map_update/map_update_visitor.hpp"
 #include "dummy/server/errors.hpp"

@@ -1,4 +1,5 @@
 #include "dummy/server/map_state.hpp"
+
 #include "dummy/protocol/map_update/character_position.hpp"
 #include "dummy/protocol/map_update/living_off.hpp"
 #include "dummy/protocol/map_update/living_on.hpp"

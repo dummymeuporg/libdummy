@@ -1,5 +1,5 @@
 #include "dummy/server/project.hpp"
-#include "dummy/remote/map.hpp"
+
 #include <iostream>
 
 namespace Dummy {

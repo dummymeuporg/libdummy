@@ -1,4 +1,5 @@
 #pragma once
+
 #include "dummy/server/command/command.hpp"
 
 namespace Dummy {

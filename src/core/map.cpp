@@ -4,7 +4,6 @@
 #include <iostream>
 
 #include "dummy/core/blocking_layer.hpp"
-#include "dummy/core/project.hpp"
 
 namespace fs = std::filesystem;
 

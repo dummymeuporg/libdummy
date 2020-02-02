@@ -1,7 +1,6 @@
 #pragma once
 
 #include "dummy/server/response/response.hpp"
-#include <memory>
 
 namespace Dummy {
 namespace Server {

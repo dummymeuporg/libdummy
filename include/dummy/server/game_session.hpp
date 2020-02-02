@@ -1,11 +1,11 @@
 #pragma once
 
+#include <memory>
+#include <queue>
+
 #include <boost/asio.hpp>
 
 #include "dummy/server/command/handler.hpp"
-
-#include <memory>
-#include <queue>
 
 namespace Dummy {
 namespace Core {
