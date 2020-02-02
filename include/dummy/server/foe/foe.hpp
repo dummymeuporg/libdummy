@@ -8,26 +8,25 @@
 
 #include "dummy/server/map_observer.hpp"
 
-extern "C" {
+extern "C"
+{
+#include <lauxlib.h>
 #include <lua.h>
 #include <lualib.h>
-#include <lauxlib.h>
 }
 
 
 namespace Dummy {
-
 namespace Core {
 
 class Foe;
 } // namespace Core
 
-
 namespace Server {
-
 namespace Foe {
 
-enum FoeAction {
+enum FoeAction
+{
     moveUp = 0,
     moveUpRight,
     moveRight,
@@ -40,25 +39,15 @@ enum FoeAction {
 
 static const double SQRT_2 = 1.414213562373;
 
-class Foe : public MapObserver {
+class Foe : public MapObserver
+{
 public:
     Foe(const Core::Foe&, boost::asio::io_context&);
 
-    const std::string& chipset() const {
-        return m_chipset;
-    }
-
-    std::uint16_t x() const {
-        return m_position.first;
-    }
-
-    std::uint16_t y() const {
-        return m_position.second;
-    }
-
-    std::uint8_t floor() const {
-        return m_floor;
-    }
+    const std::string& chipset() const { return m_chipset; }
+    std::uint16_t x() const { return m_position.first; }
+    std::uint16_t y() const { return m_position.second; }
+    std::uint8_t floor() const { return m_floor; }
 
     int luaSay(::lua_State*);
 
@@ -80,9 +69,8 @@ private:
     void interpretAction(FoeAction);
     void setLocalPosition();
 
-    std::pair<std::int16_t, std::int16_t> computeDistance(
-         const std::pair<int, int>&
-    );
+    std::pair<std::int16_t, std::int16_t>
+    computeDistance(const std::pair<int, int>&);
 
     static std::pair<int, int> getMovement(FoeAction);
     // Properties:
@@ -101,8 +89,8 @@ private:
 
 typedef int (Foe::*mem_func)(::lua_State* L);
 
-template <mem_func func>
-int dispatch(::lua_State * L) {
+template <mem_func func> int dispatch(::lua_State* L)
+{
     Foe* ptr = *static_cast<Foe**>(lua_getextraspace(L));
     return ((*ptr).*func)(L);
 }

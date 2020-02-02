@@ -18,11 +18,11 @@ namespace Server {
 class Map;
 class MapState;
 
-using MapUpdatesVector = std::vector<
-    std::unique_ptr<Dummy::Protocol::MapUpdate::Update>
->;
+using MapUpdatesVector =
+    std::vector<std::unique_ptr<Dummy::Protocol::MapUpdate::Update>>;
 
-class MapObserver : public std::enable_shared_from_this<MapObserver> {
+class MapObserver : public std::enable_shared_from_this<MapObserver>
+{
 public:
     MapObserver();
     MapObserver(std::uint32_t);
@@ -30,14 +30,13 @@ public:
     void setMap(std::weak_ptr<Map>);
     void setID(std::uint32_t);
     void resetID();
-    std::uint32_t id() const {
-        return m_id.value();
-    }
+    std::uint32_t id() const { return m_id.value(); }
 
-    virtual void notifyOn(MapUpdatesVector&) = 0;
-    virtual void notifyPosition(MapUpdatesVector&) = 0;
+    virtual void notifyOn(MapUpdatesVector&)                              = 0;
+    virtual void notifyPosition(MapUpdatesVector&)                        = 0;
     virtual void receiveMessage(std::uint32_t author, const std::string&) = 0;
-    virtual std::pair<std::uint16_t, std::uint16_t> position() = 0;
+    virtual std::pair<std::uint16_t, std::uint16_t> position()            = 0;
+
 protected:
     std::optional<std::uint32_t> m_id;
     std::weak_ptr<Map> m_map;

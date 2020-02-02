@@ -18,9 +18,11 @@ macro(GroupSources curdir)
         if(IS_DIRECTORY ${PROJECT_SOURCE_DIR}/${curdir}/${child})
             GroupSources(${curdir}/${child})
         else()
-            string(REPLACE "/" "\\" groupname ${curdir})
+            string(REGEX REPLACE "^(src|include/dummy)/?" "" curdirsimple ${curdir})
+            string(REPLACE "/" "\\" groupname "${curdirsimple}")
+            #string(REPLACE "/" "\\" groupname "${curdir}")
             source_group(
-                ${groupname}
+                "${groupname}"
                 FILES
                 ${PROJECT_SOURCE_DIR}/${curdir}/${child}
             )

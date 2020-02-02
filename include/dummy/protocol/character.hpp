@@ -1,24 +1,19 @@
 #pragma once
 
-#include <string>
 #include "dummy/protocol/living.hpp"
+#include <string>
 
 namespace Dummy {
-
 namespace Protocol {
 
 // XXX: Has become useless. Remove it.
-class Character : public Living {
+class Character : public Living
+{
 public:
-    Character(std::uint32_t,
-              std::uint16_t,
-              std::uint16_t,
-              std::uint8_t,
-              const std::string&,
-              const std::string&,
+    Character(std::uint32_t, std::uint16_t, std::uint16_t, std::uint8_t,
+              const std::string&, const std::string&,
               Dummy::Core::Character::Direction direction);
 };
 
 } // namespace Protocol
-
 } // namespace Dummy

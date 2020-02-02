@@ -3,7 +3,8 @@
 namespace Dummy {
 namespace Server {
 
-class ServerResponseHandler {
+class ServerResponseHandler
+{
 public:
     virtual ~ServerResponseHandler();
     virtual void dequeueResponse() = 0;

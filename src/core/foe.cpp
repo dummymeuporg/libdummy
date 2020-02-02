@@ -3,7 +3,9 @@
 namespace Dummy {
 namespace Core {
 
-Foe::Foe(const std::string& luaFilename) : m_luaFilename(luaFilename) {}
+Foe::Foe(const std::string& luaFilename)
+    : m_luaFilename(luaFilename)
+{}
 
 /*
 Foe::Foe(

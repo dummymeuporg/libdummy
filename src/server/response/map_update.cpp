@@ -2,9 +2,6 @@
 
 namespace Dummy {
 namespace Server {
-namespace Response {
-
-
-} // namespace Response
+namespace Response {} // namespace Response
 } // namespace Server
 } // namespace Dummy

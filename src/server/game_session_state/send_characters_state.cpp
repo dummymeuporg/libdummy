@@ -1,6 +1,6 @@
-#include <iostream>
-#include <fstream>
 #include <filesystem>
+#include <fstream>
+#include <iostream>
 
 #include <boost/range/iterator_range.hpp>
 
@@ -27,24 +27,21 @@ using CharactersListResponse = Dummy::Server::Response::CharactersListResponse;
 
 SendCharactersState::SendCharactersState(GameSession& gameSession)
     : State(gameSession)
-{
-}
+{}
 
-void SendCharactersState::resume() {
-}
+void SendCharactersState::resume() {}
 
 
 void SendCharactersState::onCommand(
-    const ::Dummy::Server::Command::Command& command
-)
+    const ::Dummy::Server::Command::Command& command)
 {
     std::cerr << "[SendCharactersState] command." << std::endl;
     return command.accept(*this);
 }
 
 void SendCharactersState::visitCommand(
-    const Dummy::Server::Command::GetPrimaryInfoCommand& command
-) {
+    const Dummy::Server::Command::GetPrimaryInfoCommand& command)
+{
     auto self(shared_from_this());
 
     auto response = std::make_shared<CharactersListResponse>();
@@ -52,14 +49,13 @@ void SendCharactersState::visitCommand(
     // Retrieve the account's characters list.
     CharactersMap&& map(m_gameSession.getCharactersList());
 
-    for (const auto& [name, chr]: map) {
+    for (const auto& [name, chr] : map) {
         response->addCharacter(chr);
     }
 
     std::cerr << "Will change state." << std::endl;
     m_gameSession.changeState(
-        std::make_shared<ManageCharactersState>(m_gameSession, std::move(map))
-    );
+        std::make_shared<ManageCharactersState>(m_gameSession, std::move(map)));
     m_gameSession.addResponse(std::move(response));
 }
 

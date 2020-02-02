@@ -7,9 +7,11 @@ namespace Foe {
 
 class Foe;
 
-class MapCommunicator {
+class MapCommunicator
+{
 public:
     MapCommunicator(Foe&, Map&);
+
 private:
     Foe& m_foe;
     Map& m_map;

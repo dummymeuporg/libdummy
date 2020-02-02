@@ -3,23 +3,21 @@
 #include "dummy/protocol/outgoing_packet.hpp"
 
 namespace Dummy {
-
 namespace Protocol {
 
 OutgoingPacket::OutgoingPacket()
-    : m_buffer(sizeof(std::uint16_t)), m_cursor(2)
-{
-}
+    : m_buffer(sizeof(std::uint16_t))
+    , m_cursor(2)
+{}
 
 OutgoingPacket::OutgoingPacket(std::size_t initialSize)
-    : m_buffer(sizeof(std::uint16_t) + initialSize), m_cursor(2)
-{
-}
+    : m_buffer(sizeof(std::uint16_t) + initialSize)
+    , m_cursor(2)
+{}
 
 OutgoingPacket& OutgoingPacket::operator<<(const std::uint8_t val)
 {
-    if (m_buffer.size() < m_cursor + sizeof(std::uint8_t))
-    {
+    if (m_buffer.size() < m_cursor + sizeof(std::uint8_t)) {
         m_buffer.resize(m_buffer.size() + sizeof(std::uint8_t));
     }
     *(reinterpret_cast<std::uint8_t*>(m_buffer.data() + m_cursor)) = val;
@@ -30,8 +28,7 @@ OutgoingPacket& OutgoingPacket::operator<<(const std::uint8_t val)
 
 OutgoingPacket& OutgoingPacket::operator<<(const std::uint16_t val)
 {
-    if (m_buffer.size() < m_cursor + sizeof(std::uint16_t))
-    {
+    if (m_buffer.size() < m_cursor + sizeof(std::uint16_t)) {
         m_buffer.resize(m_buffer.size() + sizeof(std::uint16_t));
     }
     *(reinterpret_cast<std::uint16_t*>(m_buffer.data() + m_cursor)) = val;
@@ -42,8 +39,7 @@ OutgoingPacket& OutgoingPacket::operator<<(const std::uint16_t val)
 
 OutgoingPacket& OutgoingPacket::operator<<(const std::uint32_t val)
 {
-    if (m_buffer.size() < m_cursor + sizeof(std::uint32_t))
-    {
+    if (m_buffer.size() < m_cursor + sizeof(std::uint32_t)) {
         m_buffer.resize(m_buffer.size() + sizeof(std::uint32_t));
     }
     *(reinterpret_cast<std::uint32_t*>(m_buffer.data() + m_cursor)) = val;
@@ -55,8 +51,7 @@ OutgoingPacket& OutgoingPacket::operator<<(const std::uint32_t val)
 OutgoingPacket& OutgoingPacket::operator<<(const std::string& str)
 {
     std::size_t appendSize = sizeof(std::uint32_t) + str.size();
-    if (m_buffer.size() < m_cursor + appendSize)
-    {
+    if (m_buffer.size() < m_cursor + appendSize) {
         m_buffer.resize(m_buffer.size() + appendSize);
     }
 
@@ -76,5 +71,4 @@ void OutgoingPacket::_updateInternalSize()
 }
 
 } // namespace Protocol
-
 } // namespace Dummy

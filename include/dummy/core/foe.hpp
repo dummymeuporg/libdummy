@@ -5,12 +5,11 @@
 namespace Dummy {
 namespace Core {
 
-class Foe {
+class Foe
+{
 public:
     Foe(const std::string&);
-    const std::string& luaFilename() const {
-        return m_luaFilename;
-    }
+    const std::string& luaFilename() const { return m_luaFilename; }
 
 private:
     std::string m_luaFilename;

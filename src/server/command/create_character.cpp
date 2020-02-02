@@ -8,13 +8,13 @@ namespace Command {
 
 CreateCharacter::CreateCharacter(const std::string& name,
                                  const std::string& skin)
-    : m_name(name), m_skin(skin)
-{
-}
+    : m_name(name)
+    , m_skin(skin)
+{}
 
-void
-CreateCharacter::accept(::Dummy::Server::Command::CommandVisitor& visitor)
-const {
+void CreateCharacter::accept(
+    ::Dummy::Server::Command::CommandVisitor& visitor) const
+{
     visitor.visitCommand(*this);
 }
 

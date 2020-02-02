@@ -6,9 +6,10 @@ namespace Dummy {
 namespace Server {
 namespace Command {
 
-Ping::Ping() { }
+Ping::Ping() {}
 
-void Ping::accept(CommandVisitor& visitor) const {
+void Ping::accept(CommandVisitor& visitor) const
+{
     visitor.visitCommand(*this);
 }
 

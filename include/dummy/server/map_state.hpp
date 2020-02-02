@@ -17,48 +17,42 @@ class Update;
 class CharacterPosition;
 class LivingOff;
 class LivingOn;
-}
+} // namespace MapUpdate
 
 } // namespace Protocol
 
-class LivingNotFound : public Server::Error {
+class LivingNotFound : public Server::Error
+{
 public:
-    virtual const char* what() const noexcept override {
+    virtual const char* what() const noexcept override
+    {
         return "the living was not found in the map state";
     }
 };
 
 namespace Server {
-class MapState : public Dummy::Protocol::MapUpdate::MapUpdateVisitor {
+class MapState : public Dummy::Protocol::MapUpdate::MapUpdateVisitor
+{
 public:
-    using LivingsMap = std::map<std::uint32_t,
-                                std::shared_ptr<Dummy::Protocol::Living>>;
+    using LivingsMap =
+        std::map<std::uint32_t, std::shared_ptr<Dummy::Protocol::Living>>;
     MapState();
     void update(const Dummy::Protocol::MapUpdate::Update&);
 
     void visitMapUpdate(
-        const Dummy::Protocol::MapUpdate::CharacterPosition&
-    ) override;
+        const Dummy::Protocol::MapUpdate::CharacterPosition&) override;
+    void visitMapUpdate(const Dummy::Protocol::MapUpdate::LivingOff&) override;
+    void visitMapUpdate(const Dummy::Protocol::MapUpdate::LivingOn&) override;
+    void
+    visitMapUpdate(const Dummy::Protocol::MapUpdate::NamedLivingOn&) override;
 
-    void visitMapUpdate(
-        const Dummy::Protocol::MapUpdate::LivingOff&
-    ) override;
+    const LivingsMap& livings() const { return m_livings; }
 
-    void visitMapUpdate(
-        const Dummy::Protocol::MapUpdate::LivingOn&
-    ) override;
-
-    void visitMapUpdate(
-        const Dummy::Protocol::MapUpdate::NamedLivingOn &
-    ) override;
-
-    const LivingsMap& livings() const {
-        return m_livings;
-    }
-    
-    const Dummy::Protocol::Living& living(std::uint32_t id) const {
+    const Dummy::Protocol::Living& living(std::uint32_t id) const
+    {
         return *m_livings.at(id);
     }
+
 private:
     LivingsMap m_livings;
 };

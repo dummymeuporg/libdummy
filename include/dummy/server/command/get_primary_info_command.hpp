@@ -8,11 +8,13 @@ namespace Dummy {
 namespace Server {
 namespace Command {
 
-class GetPrimaryInfoCommand : public Command {
+class GetPrimaryInfoCommand : public Command
+{
 public:
     GetPrimaryInfoCommand();
     virtual void
     accept(::Dummy::Server::Command::CommandVisitor&) const override;
+
 private:
 };
 

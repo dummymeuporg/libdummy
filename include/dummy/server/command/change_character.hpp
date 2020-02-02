@@ -6,11 +6,12 @@ namespace Dummy {
 namespace Server {
 namespace Command {
 
-class ChangeCharacter : public Command {
+class ChangeCharacter : public Command
+{
 public:
-    void accept(::Dummy::Server::Command::CommandVisitor &) const override;
+    void accept(::Dummy::Server::Command::CommandVisitor&) const override;
 };
 
-}
-}
-}
+} // namespace Command
+} // namespace Server
+} // namespace Dummy

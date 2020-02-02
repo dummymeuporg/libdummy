@@ -13,7 +13,8 @@ class Character;
 namespace Server {
 namespace Response {
 
-class SelectCharacter : public Response {
+class SelectCharacter : public Response
+{
 public:
     virtual void accept(ResponseVisitor&) const override;
     std::shared_ptr<Response> clone() const override;

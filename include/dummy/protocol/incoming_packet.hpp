@@ -2,17 +2,17 @@
 
 #include <array>
 #include <cstdint>
-#include <string>
 #include <iostream>
+#include <string>
 #include <vector>
 
 #include "dummy/protocol/errors.hpp"
 
 namespace Dummy {
-
 namespace Protocol {
 
-class IncomingPacket {
+class IncomingPacket
+{
 public:
     IncomingPacket(const std::uint8_t*, std::size_t);
     IncomingPacket(const std::vector<std::uint8_t>&);
@@ -22,22 +22,18 @@ public:
     IncomingPacket& operator>>(std::uint16_t&);
     IncomingPacket& operator>>(std::uint32_t&);
 
-    template<std::size_t SIZE>
-    IncomingPacket& operator>>(std::array<std::uint8_t, SIZE>& arr) {
-        std::copy(
-            m_data + m_cursor,
-            m_data + m_cursor + SIZE,
-            arr.data()
-        );
+    template <std::size_t SIZE>
+    IncomingPacket& operator>>(std::array<std::uint8_t, SIZE>& arr)
+    {
+        std::copy(m_data + m_cursor, m_data + m_cursor + SIZE, arr.data());
         m_cursor += SIZE;
         return *this;
     }
-    std::size_t size() const {
-        return m_size;
-    }
+    std::size_t size() const { return m_size; }
+
 private:
-    template<typename T>
-    IncomingPacket& operator>>(T& value) {
+    template <typename T> IncomingPacket& operator>>(T& value)
+    {
         if (m_size - m_cursor < sizeof(T)) {
             throw ParseError();
         }
@@ -51,5 +47,4 @@ private:
 };
 
 } // namespace Protocol
-
 } // namespace Dummy

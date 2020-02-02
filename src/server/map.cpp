@@ -2,26 +2,24 @@
 
 #include "dummy/server/abstract_game_server.hpp"
 #include "dummy/server/foe/foe.hpp"
-#include "dummy/server/player.hpp"
 #include "dummy/server/map.hpp"
 #include "dummy/server/map_observer.hpp"
+#include "dummy/server/player.hpp"
 
 namespace Dummy {
 namespace Server {
 
-Map::Map(
-    Instance& instance,
-    const ::Dummy::Remote::Map& map,
-    boost::asio::io_context& ioContext
-) : m_instance(instance),
-    m_map(map),
-    m_ioContext(ioContext),
-    m_idGenerator(0)
-{
-}
+Map::Map(Instance& instance, const ::Dummy::Remote::Map& map,
+         boost::asio::io_context& ioContext)
+    : m_instance(instance)
+    , m_map(map)
+    , m_ioContext(ioContext)
+    , m_idGenerator(0)
+{}
 
-void Map::spawn() {
-    for (const auto& foe: m_map.foes()) {
+void Map::spawn()
+{
+    for (const auto& foe : m_map.foes()) {
         auto mapFoe(std::make_shared<Foe::Foe>(foe, m_ioContext));
         m_foes.insert(mapFoe);
         addObserver(mapFoe);
@@ -30,31 +28,34 @@ void Map::spawn() {
     }
 }
 
-void
-Map::addPlayer(std::shared_ptr<Player> player) {
+void Map::addPlayer(std::shared_ptr<Player> player)
+{
     if (m_players.find(player->name()) == std::end(m_players)) {
         m_players[player->name()] = player;
         player->setMap(shared_from_this());
     }
 }
 
-void
-Map::removePlayer(std::shared_ptr<Player> player) {
+void Map::removePlayer(std::shared_ptr<Player> player)
+{
     if (m_players.find(player->name()) != std::end(m_players)) {
         std::cerr << "Bye bye " << player->name() << std::endl;
         m_players.erase(player->name());
     }
 }
 
-void Map::addObserver(std::shared_ptr<MapObserver> mapObserver) {
+void Map::addObserver(std::shared_ptr<MapObserver> mapObserver)
+{
     // XXX: Should not be problematic. For now.
-    while(m_observers.find(++m_idGenerator) != std::end(m_observers));
+    while (m_observers.find(++m_idGenerator) != std::end(m_observers))
+        ;
 
     mapObserver->setID(m_idGenerator);
     m_observers[m_idGenerator] = mapObserver;
 }
 
-void Map::removeObserver(std::uint32_t id) {
+void Map::removeObserver(std::uint32_t id)
+{
     if (m_observers.find(id) != std::end(m_observers)) {
         auto observer = m_observers[id].lock();
         if (nullptr != observer) {
@@ -64,14 +65,15 @@ void Map::removeObserver(std::uint32_t id) {
     }
 }
 
-bool
-Map::isBlocking(std::uint16_t x, std::uint16_t y, std::uint8_t floor) const {
+bool Map::isBlocking(std::uint16_t x, std::uint16_t y, std::uint8_t floor) const
+{
     // XXX: refactor this.
     return m_map.floors().at(floor).isBlocking(x, y);
 }
 
-void Map::dispatchMessage(std::uint32_t author, const std::string& message) {
-    for (auto& [id, observer]: m_observers) {
+void Map::dispatchMessage(std::uint32_t author, const std::string& message)
+{
+    for (auto& [id, observer] : m_observers) {
         auto observerPt = observer.lock();
         if (nullptr != observerPt) {
             observerPt->receiveMessage(author, message);

@@ -8,10 +8,9 @@ namespace Command {
 
 GetPrimaryInfoCommand::GetPrimaryInfoCommand() {}
 
-void
-GetPrimaryInfoCommand::accept(
-    ::Dummy::Server::Command::CommandVisitor& visitor
-) const {
+void GetPrimaryInfoCommand::accept(
+    ::Dummy::Server::Command::CommandVisitor& visitor) const
+{
     visitor.visitCommand(*this);
 }
 

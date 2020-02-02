@@ -10,11 +10,11 @@
 namespace Dummy {
 namespace Server {
 
-using CommandPtr = std::shared_ptr<const Dummy::Server::Command::Command>;
+using CommandPtr  = std::shared_ptr<const Dummy::Server::Command::Command>;
 using ResponsePtr = std::shared_ptr<const Dummy::Server::Response::Response>;
 
-class GameSessionCommunicator :
-    public std::enable_shared_from_this<GameSessionCommunicator>
+class GameSessionCommunicator
+    : public std::enable_shared_from_this<GameSessionCommunicator>
 {
 public:
     GameSessionCommunicator(boost::asio::io_context&);
@@ -35,5 +35,5 @@ private:
     std::weak_ptr<Dummy::Server::Response::Handler> m_responseHandler;
 };
 
-}
-}
+} // namespace Server
+} // namespace Dummy

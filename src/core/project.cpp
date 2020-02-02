@@ -1,35 +1,34 @@
+#include "dummy/core/project.hpp"
+
 #include <iostream>
 #include <queue>
 #include <sstream>
 
-#include "dummy/core/project.hpp"
-
 namespace fs = std::filesystem;
 namespace pt = boost::property_tree;
 
-namespace Dummy
-{
+namespace Dummy {
+namespace Core {
 
-namespace Core
-{
-
-Project::Project(const fs::path& projectPath) : m_projectPath(projectPath)
+Project::Project(const fs::path& projectPath)
+    : m_projectPath(projectPath)
 {
     // Load project.xml
     // Identify starting map.
 }
 
-Project::Project(const std::string& projectPath) :
-    m_projectPath(fs::path(projectPath))
+Project::Project(const std::string& projectPath)
+    : m_projectPath(fs::path(projectPath))
 {}
 
 Project::~Project() {}
 
-void Project::load() {
+void Project::load()
+{
 
     fs::path projectXMLPath(m_projectPath / "project.xml");
 
-    if (!fs::exists(projectXMLPath)) {
+    if (! fs::exists(projectXMLPath)) {
         throw ProjectFileNotFound();
     }
 
@@ -42,12 +41,13 @@ void Project::load() {
     _setStartingPoint(tree.get_child("project.starting_point"));
 }
 
-void Project::_setStartingPoint(pt::ptree node) {
+void Project::_setStartingPoint(pt::ptree node)
+{
     std::string x, y, map, floorString;
     std::pair<std::uint16_t, std::uint16_t> position;
     std::uint16_t floor;
 
-    for(const auto& child: node.get_child("<xmlattr>")) {
+    for (const auto& child : node.get_child("<xmlattr>")) {
         if (child.first == "x") {
             x = child.second.data();
         } else if (child.first == "y") {
@@ -79,7 +79,7 @@ void Project::_setStartingPoint(pt::ptree node) {
     }
     std::cerr << "y = " << position.second << std::endl;
 
-    if (!mapExists(map)) {
+    if (! mapExists(map)) {
         throw MapNotFound();
     }
 
@@ -89,19 +89,14 @@ void Project::_setStartingPoint(pt::ptree node) {
 
     // From here, everything is correct.
     m_startingPoint = std::make_optional<StartingPoint>(
-        map,
-        position,
-        static_cast<std::uint8_t>(floor)
-    );
-
+        map, position, static_cast<std::uint8_t>(floor));
 }
 
-void Project::_browseNode(pt::ptree node) {
-    for (const auto& it: node) {
-        if (it.first == "map")
-        {
-            for (const auto& child: it.second.get_child("<xmlattr>"))
-            {
+void Project::_browseNode(pt::ptree node)
+{
+    for (const auto& it : node) {
+        if (it.first == "map") {
+            for (const auto& child : it.second.get_child("<xmlattr>")) {
                 if (child.first == "name") {
                     m_maps.insert(child.second.data());
                     onMapFound(child.second.data());
@@ -114,15 +109,16 @@ void Project::_browseNode(pt::ptree node) {
     }
 }
 
-void Project::onMapFound(const std::string&) {
+void Project::onMapFound(const std::string&)
+{
     // XXX: Set it as a pure virtual function later.
 }
 
-bool Project::mapExists(const std::string&) {
+bool Project::mapExists(const std::string&)
+{
     // XXX: Set it as a pure virtual function later.
     return false;
 }
 
 } // namespace Core
-
 } // namespace Dummy

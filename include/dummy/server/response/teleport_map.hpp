@@ -1,13 +1,14 @@
 #pragma once
 
-#include <memory>
 #include "dummy/server/response/response.hpp"
+#include <memory>
 
 namespace Dummy {
 namespace Server {
 namespace Response {
 
-class TeleportMap : public Response {
+class TeleportMap : public Response
+{
 public:
     virtual void accept(ResponseVisitor&) const override;
     std::shared_ptr<Response> clone() const override;

@@ -4,31 +4,29 @@
 #include <string>
 
 namespace Dummy {
-
 namespace Protocol {
 
-class TeleportRequest {
+class TeleportRequest
+{
 public:
     TeleportRequest(const std::string&,
                     const std::pair<std::uint16_t, std::uint16_t>&,
-                    std::uint8_t,
-                    const std::string&);
+                    std::uint8_t, const std::string&);
 
-    const std::string& destinationMap() const {
-        return m_destinationMap;
-    }
+    const std::string& destinationMap() const { return m_destinationMap; }
 
-    const std::string& destinationInstance() const {
+    const std::string& destinationInstance() const
+    {
         return m_destinationInstance;
     }
 
-    const std::pair<std::uint16_t, std::uint16_t>& position() const {
+    const std::pair<std::uint16_t, std::uint16_t>& position() const
+    {
         return m_position;
     }
 
-    std::uint8_t floor() const {
-        return m_floor;
-    }
+    std::uint8_t floor() const { return m_floor; }
+
 private:
     std::string m_destinationMap;
     std::pair<std::uint16_t, std::uint16_t> m_position;
@@ -37,5 +35,4 @@ private:
 };
 
 } // namespace Protocol
-
 } // namespace Dummy

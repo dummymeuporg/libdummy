@@ -1,18 +1,20 @@
 #include <filesystem>
 
-#include "dummy/server/project.hpp"
 #include "dummy/remote/map.hpp"
+#include "dummy/server/project.hpp"
 
 namespace fs = std::filesystem;
 
 namespace Dummy {
 namespace Remote {
 
-Map::Map(const Dummy::Server::Project& project, const std::string& name) :
-    Core::Map(name), m_project(project)
+Map::Map(const Dummy::Server::Project& project, const std::string& name)
+    : Core::Map(name)
+    , m_project(project)
 {}
 
-void Map::load() {
+void Map::load()
+{
 
     fs::path basePath(m_project.projectPath() / "maps");
     std::string mapFile(m_name + ".map");
@@ -20,12 +22,12 @@ void Map::load() {
     std::string luaFile(m_name + ".lua");
 
     std::ifstream ifsMapFile(basePath / mapFile, std::ios::binary);
-    if (!ifsMapFile.is_open()) {
+    if (! ifsMapFile.is_open()) {
         throw Dummy::Core::MapFileNotFound();
     }
 
     std::ifstream ifsBlkFile(basePath / blkFile, std::ios::binary);
-    if (!ifsBlkFile.is_open()) {
+    if (! ifsBlkFile.is_open()) {
         throw Dummy::Core::BlkFileNotFound();
     }
 
@@ -37,30 +39,34 @@ void Map::load() {
     }
 
     loadLuaFile((basePath / luaFile).string());
-
 }
 
-int Map::luaOnTouchEvent(::lua_State*) {
+int Map::luaOnTouchEvent(::lua_State*)
+{
     // XXX: What do we do?
     return 1;
 }
 
-int Map::luaMessage(::lua_State*) {
+int Map::luaMessage(::lua_State*)
+{
     // XXX: What do we do?
     return 1;
 }
 
-int Map::luaTeleport(::lua_State*) {
+int Map::luaTeleport(::lua_State*)
+{
     // XXX: What do we do?
     return 1;
 }
 
-int Map::luaOnKeypressEvent(::lua_State*) {
+int Map::luaOnKeypressEvent(::lua_State*)
+{
     // XXX: What do we do?
     return 1;
 }
 
-int Map::luaAddFoe(::lua_State* luaState) {
+int Map::luaAddFoe(::lua_State* luaState)
+{
     // XXX: What do we do?
     std::string luaFilename = lua_tostring(luaState, 1);
     fs::path fullpath(m_project.projectPath() / "foes");

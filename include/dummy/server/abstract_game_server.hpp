@@ -24,34 +24,23 @@ class GameSessionCommunicator;
 class Player;
 class Map;
 
-class AbstractGameServer {
+class AbstractGameServer
+{
 public:
     AbstractGameServer(boost::asio::io_context& ioContext,
-                       const fs::path& projectPath,
-                       const fs::path& serverPath);
+                       const fs::path& projectPath, const fs::path& serverPath);
 
-    const fs::path& serverPath() const {
-        return m_serverPath;
-    }
+    const fs::path& serverPath() const { return m_serverPath; }
+    const Project& project() const { return m_project; }
 
-    const Project& project() const {
-        return m_project;
-    }
-
-    std::shared_ptr<Account>
-    connect(const std::string&, const std::string&);
+    std::shared_ptr<Account> connect(const std::string&, const std::string&);
 
     void disconnect(const std::string&);
-
     void addPending(const std::string&, const std::string&);
-
     bool isPending(const std::string&) const;
-
     bool isAuthenticated(const std::string&) const;
 
-    Instance& mainInstance() {
-        return m_mainInstance;
-    }
+    Instance& mainInstance() { return m_mainInstance; }
 
 
     /* Character creation. */
@@ -59,20 +48,16 @@ public:
     bool skinExists(const std::string&) const;
 
     std::shared_ptr<GameSession> buildGameSession(
-        std::shared_ptr<Dummy::Server::GameSessionCommunicator>
-    );
+        std::shared_ptr<Dummy::Server::GameSessionCommunicator>);
 
-    ::Dummy::Core::Character createCharacter(
-        const Account&,
-        const std::string& characterName,
-        const std::string& skin
-    ) const;
+    ::Dummy::Core::Character createCharacter(const Account&,
+                                             const std::string& characterName,
+                                             const std::string& skin) const;
 
-    void
-    createCharacterFile(const Account&, const ::Dummy::Core::Character&) const;
+    void createCharacterFile(const Account&,
+                             const ::Dummy::Core::Character&) const;
 
-    void
-    saveCharacter(const Account&, const ::Dummy::Core::Character&) const;
+    void saveCharacter(const Account&, const ::Dummy::Core::Character&) const;
 
     void removeSession(std::shared_ptr<GameSession>);
 
@@ -82,7 +67,8 @@ public:
 
     virtual void run();
 
-    std::weak_ptr<Instance> instance(const std::string& name) {
+    std::weak_ptr<Instance> instance(const std::string& name)
+    {
         if (m_instances.find(name) == std::end(m_instances)) {
             spawnInstance(name);
         }
@@ -99,10 +85,8 @@ protected:
     Instance m_mainInstance;
 
     std::map<std::string, std::shared_ptr<Instance>> m_instances;
-    std::map<std::string,
-             std::shared_ptr<Account>> m_pendingAccounts;
-    std::map<std::string,
-             std::shared_ptr<Account>> m_connectedAccounts;
+    std::map<std::string, std::shared_ptr<Account>> m_pendingAccounts;
+    std::map<std::string, std::shared_ptr<Account>> m_connectedAccounts;
     std::set<std::shared_ptr<GameSession>> m_gameSessions;
 };
 

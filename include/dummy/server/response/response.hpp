@@ -13,18 +13,18 @@ namespace Response {
 
 class ResponseVisitor;
 
-class Response : public std::enable_shared_from_this<Response> {
+class Response : public std::enable_shared_from_this<Response>
+{
 public:
     Response();
-    std::uint8_t status() const {
-        return m_status;
-    }
+    std::uint8_t status() const { return m_status; }
 
     void setStatus(std::uint8_t status);
-    virtual void accept(ResponseVisitor&) const = 0;
-    virtual std::shared_ptr<Response> clone() const = 0;
+    virtual void accept(ResponseVisitor&) const                      = 0;
+    virtual std::shared_ptr<Response> clone() const                  = 0;
     virtual void serializeTo(Dummy::Protocol::OutgoingPacket&) const = 0;
-    virtual void readFrom(Dummy::Protocol::IncomingPacket&) = 0;
+    virtual void readFrom(Dummy::Protocol::IncomingPacket&)          = 0;
+
 protected:
     std::uint8_t m_status;
 };

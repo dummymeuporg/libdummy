@@ -6,36 +6,19 @@
 #include "dummy/core/character.hpp"
 
 namespace Dummy {
-
 namespace Protocol {
 
-class Living {
+class Living
+{
 public:
-    Living(std::uint32_t,
-           std::uint16_t,
-           std::uint16_t,
-           std::uint8_t,
-           const std::string&,
-           Dummy::Core::Character::Direction);
+    Living(std::uint32_t, std::uint16_t, std::uint16_t, std::uint8_t,
+           const std::string&, Dummy::Core::Character::Direction);
 
-    std::uint32_t id() const {
-        return m_id;
-    }
-    std::uint16_t x() const {
-        return m_x;
-    }
-
-    std::uint16_t y() const {
-        return m_y;
-    }
-
-    const std::string& chipset() const {
-        return m_chipset;
-    }
-
-    Dummy::Core::Character::Direction direction() const {
-        return m_direction;
-    }
+    std::uint32_t id() const { return m_id; }
+    std::uint16_t x() const { return m_x; }
+    std::uint16_t y() const { return m_y; }
+    const std::string& chipset() const { return m_chipset; }
+    Dummy::Core::Character::Direction direction() const { return m_direction; }
 
     void setPosition(std::uint16_t, std::uint16_t);
     void setDirection(Dummy::Core::Character::Direction);
@@ -51,5 +34,4 @@ protected:
 };
 
 } // namespace Protocol
-
 } // namespace Dummy

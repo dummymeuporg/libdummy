@@ -6,10 +6,10 @@
 
 namespace Dummy {
 namespace Server {
-
 namespace Response {
 
-class MapUpdate : public Response {
+class MapUpdate : public Response
+{
 public:
     virtual void accept(ResponseVisitor&) const override;
     std::shared_ptr<Response> clone() const override;

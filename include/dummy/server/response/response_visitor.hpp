@@ -8,9 +8,11 @@ namespace Dummy {
 namespace Server {
 namespace Response {
 
-class ResponseNotHandled : public ::Dummy::Server::Error {
+class ResponseNotHandled : public ::Dummy::Server::Error
+{
 public:
-    virtual const char* what() const noexcept override {
+    virtual const char* what() const noexcept override
+    {
         return "this state does not handle such a response";
     }
 };
@@ -25,33 +27,37 @@ class SelectCharacter;
 class SetPosition;
 class TeleportMap;
 
-class ResponseVisitor {
+class ResponseVisitor
+{
 public:
-    virtual void visitResponse(const ChangeCharacter&) {
+    virtual void visitResponse(const ChangeCharacter&)
+    {
         throw ResponseNotHandled();
     }
-    virtual void visitResponse(const ConnectResponse&) {
+    virtual void visitResponse(const ConnectResponse&)
+    {
         throw ResponseNotHandled();
     }
-    virtual void visitResponse(const CharactersListResponse&) {
+    virtual void visitResponse(const CharactersListResponse&)
+    {
         throw ResponseNotHandled();
     }
-    virtual void visitResponse(const CreateCharacter&) {
+    virtual void visitResponse(const CreateCharacter&)
+    {
         throw ResponseNotHandled();
     }
-    virtual void visitResponse(const Message&) {
+    virtual void visitResponse(const Message&) { throw ResponseNotHandled(); }
+    virtual void visitResponse(const SelectCharacter&)
+    {
         throw ResponseNotHandled();
     }
-    virtual void visitResponse(const SelectCharacter&) {
+    virtual void visitResponse(const TeleportMap&)
+    {
         throw ResponseNotHandled();
     }
-    virtual void visitResponse(const TeleportMap&) {
-        throw ResponseNotHandled();
-    }
-    virtual void visitResponse(const Ping&) {
-        throw ResponseNotHandled();
-    }
-    virtual void visitResponse(const SetPosition&) {
+    virtual void visitResponse(const Ping&) { throw ResponseNotHandled(); }
+    virtual void visitResponse(const SetPosition&)
+    {
         throw ResponseNotHandled();
     }
 };

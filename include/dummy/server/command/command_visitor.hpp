@@ -6,14 +6,16 @@ namespace Dummy {
 namespace Server {
 
 namespace Response {
-    class Response;
+class Response;
 }
 
 namespace Command {
 
-class CommandNotHandled : public ::Dummy::Server::Error {
+class CommandNotHandled : public ::Dummy::Server::Error
+{
 public:
-    virtual const char* what() const noexcept override {
+    virtual const char* what() const noexcept override
+    {
         return "this state does not handle such a command";
     };
 };
@@ -28,44 +30,41 @@ class SelectCharacter;
 class SetPosition;
 class TeleportMap;
 
-class CommandVisitor {
+class CommandVisitor
+{
 public:
-
-    virtual void visitCommand(const ChangeCharacter&) {
+    virtual void visitCommand(const ChangeCharacter&)
+    {
         throw CommandNotHandled();
     }
 
-    virtual void visitCommand(const ConnectCommand&) {
+    virtual void visitCommand(const ConnectCommand&)
+    {
         throw CommandNotHandled();
     }
 
-    virtual void visitCommand(const CreateCharacter&) {
+    virtual void visitCommand(const CreateCharacter&)
+    {
         throw CommandNotHandled();
     }
 
-    virtual void visitCommand(const GetPrimaryInfoCommand&) {
+    virtual void visitCommand(const GetPrimaryInfoCommand&)
+    {
         throw CommandNotHandled();
     }
 
-    virtual void visitCommand(const Message&) {
+    virtual void visitCommand(const Message&) { throw CommandNotHandled(); }
+
+    virtual void visitCommand(const Ping&) { throw CommandNotHandled(); }
+
+    virtual void visitCommand(const SetPosition&) { throw CommandNotHandled(); }
+
+    virtual void visitCommand(const SelectCharacter&)
+    {
         throw CommandNotHandled();
     }
 
-    virtual void visitCommand(const Ping&) {
-        throw CommandNotHandled();
-    }
-
-    virtual void visitCommand(const SetPosition&) {
-        throw CommandNotHandled();
-    }
-
-    virtual void visitCommand(const SelectCharacter&) {
-        throw CommandNotHandled();
-    }
-
-    virtual void visitCommand(const TeleportMap&) {
-        throw CommandNotHandled();
-    }
+    virtual void visitCommand(const TeleportMap&) { throw CommandNotHandled(); }
 };
 
 } // namespace Command

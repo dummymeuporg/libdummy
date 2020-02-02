@@ -10,33 +10,33 @@ namespace Dummy {
 namespace Server {
 namespace Response {
 
-void CharactersListResponse::accept(ResponseVisitor& visitor) const {
+void CharactersListResponse::accept(ResponseVisitor& visitor) const
+{
     visitor.visitResponse(*this);
 }
 
-void
-CharactersListResponse::addCharacter(
-    std::shared_ptr<Dummy::Core::Character> character
-)
+void CharactersListResponse::addCharacter(
+    std::shared_ptr<Dummy::Core::Character> character)
 {
     m_charactersList.push_back(character);
 }
 
-void CharactersListResponse::serializeTo(Dummy::Protocol::OutgoingPacket& pkt)
-const
+void CharactersListResponse::serializeTo(
+    Dummy::Protocol::OutgoingPacket& pkt) const
 {
     pkt << static_cast<std::uint16_t>(m_charactersList.size());
-    for (auto chr: m_charactersList) {
+    for (auto chr : m_charactersList) {
         pkt << *chr;
     }
 }
 
-void CharactersListResponse::readFrom(Dummy::Protocol::IncomingPacket& pkt) {
+void CharactersListResponse::readFrom(Dummy::Protocol::IncomingPacket& pkt)
+{
     pkt >> m_status;
     // XXX: extract characters
     std::uint16_t charactersCount;
     pkt >> charactersCount;
-    for (const auto i: boost::irange(charactersCount)) {
+    for (const auto i : boost::irange(charactersCount)) {
         boost::ignore_unused(i);
         std::shared_ptr<Dummy::Core::Character> chr =
             std::make_shared<Dummy::Core::Character>();
@@ -45,12 +45,12 @@ void CharactersListResponse::readFrom(Dummy::Protocol::IncomingPacket& pkt) {
     }
 }
 
-std::shared_ptr<Response> CharactersListResponse::clone() const {
+std::shared_ptr<Response> CharactersListResponse::clone() const
+{
     auto response(std::make_shared<CharactersListResponse>());
-    for (const auto& character: m_charactersList) {
+    for (const auto& character : m_charactersList) {
         response->addCharacter(
-            std::make_shared<Dummy::Core::Character>(*character)
-        );
+            std::make_shared<Dummy::Core::Character>(*character));
     }
     return std::move(response);
 }

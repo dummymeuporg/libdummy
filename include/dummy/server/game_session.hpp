@@ -18,20 +18,20 @@ class Account;
 class Player;
 
 namespace Command {
-    class Command;
+class Command;
 }
 
 namespace Response {
-    class Response;
+class Response;
 }
 
 namespace GameSessionState {
-    class State;
+class State;
 }
 
 class GameSessionCommunicator;
 
-using CommandPtr = std::shared_ptr<const Dummy::Server::Command::Command>;
+using CommandPtr  = std::shared_ptr<const Dummy::Server::Command::Command>;
 using ResponsePtr = std::shared_ptr<const Dummy::Server::Response::Response>;
 
 using CharactersMap =
@@ -39,13 +39,11 @@ using CharactersMap =
 
 
 class GameSession : public std::enable_shared_from_this<GameSession>,
-                    public Command::Handler {
+                    public Command::Handler
+{
 public:
-    GameSession(
-        AbstractGameServer&,
-        std::shared_ptr<GameSessionCommunicator>,
-        boost::asio::io_context&
-    );
+    GameSession(AbstractGameServer&, std::shared_ptr<GameSessionCommunicator>,
+                boost::asio::io_context&);
     virtual ~GameSession();
     void start();
     void close();
@@ -54,26 +52,17 @@ public:
     void handleCommand(CommandPtr) override;
     void responseHandlerClosed() override;
 
-    std::unique_ptr<const Dummy::Server::Response::Response>
-    getResponse();
+    std::unique_ptr<const Dummy::Server::Response::Response> getResponse();
 
     void addResponse(ResponsePtr);
 
-    AbstractGameServer& abstractGameServer() {
-        return m_abstractGameServer;
-    }
+    AbstractGameServer& abstractGameServer() { return m_abstractGameServer; }
 
-    const Dummy::Server::Account& account() const {
-        return *m_account;
-    }
+    const Dummy::Server::Account& account() const { return *m_account; }
 
-    std::weak_ptr<Dummy::Server::Player> player() {
-        return m_player;
-    }
+    std::weak_ptr<Dummy::Server::Player> player() { return m_player; }
 
-    boost::asio::io_context& ioContext() {
-        return m_ioContext;
-    }
+    boost::asio::io_context& ioContext() { return m_ioContext; }
 
     void setAccount(std::shared_ptr<Account> account);
     void setPlayer(std::shared_ptr<Player> player);
@@ -91,7 +80,6 @@ private:
     std::queue<std::unique_ptr<const Dummy::Server::Response::Response>>
         m_responses;
     bool m_open;
-
 };
 
 } // namespace Server

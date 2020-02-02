@@ -5,7 +5,8 @@ namespace Dummy {
 namespace Server {
 namespace Command {
 
-class Ping : public Command {
+class Ping : public Command
+{
 public:
     Ping();
     virtual void accept(CommandVisitor&) const override;

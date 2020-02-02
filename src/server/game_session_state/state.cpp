@@ -1,5 +1,5 @@
-#include "dummy/server/game_session.hpp"
 #include "dummy/server/game_session_state/state.hpp"
+#include "dummy/server/game_session.hpp"
 
 namespace Dummy {
 namespace Server {

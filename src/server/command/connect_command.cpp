@@ -8,12 +8,12 @@ namespace Command {
 
 ConnectCommand::ConnectCommand(const std::string& tagName,
                                const std::string& sessionID)
-    : m_tagName(tagName), m_sessionID(sessionID)
-{
-}
+    : m_tagName(tagName)
+    , m_sessionID(sessionID)
+{}
 
-void
-ConnectCommand::accept(::Dummy::Server::Command::CommandVisitor& visitor) const
+void ConnectCommand::accept(
+    ::Dummy::Server::Command::CommandVisitor& visitor) const
 {
     visitor.visitCommand(*this);
 }

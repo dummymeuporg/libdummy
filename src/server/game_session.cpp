@@ -1,13 +1,13 @@
-#include <iostream>
-#include "dummy/server/player.hpp"
+#include "dummy/server/game_session.hpp"
 #include "dummy/server/abstract_game_server.hpp"
 #include "dummy/server/account.hpp"
-#include "dummy/server/game_session.hpp"
 #include "dummy/server/game_session_state/initial_state.hpp"
+#include "dummy/server/player.hpp"
+#include <iostream>
 
 #include "dummy/server/command/command.hpp"
-#include "dummy/server/response/response.hpp"
 #include "dummy/server/response/message.hpp"
+#include "dummy/server/response/response.hpp"
 
 #include "dummy/server/game_session_communicator.hpp"
 
@@ -18,31 +18,31 @@ namespace Server {
 GameSession::GameSession(
     AbstractGameServer& abstractGameServer,
     std::shared_ptr<GameSessionCommunicator> gameSessionCommunicator,
-    boost::asio::io_context& ioContext
-)
-    : m_abstractGameServer(abstractGameServer),
-      m_gameSessionCommunicator(gameSessionCommunicator),
-      m_ioContext(ioContext),
-      m_state(nullptr),
-      m_account(nullptr),
-      m_player(nullptr),
-      m_open(false)
+    boost::asio::io_context& ioContext)
+    : m_abstractGameServer(abstractGameServer)
+    , m_gameSessionCommunicator(gameSessionCommunicator)
+    , m_ioContext(ioContext)
+    , m_state(nullptr)
+    , m_account(nullptr)
+    , m_player(nullptr)
+    , m_open(false)
+{}
+
+GameSession::~GameSession()
 {
-
-}
-
-GameSession::~GameSession() {
     std::cerr << "Ending game session." << std::endl;
 }
 
-void GameSession::start() {
+void GameSession::start()
+{
     m_gameSessionCommunicator->setCommandHandler(shared_from_this());
     m_state = std::make_shared<GameSessionState::InitialState>(*this);
-    m_open = true;
+    m_open  = true;
     m_state->resume();
 }
 
-void GameSession::close() {
+void GameSession::close()
+{
     // XXX: Get the character out of the map, if needed.
     auto self(shared_from_this());
     if (nullptr != m_account && nullptr != m_player) {
@@ -54,61 +54,66 @@ void GameSession::close() {
     m_open = false;
 }
 
-void GameSession::changeState(std::shared_ptr<GameSessionState::State> state) {
+void GameSession::changeState(std::shared_ptr<GameSessionState::State> state)
+{
     m_state = state;
 }
 
-void GameSession::setAccount(std::shared_ptr<Account> account) {
+void GameSession::setAccount(std::shared_ptr<Account> account)
+{
     m_account = account;
 }
 
-void GameSession::setPlayer(std::shared_ptr<Player> player) {
+void GameSession::setPlayer(std::shared_ptr<Player> player)
+{
     m_player = player;
 }
 
-void
-GameSession::addResponse(ResponsePtr response) {
-    //m_responses.emplace(std::move(response));
+void GameSession::addResponse(ResponsePtr response)
+{
+    // m_responses.emplace(std::move(response));
     m_gameSessionCommunicator->forwardResponse(response);
 }
 
-void GameSession::handleCommand(CommandPtr command) {
+void GameSession::handleCommand(CommandPtr command)
+{
     m_state->onCommand(*command);
 }
 
-void GameSession::responseHandlerClosed() {
+void GameSession::responseHandlerClosed()
+{
     m_gameSessionCommunicator = nullptr;
     close();
 }
 
 std::unique_ptr<const Dummy::Server::Response::Response>
-GameSession::getResponse() {
+GameSession::getResponse()
+{
     if (m_responses.size() > 0) {
         std::unique_ptr<const Dummy::Server::Response::Response> r(
-            std::move(m_responses.front())
-        );
+            std::move(m_responses.front()));
         m_responses.pop();
         return r;
     }
     return nullptr; // no response
 }
 
-void GameSession::receiveMessage(
-    std::uint32_t author,
-    const std::string& content
-) {
+void GameSession::receiveMessage(std::uint32_t author,
+                                 const std::string& content)
+{
     auto message(std::make_unique<Dummy::Server::Response::Message>());
     message->setAuthor(author);
     message->setContent(content);
     addResponse(std::move(message));
 }
 
-CharactersMap GameSession::getCharactersList() const {
+CharactersMap GameSession::getCharactersList() const
+{
     CharactersMap map;
-    fs::path accountPath(m_abstractGameServer.serverPath()
-        / "accounts" / account().name() / "characters");
+    fs::path accountPath(m_abstractGameServer.serverPath() / "accounts"
+                         / account().name() / "characters");
 
-    for (const auto& entry: fs::directory_iterator(accountPath)) {
+    for (const auto& entry : fs::directory_iterator(accountPath)) {
         std::shared_ptr<Dummy::Core::Character> chr =
             std::make_shared<Dummy::Core::Character>();
         std::ifstream ifs(entry.path().string(),

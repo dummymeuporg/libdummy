@@ -13,7 +13,8 @@ class LivingOn;
 class NamedLivingOn;
 class CharacterPosition;
 
-class PacketSerializer : public MapUpdateVisitor {
+class PacketSerializer : public MapUpdateVisitor
+{
 public:
     PacketSerializer(OutgoingPacket&);
     void visit(const Update&);
@@ -22,6 +23,7 @@ public:
     void visitMapUpdate(const LivingOn&) override;
     void visitMapUpdate(const NamedLivingOn&) override;
     void visitMapUpdate(const CharacterPosition&) override;
+
 private:
     Dummy::Protocol::OutgoingPacket& m_packet;
 };

@@ -8,12 +8,10 @@ namespace Command {
 
 SelectCharacter::SelectCharacter(const std::string& name)
     : m_name(name)
-{
-}
+{}
 
-void
-SelectCharacter::accept(CommandVisitor& visitor)
-const {
+void SelectCharacter::accept(CommandVisitor& visitor) const
+{
     visitor.visitCommand(*this);
 }
 

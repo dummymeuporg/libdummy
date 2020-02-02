@@ -1,7 +1,7 @@
 #pragma once
 
-#include <string>
 #include "dummy/protocol/map_update/update.hpp"
+#include <string>
 
 namespace Dummy {
 namespace Protocol {
@@ -11,7 +11,8 @@ class OutgoingPacket;
 
 namespace MapUpdate {
 
-class CharacterFloor : public Update {
+class CharacterFloor : public Update
+{
 public:
     CharacterFloor(const std::string&, std::uint8_t);
 
@@ -19,13 +20,10 @@ public:
     void serializeTo(Dummy::Protocol::OutgoingPacket&) const override;
     void readFrom(Dummy::Protocol::IncomingPacket&) override;
 
-    const std::string& name() const {
-        return m_name;
-    }
+    const std::string& name() const { return m_name; }
 
-    std::uint8_t floor() const {
-        return m_floor;
-    }
+    std::uint8_t floor() const { return m_floor; }
+
 private:
     std::string m_name;
     std::uint8_t m_floor;

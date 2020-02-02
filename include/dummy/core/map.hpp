@@ -5,49 +5,54 @@
 #include <fstream>
 #include <vector>
 
-extern "C" {
+extern "C"
+{
+#include <lauxlib.h>
 #include <lua.h>
 #include <lualib.h>
-#include <lauxlib.h>
 }
 
-#include "dummy/core/foe.hpp"
 #include "dummy/core/errors.hpp"
+#include "dummy/core/foe.hpp"
 
-namespace Dummy
+namespace Dummy {
+namespace Core {
+
+class MapError : public Error
+{};
+
+class WrongMagicNumber : public MapError
 {
-
-namespace Core
-{
-
-class MapError : public Error {
-
-};
-
-class WrongMagicNumber : public MapError {
 public:
-    virtual const char* what() const noexcept {
+    virtual const char* what() const noexcept
+    {
         return "the magic number is invalid";
     }
 };
 
-class MapFileNotFound : public MapError {
+class MapFileNotFound : public MapError
+{
 public:
-    virtual const char* what() const noexcept {
+    virtual const char* what() const noexcept
+    {
         return "the map file could not be found";
     }
 };
 
-class BlkFileNotFound : public MapError {
+class BlkFileNotFound : public MapError
+{
 public:
-    virtual const char* what() const noexcept {
+    virtual const char* what() const noexcept
+    {
         return "the blk file could not be found";
     }
 };
 
-class LuaFileNotFound : public MapError {
+class LuaFileNotFound : public MapError
+{
 public:
-    virtual const char* what() const noexcept {
+    virtual const char* what() const noexcept
+    {
         return "the lua file could not be found";
     }
 };
@@ -59,40 +64,27 @@ using BlockingFloors = std::vector<BlockingLayer>;
 
 
 
-class Map {
+class Map
+{
 public:
     static const std::uint32_t MAP_MAGIC_WORD = 0xF000BABA;
     static const std::uint32_t BLK_MAGIC_WORD = 0xDEADDAAD;
-    static const std::uint16_t VERSION = 1;
+    static const std::uint16_t VERSION        = 1;
 
     Map(const std::string&);
     virtual ~Map();
 
-    const std::string& name() const {
-        return m_name;
-    }
-
-    std::uint16_t width() const {
-        return m_width;
-    }
-
-    std::uint16_t height() const {
-        return m_height;
-    }
+    const std::string& name() const { return m_name; }
+    std::uint16_t width() const { return m_width; }
+    std::uint16_t height() const { return m_height; }
 
     virtual void load() = 0;
 
-    ::lua_State* luaState() {
-        return m_eventsState;
-    }
+    ::lua_State* luaState() { return m_eventsState; }
 
-    std::uint8_t floorsCount() const {
-        return m_floorsCount;
-    }
+    std::uint8_t floorsCount() const { return m_floorsCount; }
 
-    const std::vector<Foe>& foes() const {
-        return m_foes;
-    }
+    const std::vector<Foe>& foes() const { return m_foes; }
 
 protected:
     void loadBaseInfo(std::ifstream&);
@@ -101,11 +93,11 @@ protected:
     void loadLuaFile(const std::string&);
 
     // XXX: export this elsewhere?
-    virtual int luaOnTouchEvent(::lua_State*) = 0;
+    virtual int luaOnTouchEvent(::lua_State*)    = 0;
     virtual int luaOnKeypressEvent(::lua_State*) = 0;
-    virtual int luaMessage(::lua_State*) = 0;
-    virtual int luaTeleport(::lua_State*) = 0;
-    //int luaAddFoe(::lua_State*);
+    virtual int luaMessage(::lua_State*)         = 0;
+    virtual int luaTeleport(::lua_State*)        = 0;
+    // int luaAddFoe(::lua_State*);
     virtual int luaAddFoe(::lua_State*) = 0;
 
 protected:
@@ -119,12 +111,11 @@ protected:
 
 typedef int (Map::*mem_func)(::lua_State* L);
 
-template <mem_func func>
-int dispatch(::lua_State * L) {
+template <mem_func func> int dispatch(::lua_State* L)
+{
     Map* ptr = *static_cast<Map**>(lua_getextraspace(L));
     return ((*ptr).*func)(L);
 }
 
 } // namespace Core
-
 } // namespace Dummy

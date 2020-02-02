@@ -12,19 +12,19 @@ namespace fs = std::filesystem;
 namespace Dummy {
 namespace Server {
 
-using RemoteMaps = std::map<std::string,
-                            std::unique_ptr<Dummy::Remote::Map>>;
+using RemoteMaps = std::map<std::string, std::unique_ptr<Dummy::Remote::Map>>;
 
-class Project : public Core::Project {
+class Project : public Core::Project
+{
 public:
     Project(const fs::path&);
     Project(const std::string&);
-    const RemoteMaps& maps() const {
-        return m_maps;
-    }
+    const RemoteMaps& maps() const { return m_maps; }
+
 protected:
     void onMapFound(const std::string&) override;
     bool mapExists(const std::string&) override;
+
 private:
     RemoteMaps m_maps;
 };

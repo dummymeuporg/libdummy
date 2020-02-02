@@ -5,11 +5,16 @@ namespace Dummy {
 namespace Server {
 
 MapObserver::MapObserver() {}
-MapObserver::MapObserver(std::uint32_t id) : m_id(id) {}
+MapObserver::MapObserver(std::uint32_t id)
+    : m_id(id)
+{}
 MapObserver::MapObserver(std::uint32_t id, std::weak_ptr<Map> map)
-    : m_id(id), m_map(map) {}
+    : m_id(id)
+    , m_map(map)
+{}
 
-void MapObserver::setMap(std::weak_ptr<Map> map) {
+void MapObserver::setMap(std::weak_ptr<Map> map)
+{
     m_map = map;
 }
 
@@ -23,11 +28,13 @@ void MapObserver::leaveCurrentMap() {
 }
 */
 
-void MapObserver::setID(std::uint32_t id) {
+void MapObserver::setID(std::uint32_t id)
+{
     m_id = id;
 }
 
-void MapObserver::resetID() {
+void MapObserver::resetID()
+{
     m_id.reset();
 }
 

@@ -21,20 +21,20 @@ namespace Response {
 
 class ResponseVisitor;
 
-using MapUpdates = \
+using MapUpdates =
     std::vector<std::shared_ptr<const Dummy::Protocol::MapUpdate::Update>>;
 
 
-class Ping : public Response {
+class Ping : public Response
+{
 public:
     virtual void accept(ResponseVisitor&) const override;
     std::shared_ptr<Response> clone() const override;
     void addUpdate(std::shared_ptr<const Dummy::Protocol::MapUpdate::Update>);
     virtual void serializeTo(Dummy::Protocol::OutgoingPacket&) const override;
     virtual void readFrom(Dummy::Protocol::IncomingPacket&) override;
-    const MapUpdates& mapUpdates() const {
-        return m_mapUpdates;
-    }
+    const MapUpdates& mapUpdates() const { return m_mapUpdates; }
+
 private:
     std::shared_ptr<const Dummy::Protocol::MapUpdate::LivingOff>
     readLivingOff(Dummy::Protocol::IncomingPacket&);
@@ -52,7 +52,6 @@ private:
     readCharacterFloor(Dummy::Protocol::IncomingPacket&);
 
     MapUpdates m_mapUpdates;
-
 };
 
 } // namespace Response

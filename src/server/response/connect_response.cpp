@@ -1,26 +1,30 @@
+#include "dummy/server/response/connect_response.hpp"
 #include "dummy/protocol/incoming_packet.hpp"
 #include "dummy/protocol/outgoing_packet.hpp"
-#include "dummy/server/response/connect_response.hpp"
 #include "dummy/server/response/response_visitor.hpp"
 
 namespace Dummy {
 namespace Server {
 namespace Response {
 
-void ConnectResponse::accept(ResponseVisitor& visitor) const {
+void ConnectResponse::accept(ResponseVisitor& visitor) const
+{
     visitor.visitResponse(*this);
 }
 
-void ConnectResponse::serializeTo(Dummy::Protocol::OutgoingPacket& pkt) const {
+void ConnectResponse::serializeTo(Dummy::Protocol::OutgoingPacket& pkt) const
+{
     pkt << m_status;
 }
 
 
-void ConnectResponse::readFrom(Dummy::Protocol::IncomingPacket& pkt) {
+void ConnectResponse::readFrom(Dummy::Protocol::IncomingPacket& pkt)
+{
     pkt >> m_status;
 }
 
-std::shared_ptr<Response> ConnectResponse::clone() const {
+std::shared_ptr<Response> ConnectResponse::clone() const
+{
     return std::make_shared<ConnectResponse>(*this);
 }
 

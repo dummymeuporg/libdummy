@@ -16,47 +16,53 @@
 namespace fs = std::filesystem;
 namespace pt = boost::property_tree;
 
-namespace Dummy
+namespace Dummy {
+namespace Core {
+
+class ProjectError : public std::exception
+{};
+
+class ProjectFileNotFound : public ProjectError
 {
-
-namespace Core
-{
-
-class ProjectError : public std::exception {
-
-};
-
-class ProjectFileNotFound : public ProjectError {
 public:
-    const char* what() const noexcept override {
+    const char* what() const noexcept override
+    {
         return "project.xml file could not be found";
     }
 };
 
-class MapNotFound : public ProjectError {
+class MapNotFound : public ProjectError
+{
 public:
-    const char* what() const noexcept override {
+    const char* what() const noexcept override
+    {
         return "the map could not be found";
     }
 };
 
-class IncompleteStartingPosition : public ProjectError {
+class IncompleteStartingPosition : public ProjectError
+{
 public:
-    const char* what() const noexcept override {
+    const char* what() const noexcept override
+    {
         return "the starting position is incomplete";
     }
 };
 
-class IncorrectStartingPosition : public ProjectError {
+class IncorrectStartingPosition : public ProjectError
+{
 public:
-    const char* what() const noexcept override {
+    const char* what() const noexcept override
+    {
         return "the starting position is incorrect.";
     }
 };
 
-class StartingPositionNotSet : public ProjectError {
+class StartingPositionNotSet : public ProjectError
+{
 public:
-    const char* what() const noexcept override {
+    const char* what() const noexcept override
+    {
         return "the starting position is not set.";
     }
 };
@@ -67,12 +73,11 @@ public:
     Project(const fs::path&);
     Project(const std::string&);
     virtual ~Project();
-    const fs::path& projectPath() const {
-        return m_projectPath;
-    }
+    const fs::path& projectPath() const { return m_projectPath; }
 
-    const StartingPoint& startingPoint() const {
-        if (!m_startingPoint.has_value()) {
+    const StartingPoint& startingPoint() const
+    {
+        if (! m_startingPoint.has_value()) {
             throw StartingPositionNotSet();
         }
         return m_startingPoint.value();
@@ -80,13 +85,12 @@ public:
 
     void load();
 
-    const std::set<std::string>& maps() const {
-        return m_maps;
-    }
+    const std::set<std::string>& maps() const { return m_maps; }
 
 protected:
     virtual void onMapFound(const std::string&);
     virtual bool mapExists(const std::string&);
+
 protected:
     void _browseNode(pt::ptree);
     void _setStartingPoint(pt::ptree);
@@ -97,7 +101,5 @@ protected:
     std::set<std::string> m_maps;
 };
 
-
 } // namespace Core
-
 } // namespace Dummy

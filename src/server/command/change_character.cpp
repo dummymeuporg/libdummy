@@ -5,7 +5,8 @@ namespace Dummy {
 namespace Server {
 namespace Command {
 
-void ChangeCharacter::accept(CommandVisitor& visitor) const {
+void ChangeCharacter::accept(CommandVisitor& visitor) const
+{
     visitor.visitCommand(*this);
 }
 

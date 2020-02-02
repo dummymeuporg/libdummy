@@ -13,31 +13,31 @@
 
 namespace fs = std::filesystem;
 
-namespace Dummy
-{
-
-namespace Local
-{
+namespace Dummy {
+namespace Local {
 
 Map::Map(const Project& project, const std::string& name)
-    : Dummy::Core::Map(name), m_project(project), m_eventObserver(nullptr)
+    : Dummy::Core::Map(name)
+    , m_project(project)
+    , m_eventObserver(nullptr)
 {
     std::cerr << "Local map constructor" << std::endl;
 }
 
-void Map::load() {
+void Map::load()
+{
     fs::path basePath(m_project.projectPath() / "maps");
     std::string mapFile(m_name + ".map");
     std::string blkFile(m_name + ".blk");
     std::string luaFile(m_name + ".lua");
 
     std::ifstream ifsMapFile(basePath / mapFile, std::ios::binary);
-    if (!ifsMapFile.is_open()) {
+    if (! ifsMapFile.is_open()) {
         throw Dummy::Core::MapFileNotFound();
     }
 
     std::ifstream ifsBlkFile(basePath / blkFile, std::ios::binary);
-    if (!ifsBlkFile.is_open()) {
+    if (! ifsBlkFile.is_open()) {
         throw Dummy::Core::BlkFileNotFound();
     }
     loadMapFile(ifsMapFile);
@@ -50,7 +50,8 @@ void Map::load() {
     loadLuaFile((basePath / luaFile).string());
 }
 
-void Map::loadMapFile(std::ifstream& ifs) {
+void Map::loadMapFile(std::ifstream& ifs)
+{
     Dummy::Core::Map::loadBaseInfo(ifs);
     std::cerr << "Map::loadMapFile" << std::endl;
     std::uint32_t strSize;
@@ -76,34 +77,27 @@ void Map::loadMapFile(std::ifstream& ifs) {
     }
 }
 
-void Map::readMapFloor(
-    std::ifstream& ifsMapFile,
-    std::ifstream& ifsBlkFile)
+void Map::readMapFloor(std::ifstream& ifsMapFile, std::ifstream& ifsBlkFile)
 {
     Floor floor(*this);
     std::size_t elements = m_width * m_height;
     std::uint8_t layersCount;
 
     // Read layers count
-    ifsMapFile.read(
-        reinterpret_cast<char*>(&layersCount),
-        sizeof(std::uint8_t)
-    );
+    ifsMapFile.read(reinterpret_cast<char*>(&layersCount),
+                    sizeof(std::uint8_t));
 
-    for(std::uint8_t i = 0; i < layersCount; i++) {
+    for (std::uint8_t i = 0; i < layersCount; i++) {
         // Read the layer position
         std::int8_t position;
-        ifsMapFile.read(
-            reinterpret_cast<char*>(&position), sizeof(std::uint8_t)
-        );
+        ifsMapFile.read(reinterpret_cast<char*>(&position),
+                        sizeof(std::uint8_t));
         Dummy::Core::GraphicLayer graphicLayer(m_width, m_height);
         // read the whole layer
         ifsMapFile.read(
             reinterpret_cast<char*>(graphicLayer.data()),
             static_cast<std::streamsize>(
-                elements * sizeof(std::pair<std::int8_t, std::int8_t>)
-            )
-        );
+                elements * sizeof(std::pair<std::int8_t, std::int8_t>)));
         floor.addGraphicLayer(position, std::move(graphicLayer));
     }
     // Read the blocking layer
@@ -114,7 +108,8 @@ void Map::readMapFloor(
     m_floors.push_back(std::move(floor));
 }
 
-int Map::luaOnKeypressEvent(::lua_State* luaState) {
+int Map::luaOnKeypressEvent(::lua_State* luaState)
+{
     int isNum;
     std::uint16_t x, y;
     std::uint8_t floor;
@@ -134,17 +129,15 @@ int Map::luaOnKeypressEvent(::lua_State* luaState) {
     }
 
     std::string luaCallback = lua_tostring(luaState, 4);
-    auto index = y * m_width + x;
+    auto index              = y * m_width + x;
     auto& currentFloor(m_floors[floor]);
-    currentFloor.keypressEvents().emplace(index, std::make_shared<Event>(
-        m_eventsState,
-        *this,
-        luaCallback
-    ));
+    currentFloor.keypressEvents().emplace(
+        index, std::make_shared<Event>(m_eventsState, *this, luaCallback));
     return 1;
 }
 
-int Map::luaOnTouchEvent(::lua_State* luaState) {
+int Map::luaOnTouchEvent(::lua_State* luaState)
+{
     int isNum;
     std::uint16_t x, y;
     std::uint8_t floor;
@@ -164,17 +157,15 @@ int Map::luaOnTouchEvent(::lua_State* luaState) {
     }
 
     std::string luaCallback = lua_tostring(luaState, 4);
-    auto index = y * m_width + x;
+    auto index              = y * m_width + x;
     auto& currentFloor(m_floors[floor]);
-    currentFloor.touchEvents().emplace(index, std::make_shared<Event>(
-        m_eventsState,
-        *this,
-        luaCallback
-    ));
+    currentFloor.touchEvents().emplace(
+        index, std::make_shared<Event>(m_eventsState, *this, luaCallback));
     return 1;
 }
 
-int Map::luaMessage(::lua_State* luaState) {
+int Map::luaMessage(::lua_State* luaState)
+{
     if (m_eventObserver != nullptr) {
         std::string message = lua_tostring(luaState, 1);
         m_eventObserver->onMessage(message);
@@ -183,7 +174,8 @@ int Map::luaMessage(::lua_State* luaState) {
     return 0;
 }
 
-int Map::luaTeleport(::lua_State* luaState) {
+int Map::luaTeleport(::lua_State* luaState)
+{
     if (m_eventObserver != nullptr) {
         std::uint16_t x, y;
         std::uint8_t floor;
@@ -211,7 +203,8 @@ int Map::luaTeleport(::lua_State* luaState) {
     return 0;
 }
 
-int Map::luaAddFoe(::lua_State* luaState) {
+int Map::luaAddFoe(::lua_State* luaState)
+{
     std::string luaFilename = lua_tostring(luaState, 1);
     fs::path fullpath(m_project.projectPath() / "foes");
     fullpath /= luaFilename;
@@ -221,10 +214,10 @@ int Map::luaAddFoe(::lua_State* luaState) {
     return 1;
 }
 
-void Map::setEventObserver(EventObserver* eventObserver) {
+void Map::setEventObserver(EventObserver* eventObserver)
+{
     m_eventObserver = eventObserver;
 }
 
-
-} // namespace Core
+} // namespace Local
 } // namespace Dummy

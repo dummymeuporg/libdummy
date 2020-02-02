@@ -8,15 +8,15 @@ namespace Dummy {
 namespace Server {
 namespace Command {
 
-class SelectCharacter : public Command {
+class SelectCharacter : public Command
+{
 public:
     SelectCharacter(const std::string&);
     virtual void
     accept(::Dummy::Server::Command::CommandVisitor&) const override;
 
-    const std::string& name() const {
-        return m_name;
-    }
+    const std::string& name() const { return m_name; }
+
 private:
     std::string m_name;
 };

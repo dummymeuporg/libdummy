@@ -6,14 +6,16 @@
 namespace Dummy {
 namespace Local {
 
-Event::Event(
-    ::lua_State* eventsState,
-    const Floor& floor,
-    const std::string& luaCallback
-) : m_eventsState(eventsState), m_floor(floor), m_luaCallback(luaCallback) {}
+Event::Event(::lua_State* eventsState, const Floor& floor,
+             const std::string& luaCallback)
+    : m_eventsState(eventsState)
+    , m_floor(floor)
+    , m_luaCallback(luaCallback)
+{}
 
 
-void Event::execute() const {
+void Event::execute() const
+{
     // Check that the callback is actually defined.
     ::lua_getglobal(m_eventsState, m_luaCallback.c_str());
     if (lua_isfunction(m_eventsState, -1)) {

@@ -14,34 +14,28 @@ class Account;
 class Instance;
 class Map;
 
-class Player : public MapObserver {
+class Player : public MapObserver
+{
 public:
-    Player(GameSession&,
-           std::shared_ptr<::Dummy::Core::Character>);
+    Player(GameSession&, std::shared_ptr<::Dummy::Core::Character>);
 
-    GameSession& gameSession() {
-        return m_gameSession;
-    }
+    GameSession& gameSession() { return m_gameSession; }
 
-    std::shared_ptr<::Dummy::Core::Character> character() const {
+    std::shared_ptr<::Dummy::Core::Character> character() const
+    {
         return m_character;
     }
 
-    const std::string& name() const {
-        return m_character->name();
-    }
+    const std::string& name() const { return m_character->name(); }
 
-    const std::pair<std::uint16_t, std::uint16_t> serverPosition() const {
+    const std::pair<std::uint16_t, std::uint16_t> serverPosition() const
+    {
         return m_character->position();
     }
 
-    std::weak_ptr<Map> map() const {
-        return m_map;
-    }
+    std::weak_ptr<Map> map() const { return m_map; }
 
-    std::weak_ptr<Instance> instance() const {
-        return m_instance;
-    }
+    std::weak_ptr<Instance> instance() const { return m_instance; }
 
     void setMap(std::weak_ptr<Map>);
     void setPosition(const std::pair<std::uint16_t, std::uint16_t>&);
@@ -59,7 +53,6 @@ private:
     std::shared_ptr<Dummy::Core::Character> m_character;
     std::weak_ptr<Map> m_map;
     std::weak_ptr<Instance> m_instance;
-
 };
 
 } // namespace Server

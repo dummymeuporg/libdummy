@@ -7,12 +7,12 @@ namespace Dummy {
 namespace Server {
 
 namespace Command {
-    class Command;
-    class TeleportMap;
-}
+class Command;
+class TeleportMap;
+} // namespace Command
 
 namespace Response {
-    class Response;
+class Response;
 }
 
 class Instance;
@@ -20,10 +20,10 @@ class Player;
 
 namespace GameSessionState {
 
-class LoadingState : public State {
+class LoadingState : public State
+{
 public:
-    LoadingState(GameSession&,
-                 Dummy::Protocol::TeleportRequest&&);
+    LoadingState(GameSession&, Dummy::Protocol::TeleportRequest&&);
     void onCommand(const ::Dummy::Server::Command::Command&) override;
 
     void visitCommand(const Dummy::Server::Command::TeleportMap&) override;
@@ -31,21 +31,14 @@ public:
 
 private:
     /* Methods */
-    std::weak_ptr<Instance> getServerInstance(
-        const std::string&,
-        std::shared_ptr<Player>
-    );
+    std::weak_ptr<Instance> getServerInstance(const std::string&,
+                                              std::shared_ptr<Player>);
 
-    void switchInstance(
-        std::shared_ptr<Player>,
-        std::shared_ptr<Instance>,
-        const std::string&
-    );
+    void switchInstance(std::shared_ptr<Player>, std::shared_ptr<Instance>,
+                        const std::string&);
 
-    void addToInstance(
-        std::shared_ptr<Player> player,
-        const std::string& newInstanceName
-    );
+    void addToInstance(std::shared_ptr<Player> player,
+                       const std::string& newInstanceName);
 
     void leavePreviousMap(std::shared_ptr<Player>);
 

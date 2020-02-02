@@ -6,23 +6,23 @@ namespace Dummy {
 namespace Server {
 
 namespace Command {
-    class ConnectCommand;
-    class Command;
-}
+class ConnectCommand;
+class Command;
+} // namespace Command
 
 namespace Response {
-    class Response;
+class Response;
 }
 
 namespace GameSessionState {
 
-class InitialState : public State {
+class InitialState : public State
+{
 public:
     InitialState(GameSession&);
     virtual void resume() override;
 
-    virtual void
-    onCommand(const ::Dummy::Server::Command::Command&) override;
+    virtual void onCommand(const ::Dummy::Server::Command::Command&) override;
 
     virtual void
     visitCommand(const ::Dummy::Server::Command::ConnectCommand&) override;

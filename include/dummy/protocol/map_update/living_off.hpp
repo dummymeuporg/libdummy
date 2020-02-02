@@ -1,10 +1,9 @@
 #pragma once
 
-#include <string>
 #include "dummy/protocol/map_update/update.hpp"
+#include <string>
 
 namespace Dummy {
-
 namespace Protocol {
 
 class IncomingPacket;
@@ -12,7 +11,8 @@ class OutgoingPacket;
 
 namespace MapUpdate {
 
-class LivingOff : public Update {
+class LivingOff : public Update
+{
 public:
     LivingOff(std::uint32_t id);
 
@@ -20,15 +20,12 @@ public:
     virtual void serializeTo(Dummy::Protocol::OutgoingPacket&) const override;
     virtual void readFrom(Dummy::Protocol::IncomingPacket&) override;
 
-    std::uint32_t id() const {
-        return m_id;
-    }
+    std::uint32_t id() const { return m_id; }
+
 private:
     std::uint32_t m_id;
 };
 
 } // namespace MapUpdate
-
 } // namespace Protocol
-
 } // namespace Dummy
