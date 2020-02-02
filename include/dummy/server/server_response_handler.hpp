@@ -1,4 +1,4 @@
-#pragma
+#pragma once
 
 namespace Dummy {
 namespace Server {
