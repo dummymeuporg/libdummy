@@ -2,6 +2,7 @@
 
 #include <iostream>
 
+#include <boost/lexical_cast.hpp>
 #include <boost/property_tree/xml_parser.hpp>
 
 namespace fs = std::filesystem;
@@ -13,39 +14,37 @@ namespace Core {
 Project::Project(const fs::path& projectPath)
     : m_projectPath(projectPath)
 {
-    // Load project.xml
-    // Identify starting map.
+    load();
 }
-
-Project::Project(const std::string& projectPath)
-    : m_projectPath(fs::path(projectPath))
-{}
-
-Project::~Project() {}
 
 void Project::load()
 {
+    // Load project.xml
+    // Identify starting map.
 
     fs::path projectXMLPath(m_projectPath / "project.xml");
-
     if (! fs::exists(projectXMLPath)) {
-        throw ProjectFileNotFound();
+        throw ProjectFileError("Project.xml file could not be found.");
     }
 
-    pt::ptree tree;
+    try {
+        pt::ptree tree;
+        pt::read_xml(projectXMLPath.string(), tree);
+        parseMapsList(tree.get_child("project.maps"));
+        parseStartingPoint(tree.get_child("project.starting_point"));
 
-    std::cerr << "Load project.xml file." << std::endl;
-    pt::read_xml(projectXMLPath.string(), tree);
-
-    _browseNode(tree.get_child("project.maps"));
-    _setStartingPoint(tree.get_child("project.starting_point"));
+    } catch (pt::xml_parser_error) {
+        throw ProjectFileError("Project.xml file could not be parsed.");
+    } catch (pt::ptree_bad_path) {
+        throw ProjectFileError("Project.xml file has missing data.");
+    }
 }
 
-void Project::_setStartingPoint(pt::ptree node)
+void Project::parseStartingPoint(pt::ptree node)
 {
     std::string x, y, map, floorString;
     tilecoords position;
-    uint16_t floor;
+    uint8_t floor;
 
     for (const auto& child : node.get_child("<xmlattr>")) {
         if (child.first == "x") {
@@ -60,39 +59,26 @@ void Project::_setStartingPoint(pt::ptree node)
     }
 
     if (x == "" || y == "" || map == "" || floorString == "") {
-        throw IncompleteStartingPosition();
+        throw ProjectFileError("The starting position is incomplete.");
     }
-    std::istringstream iss(x);
-    iss >> position.first;
 
-    if (iss.bad()) {
-        throw IncorrectStartingPosition();
+    try {
+        position.first  = boost::lexical_cast<uint16_t>(x);
+        position.second = boost::lexical_cast<uint16_t>(y);
+        floor           = boost::lexical_cast<uint8_t>(floorString);
+    } catch (boost::bad_lexical_cast) {
+        throw ProjectFileError("The starting position is incorrect.");
     }
-    std::cerr << "x = " << position.first << std::endl;
-
-    iss.str(y);
-    iss.seekg(0);
-    iss >> position.second;
-
-    if (iss.bad()) {
-        throw IncorrectStartingPosition();
-    }
-    std::cerr << "y = " << position.second << std::endl;
 
     if (! mapExists(map)) {
-        throw MapNotFound();
+        throw ProjectFileError("The starting point's map could not be found.");
     }
 
-    iss.str(floorString);
-    iss.seekg(0);
-    iss >> floor;
-
     // From here, everything is correct.
-    m_startingPoint = std::make_optional<StartingPoint>(
-        map, position, static_cast<uint8_t>(floor));
+    m_startingPoint = StartingPoint(map, position, floor);
 }
 
-void Project::_browseNode(pt::ptree node)
+void Project::parseMapsList(pt::ptree node)
 {
     for (const auto& it : node) {
         if (it.first == "map") {
@@ -103,7 +89,7 @@ void Project::_browseNode(pt::ptree node)
                 }
             }
             if (it.second.count("map") > 0) {
-                _browseNode(it.second);
+                parseMapsList(it.second);
             }
         }
     }
