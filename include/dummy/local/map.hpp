@@ -1,5 +1,6 @@
 #pragma once
 
+#include <filesystem>
 #include <map>
 #include <memory>
 
@@ -12,7 +13,6 @@ namespace Local {
 class Event;
 class EventObserver;
 class Floor;
-class Project;
 
 using Floors = std::vector<Floor>;
 using Events = std::map<uint16_t, std::shared_ptr<Event>>;
@@ -20,7 +20,7 @@ using Events = std::map<uint16_t, std::shared_ptr<Event>>;
 class Map : public Dummy::Core::Map
 {
 public:
-    Map(const Project&, const std::string&);
+    Map(const std::filesystem::path& path, const std::string&);
 
     void load() override;
 
@@ -43,7 +43,7 @@ protected:
 
     void loadMapFile(std::ifstream&);
     void readMapFloor(std::ifstream&, std::ifstream&);
-    const Project& m_project;
+    std::filesystem::path m_projectPath;
     std::string m_chipset;
     std::string m_music;
     Floors m_floors;

@@ -5,16 +5,15 @@
 
 #include "dummy/local/event_observer.hpp"
 #include "dummy/local/floor.hpp"
-#include "dummy/local/project.hpp"
 
 namespace fs = std::filesystem;
 
 namespace Dummy {
 namespace Local {
 
-Map::Map(const Project& project, const std::string& name)
+Map::Map(const fs::path& path, const std::string& name)
     : Dummy::Core::Map(name)
-    , m_project(project)
+    , m_projectPath(path)
     , m_eventObserver(nullptr)
 {
     std::cerr << "Local map constructor" << std::endl;
@@ -22,7 +21,7 @@ Map::Map(const Project& project, const std::string& name)
 
 void Map::load()
 {
-    fs::path basePath(m_project.projectPath() / "maps");
+    fs::path basePath(m_projectPath / "maps");
     std::string mapFile(m_name + ".map");
     std::string blkFile(m_name + ".blk");
     std::string luaFile(m_name + ".lua");
@@ -199,7 +198,7 @@ int Map::luaTeleport(::lua_State* luaState)
 int Map::luaAddFoe(::lua_State* luaState)
 {
     std::string luaFilename = lua_tostring(luaState, 1);
-    fs::path fullpath(m_project.projectPath() / "foes");
+    fs::path fullpath(m_projectPath / "foes");
     fullpath /= luaFilename;
 
     m_foes.push_back(Dummy::Core::Foe(fullpath.string()));
