@@ -4,8 +4,7 @@
 #include <map>
 #include <memory>
 
-#include "dummy/core/blocking_layer.hpp"
-#include "dummy/core/graphic_layer.hpp"
+#include "dummy/core/layer.hpp"
 #include "dummy/local/event.hpp"
 
 namespace Dummy {
@@ -13,14 +12,14 @@ namespace Local {
 
 class Map;
 
-using GraphicLayers = std::map<int8_t, Dummy::Core::GraphicLayer>;
+using GraphicLayers = std::map<int8_t, Core::GraphicLayer>;
 using Events        = std::map<uint16_t, std::shared_ptr<Event>>;
 
 class Floor
 {
 public:
     Floor(const Map&);
-    void addGraphicLayer(int8_t, Dummy::Core::GraphicLayer&&);
+    void addGraphicLayer(int8_t, Core::GraphicLayer&&);
     const Dummy::Core::GraphicLayer& graphicLayer(int8_t position) const
     {
         return m_graphicLayers.at(position);
@@ -43,10 +42,7 @@ public:
 
     void setBlockingLayer(Dummy::Core::BlockingLayer&&);
 
-    bool isBlocking(tilecoords xy) const
-    {
-        return m_blockingLayer.isBlocking(xy);
-    }
+    bool isBlocking(tilecoords xy) const { return m_blockingLayer.at(xy); }
 
     Events& touchEvents() { return m_touchEvents; }
 

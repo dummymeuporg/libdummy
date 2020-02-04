@@ -11,6 +11,7 @@ extern "C"
 
 #include "dummy/core/errors.hpp"
 #include "dummy/core/foe.hpp"
+#include "dummy/core/layer.hpp"
 
 namespace Dummy {
 namespace Core {
@@ -56,7 +57,6 @@ public:
 
 class Project;
 
-class BlockingLayer;
 using BlockingFloors = std::vector<BlockingLayer>;
 
 

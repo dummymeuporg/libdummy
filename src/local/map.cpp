@@ -85,11 +85,10 @@ void Map::readMapFloor(std::ifstream& ifsMapFile, std::ifstream& ifsBlkFile)
         // Read the layer position
         int8_t position;
         ifsMapFile.read(reinterpret_cast<char*>(&position), sizeof(uint8_t));
-        Dummy::Core::GraphicLayer graphicLayer(m_width, m_height);
+        Dummy::Core::GraphicLayer graphicLayer(m_width, m_height, {-1, -1});
         // read the whole layer
-        ifsMapFile.read(
-            reinterpret_cast<char*>(graphicLayer.data()),
-            static_cast<std::streamsize>(elements * sizeof(tileaspect)));
+        graphicLayer.fillWithRawData(ifsMapFile);
+
         floor.addGraphicLayer(position, std::move(graphicLayer));
     }
     // Read the blocking layer

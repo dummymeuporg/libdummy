@@ -7,11 +7,10 @@ namespace Local {
 
 Floor::Floor(const Map& map)
     : m_map(map)
-    , m_blockingLayer(m_map.width(), m_map.height())
+    , m_blockingLayer(m_map.width() * 2, m_map.height() * 2, false)
 {}
 
-void Floor::addGraphicLayer(int8_t position,
-                            Dummy::Core::GraphicLayer&& layer)
+void Floor::addGraphicLayer(int8_t position, Dummy::Core::GraphicLayer&& layer)
 {
     m_graphicLayers[position] = std::move(layer);
 }

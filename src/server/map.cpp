@@ -65,7 +65,7 @@ void Map::removeObserver(uint32_t id)
 bool Map::isBlocking(uint16_t x, uint16_t y, uint8_t floor) const
 {
     // XXX: refactor this.
-    return m_map.floors().at(floor).isBlocking({x, y});
+    return m_map.floors().at(floor).at({x, y});
 }
 
 void Map::dispatchMessage(uint32_t author, const std::string& message)

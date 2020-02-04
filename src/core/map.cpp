@@ -1,9 +1,8 @@
 #include "dummy/core/map.hpp"
 
-#include <fstream>
 #include <iostream>
 
-#include "dummy/core/blocking_layer.hpp"
+#include "dummy/core/layer.hpp"
 
 namespace fs = std::filesystem;
 
@@ -51,9 +50,8 @@ void Map::loadBaseInfo(std::ifstream& ifs)
 
 BlockingLayer Map::loadBlockingLayer(std::ifstream& ifs)
 {
-    BlockingLayer layer(m_width, m_height);
-    ifs.read(reinterpret_cast<char*>(layer.data()),
-             static_cast<std::streamsize>(layer.size() * sizeof(uint8_t)));
+    BlockingLayer layer(m_width * 2, m_height * 2, false);
+    layer.fillWithRawData(ifs);
     return layer;
 }
 
